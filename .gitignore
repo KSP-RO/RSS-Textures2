@@ -16,3 +16,5 @@ tools/TopoConv/x64
 *.ipdb
 *.pdb
 /Release
+# Build output
+/dist

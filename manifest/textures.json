@@ -1,0 +1,2864 @@
+{
+  "manifestVersion": 1,
+  "generatedFrom": {
+    "scan": "2026-09-06T21:45:46.206Z",
+    "release": "v18.6.1"
+  },
+  "readme": "tools/manifest/README.md",
+  "sets": {
+    "4096": {
+      "cap": 4096,
+      "package": true
+    },
+    "8192": {
+      "cap": 8192,
+      "package": true
+    },
+    "16384": {
+      "cap": 16384,
+      "package": true
+    }
+  },
+  "groups": {
+    "Mercury": {
+      "bodies": [
+        "Mercury"
+      ]
+    },
+    "Venus": {
+      "bodies": [
+        "Venus"
+      ]
+    },
+    "Earth": {
+      "bodies": [
+        "Earth",
+        "Moon"
+      ]
+    },
+    "Mars": {
+      "bodies": [
+        "Mars",
+        "Phobos",
+        "Deimos"
+      ]
+    },
+    "Belt": {
+      "bodies": [
+        "Vesta",
+        "Ceres"
+      ]
+    },
+    "Jupiter": {
+      "bodies": [
+        "Jupiter",
+        "Io",
+        "Europa",
+        "Ganymede",
+        "Callisto"
+      ]
+    },
+    "Saturn": {
+      "bodies": [
+        "Saturn",
+        "Mimas",
+        "Enceladus",
+        "Tethys",
+        "Dione",
+        "Rhea",
+        "Titan",
+        "Iapetus"
+      ]
+    },
+    "Uranus": {
+      "bodies": [
+        "Uranus",
+        "Miranda",
+        "Ariel",
+        "Umbriel",
+        "Titania",
+        "Oberon"
+      ]
+    },
+    "Neptune": {
+      "bodies": [
+        "Neptune",
+        "Triton"
+      ]
+    },
+    "Pluto": {
+      "bodies": [
+        "Pluto",
+        "Charon"
+      ]
+    },
+    "Shared": {
+      "bodies": [
+        "Flat"
+      ]
+    }
+  },
+  "kinds": {
+    "Color": {
+      "install": "PluginData",
+      "mips": "full",
+      "colorspace": "srgb",
+      "formats": [
+        "DXT1",
+        "DXT5"
+      ],
+      "note": "DXT1 unless the alpha channel carries real data. Mips built in linear space."
+    },
+    "Surface": {
+      "install": "PluginData",
+      "mips": "full",
+      "colorspace": "srgb",
+      "formats": [
+        "DXT1",
+        "DXT5"
+      ],
+      "note": "Detail/surface texture sampled close up."
+    },
+    "_NRM": {
+      "install": "PluginData",
+      "mips": "full",
+      "colorspace": "linear",
+      "formats": [
+        "DXT5"
+      ],
+      "note": "DXT5nm: x in alpha, y in green. Unity UnpackNormal ignores red and blue."
+    },
+    "Height": {
+      "install": "PluginData",
+      "mips": "none",
+      "colorspace": "linear",
+      "formats": [
+        "R16",
+        "R8"
+      ],
+      "note": "Never block-compressed. Changing scale or offset moves terrain under landed craft and must be coordinated with RSS."
+    },
+    "Biomes": {
+      "install": "PluginData",
+      "mips": "none",
+      "colorspace": "srgb",
+      "formats": [
+        "A8B8G8R8"
+      ],
+      "note": "Exact RGB lookup against biome definitions. Never compressed, never mipped, point filtered."
+    },
+    "Ring": {
+      "install": "PluginData",
+      "mips": "full",
+      "colorspace": "srgb",
+      "formats": [
+        "DXT5"
+      ],
+      "note": "Alpha is meaningful (ring gaps)."
+    }
+  },
+  "bodies": {
+    "Ariel": {
+      "group": "Uranus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 6150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Uranus/Ariel.cfg:172",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Callisto": {
+      "group": "Jupiter",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 20000,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Jupiter/Callisto.cfg:196",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Ceres": {
+      "group": "Belt",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 12150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Ceres/Ceres.cfg:215",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Charon": {
+      "group": "Pluto",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 10264,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Pluto/Charon.cfg:249",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Deimos": {
+      "group": "Mars",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 2128,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Mars/Deimos.cfg:174",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Dione": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Earth": {
+      "group": "Earth",
+      "maps": {
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "install": ".",
+          "todo": [
+            "source"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "install": ".",
+          "todo": [
+            "source"
+          ]
+        },
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "R16",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": -10921,
+            "deformity": 19606,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Earth/Earth.cfg:439"
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "Surface": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Enceladus": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Europa": {
+      "group": "Jupiter",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 7500,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Jupiter/Europa.cfg:182",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Flat": {
+      "group": "Shared",
+      "maps": {
+        "_NRM": {
+          "native": [
+            64,
+            32
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Ganymede": {
+      "group": "Jupiter",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 20000,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Jupiter/Ganymede.cfg:197",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Iapetus": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Io": {
+      "group": "Jupiter",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 17500,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Jupiter/Io.cfg:191",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Jupiter": {
+      "group": "Jupiter",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Mars": {
+      "group": "Mars",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "R16",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 29442,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Mars/Mars.cfg:416",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Mercury": {
+      "group": "Mercury",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 20578,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Mercury/Mercury.cfg:209",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Mimas": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Miranda": {
+      "group": "Uranus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": -8000,
+            "deformity": 20150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Uranus/Miranda.cfg:191",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Moon": {
+      "group": "Earth",
+      "maps": {
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "install": ".",
+          "todo": [
+            "source"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "install": ".",
+          "todo": [
+            "source"
+          ]
+        },
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "R16",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 19905.8,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Earth/Moon.cfg:271"
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        }
+      }
+    },
+    "Neptune": {
+      "group": "Neptune",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Oberon": {
+      "group": "Uranus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 6150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Uranus/Oberon.cfg:179",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Phobos": {
+      "group": "Mars",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 6150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Mars/Phobos.cfg:200",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Pluto": {
+      "group": "Pluto",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 10264,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Pluto/Pluto.cfg:294",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Rhea": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Saturn": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Ring": {
+          "native": [
+            512,
+            4
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Tethys": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Titan": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": -50,
+            "deformity": 1000,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Saturn/Titan.cfg:356",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Titania": {
+      "group": "Uranus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            512,
+            256
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 6150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Uranus/Titania.cfg:198",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Triton": {
+      "group": "Neptune",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Umbriel": {
+      "group": "Uranus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            512,
+            256
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 6150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Uranus/Umbriel.cfg:185",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Uranus": {
+      "group": "Uranus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Venus": {
+      "group": "Venus",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 11000,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Venus/Venus.cfg:391",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    },
+    "Vesta": {
+      "group": "Belt",
+      "maps": {
+        "Biomes": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Color": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        },
+        "Height": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": 0,
+            "deformity": 53150,
+            "node": "VertexHeightMap",
+            "source": "GameData/RealSolarSystem/RSSKopernicus/Vesta/Vesta.cfg:236",
+            "scaleDeformityByRadius": false
+          },
+          "topoconv": null,
+          "todo": [
+            "source",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            2048,
+            1024
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": null,
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": [
+            "source"
+          ]
+        }
+      }
+    }
+  },
+  "knownDeviations": [
+    {
+      "map": "ArielColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "ArielColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "ArielColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "ArielHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "ArielHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "ArielHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "Callisto_NRM",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "CallistoColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "Ceres_NRM",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "CeresColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "Charon_NRM",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "CharonColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "DeimosColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "DeimosColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "Earth_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "EarthColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "EarthHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (R16, none mips, 256.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "EarthHeight",
+      "set": "4096",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "EarthHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "absent from the checkout; only the 16384 release asset is consulted for recovery, so a file shipped solely in a smaller pack looks missing here"
+    },
+    {
+      "map": "EarthSurface",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "EnceladusColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "GanymedeColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "GanymedeColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "GanymedeColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "IapetusColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "IapetusColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "IoColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "IoColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "IoColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "Jupiter_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "Mars_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "Mars_NRM",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "MarsColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "MarsColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "MarsColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "MarsHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (R16, none mips, 256.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "Mercury_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "Mercury_NRM",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "Mercury_NRM",
+      "set": "8192",
+      "kind": "size",
+      "expected": 8192,
+      "actual": 4096,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "MercuryColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "MercuryColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "MercuryColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "MercuryColor",
+      "set": "8192",
+      "kind": "size",
+      "expected": 8192,
+      "actual": 4096,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "MirandaColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "MirandaColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "MirandaColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "MirandaHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "MirandaHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "MirandaHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "Moon_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "MoonColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "MoonColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "MoonHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (R16, none mips, 256.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "NeptuneColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "NeptuneColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "NeptuneColor",
+      "set": "4096",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 2048,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "NeptuneColor",
+      "set": "8192",
+      "kind": "size",
+      "expected": 8192,
+      "actual": 2048,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "OberonColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "OberonColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "OberonColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "OberonHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "OberonHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "OberonHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "PhobosColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "PhobosColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "RheaColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "RheaColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "SaturnColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "SaturnColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "SaturnColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "SaturnColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "SaturnColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TethysColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "TethysColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "TitaniaColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TritonColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "TritonColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "TritonColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "TritonColor",
+      "set": "8192",
+      "kind": "size",
+      "expected": 8192,
+      "actual": 4096,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "UmbrielColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UranusColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "UranusColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "UranusColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "UranusColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "Venus_NRM",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "Venus_NRM",
+      "set": "8192",
+      "kind": "size",
+      "expected": 8192,
+      "actual": 4096,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "VenusColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "VenusColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "VenusColor",
+      "set": "16384",
+      "kind": "mips",
+      "expected": "full",
+      "actual": "none",
+      "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "VenusColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "VenusColor",
+      "set": "8192",
+      "kind": "size",
+      "expected": 8192,
+      "actual": 4096,
+      "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "VenusColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "VestaColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "VestaColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "VestaColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    }
+  ]
+}

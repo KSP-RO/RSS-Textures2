@@ -1,0 +1,78 @@
+name: Build
+
+# Replaces .travis.yml, which points at travis-ci.org (shut down) with an
+# encrypted key that no longer works, and bin/build.pl, which only knows the
+# 2048/4096/8192 sets and cannot produce the 16384 pack at all.
+#
+# PROTOTYPE. Packaging only: assets are taken from the per-set directories
+# as-is, with no texture conversion. See tools/build/README.md.
+
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # Cheap gate on every PR: the manifest must be internally consistent and the
+  # checkout must not have drifted from it in ways nobody recorded.
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify checkout against manifest
+        run: node tools/manifest/verify.mjs --root .
+      - name: Report what would be packaged
+        run: node tools/build/build.mjs --all --dry-run
+
+  # One job per set. Splitting the matrix keeps each runner's disk use down:
+  # a full checkout is ~3.4 GB of textures on top of a ~2.9 GB clone, and a
+  # hosted runner has roughly 14 GB free.
+  build:
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        set: ['4096', '8192', '16384']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Show available disk
+        run: df -h .
+
+      - name: Build ${{ matrix.set }}
+        run: node tools/build/build.mjs --set ${{ matrix.set }} --out dist
+
+      # Proves the archives are readable and that what comes out of them still
+      # matches the manifest - the same check run locally in tools/build/README.md.
+      - name: Verify built assets
+        run: |
+          mkdir -p check/extract
+          for z in dist/*.zip; do unzip -oq "$z" -d check/extract; done
+          mkdir -p check/root
+          mv check/extract/GameData/RSS-Textures "check/root/${{ matrix.set }}"
+          node tools/manifest/verify.mjs --root check/root --sets ${{ matrix.set }}
+          rm -rf check
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          name: assets-${{ matrix.set }}
+          path: dist/*.zip
+          retention-days: 5
+
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${GITHUB_REF_NAME}" dist/*.zip --clobber

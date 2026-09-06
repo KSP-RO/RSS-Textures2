@@ -12,7 +12,7 @@
 // Edit manifest/textures.json by hand from here on.
 
 import { readFile, writeFile } from 'node:fs/promises';
-import { splitMapName } from './scan.mjs';
+import { splitMapName } from './lib/mapname.mjs';
 import { SETS } from './lib/sets.mjs';
 
 // Release packaging groups. Sizes in the header comment are compressed bytes

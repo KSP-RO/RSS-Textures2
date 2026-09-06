@@ -20,8 +20,9 @@
 // recorded in the manifest's knownDeviations list are reported as warnings, so
 // the backlog stays visible without making CI permanently red.
 
-import { readFile } from 'node:fs/promises';
+import { readFile, rm } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { expectedFileSize, fullChainLevels } from './lib/dds.mjs';
@@ -56,13 +57,32 @@ function parseArgs(argv) {
 }
 
 /** Run scan.mjs into a temp model rather than duplicating its walk logic. */
-async function scanTree(root, release) {
-  const tmp = join(process.env.TEMP || process.env.TMPDIR || '.', 'rss-verify-scan.json');
+async function scanTree(root, release, sets) {
+  // os.tmpdir() rather than %TEMP%/$TMPDIR: neither is reliably set on a CI
+  // runner, and the old fallback to "." wrote into whatever the cwd happened
+  // to be. The pid keeps concurrent verifies from colliding.
+  const tmp = join(tmpdir(), 'rss-verify-scan-' + process.pid + '.json');
   const args = [join(here, 'scan.mjs'), '--root', root, '--out', tmp, '--quiet', '--alpha'];
   if (release) args.push('--release', release);
+  if (sets) args.push('--sets', sets.join(','));
+
   const r = spawnSync(process.execPath, args, { encoding: 'utf8' });
-  if (r.status !== 0) throw new Error('scan failed: ' + (r.stderr || r.stdout));
-  return JSON.parse(await readFile(tmp, 'utf8'));
+  if (r.error) throw new Error('could not run scan.mjs: ' + r.error.message);
+  if (r.status !== 0) throw new Error('scan.mjs exited ' + r.status + ': ' + (r.stderr || r.stdout || '(no output)'));
+
+  try {
+    return JSON.parse(await readFile(tmp, 'utf8'));
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+    // scan.mjs reported success but produced nothing, so the failure is in the
+    // scanner, not here. Say so rather than surfacing a bare ENOENT.
+    throw new Error(
+      'scan.mjs exited 0 but wrote no output to ' + tmp + '.\n' +
+      'stdout: ' + (r.stdout || '(empty)') + '\nstderr: ' + (r.stderr || '(empty)'),
+    );
+  } finally {
+    await rm(tmp, { force: true });
+  }
 }
 
 /** Structural checks on the manifest itself, independent of any texture tree. */
@@ -139,7 +159,7 @@ async function main() {
   const manifest = JSON.parse(await readFile(opts.manifest, 'utf8'));
   const observed = opts.observed
     ? JSON.parse(await readFile(opts.observed, 'utf8'))
-    : await scanTree(opts.root, opts.release);
+    : await scanTree(opts.root, opts.release, opts.sets);
 
   const structural = validateManifest(manifest);
   const known = new Set(manifest.knownDeviations.map(deviationKey));

@@ -26,24 +26,9 @@ import {
 } from './lib/dds.mjs';
 import { readZipDirectory, findReleaseAsset } from './lib/zip.mjs';
 import { SETS, parseSets } from './lib/sets.mjs';
-
-export { SETS };
+import { splitMapName } from './lib/mapname.mjs';
 
 const REPO = 'KSP-RO/RSS-Textures';
-
-// Map filename suffix -> kind. Order matters: "_NRM" must be tested before the
-// bare-name fallback, and "Surface" before "Color" would be wrong (they are
-// distinct kinds), so we match on exact suffix.
-const KIND_SUFFIXES = ['Biomes', 'Color', 'Height', 'Surface', 'Ring', '_NRM'];
-
-export function splitMapName(base) {
-  for (const suffix of KIND_SUFFIXES) {
-    if (base.endsWith(suffix) && base.length > suffix.length) {
-      return { body: base.slice(0, base.length - suffix.length), kind: suffix };
-    }
-  }
-  return { body: base, kind: 'Other' };
-}
 
 function parseArgs(argv) {
   const opts = {
@@ -237,6 +222,4 @@ async function main() {
   }
 }
 
-if (import.meta.url === 'file:///' + process.argv[1].replace(/\\/g, '/')) {
-  main().catch((err) => { console.error(err.message); process.exit(1); });
-}
+main().catch((err) => { console.error(err.message); process.exit(1); });

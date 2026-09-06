@@ -1,0 +1,4532 @@
+{
+  "generatedAt": "2026-09-06T21:45:57.910Z",
+  "root": "\\source\\repos\\KSP-RSS-Textures",
+  "setNames": [
+    "4096",
+    "8192",
+    "16384"
+  ],
+  "release": {
+    "tag": "v18.6.1",
+    "assetBytes": 1937471967,
+    "recovered": [
+      "EarthColor",
+      "EarthHeight",
+      "EarthSurface",
+      "Earth_NRM",
+      "Jupiter_NRM",
+      "MarsColor",
+      "MarsHeight",
+      "Mars_NRM",
+      "MercuryColor",
+      "Mercury_NRM",
+      "MoonColor",
+      "MoonHeight",
+      "Moon_NRM",
+      "SaturnColor",
+      "TritonColor",
+      "UranusColor",
+      "VenusColor"
+    ],
+    "unidentified": []
+  },
+  "maps": {
+    "EarthColor": {
+      "body": "Earth",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": ".",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "ee431fef0e479ba5f9a282524e499dc9f5ef86f0fb94c556e2a993aab3d907c8"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": ".",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "573b714f7630448bc3b348f16376b6f2168717ffafc17e724118743ed7e7720d"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 15,
+          "install": ".",
+          "bytes": 178957136,
+          "zipBytes": 28196450,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "Earth_NRM": {
+      "body": "Earth",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": ".",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "fb92add5e753049ab1e95992d90f57f5c256c9d3594d0a4ad6334b6de5a6cdeb"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": ".",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "fd660570496394c75f1f73303643adbeecde69cdd653843e4232052ff97ea438"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 15,
+          "install": ".",
+          "bytes": 178957136,
+          "zipBytes": 11612235,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "MoonColor": {
+      "body": "Moon",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": ".",
+          "bytes": 5592552,
+          "sha256": "4ba6eb99c2bb62ffce7432fee3ba401d8d7f721e67afd24cbe66961d9f64c47e"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": ".",
+          "bytes": 22369768,
+          "sha256": "4b4d6f3d3176a9ab1f32b3ce6bfc0dcbc82800dc523fa997a82882021c79d124"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 15,
+          "install": ".",
+          "bytes": 178957136,
+          "zipBytes": 61457584,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "Moon_NRM": {
+      "body": "Moon",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": ".",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "f324c8aef675419f8f5adea477e66ba0278b558625d845001d617e10ea9ab7d9"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": ".",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "cce00cb5943b825b696b647f08d78ba2a0c6165ca486417070debf9fc78facb4"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 15,
+          "install": ".",
+          "bytes": 178957136,
+          "zipBytes": 108969686,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "ArielBiomes": {
+      "body": "Ariel",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "31a2f1da0273b42f01a52baf1061ca89e4ccb50dbae77003f71d51f2c696bc19"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "31a2f1da0273b42f01a52baf1061ca89e4ccb50dbae77003f71d51f2c696bc19"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "31a2f1da0273b42f01a52baf1061ca89e4ccb50dbae77003f71d51f2c696bc19"
+        }
+      }
+    },
+    "ArielColor": {
+      "body": "Ariel",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "7173b7ba78da56bc687c35d44562981769c9b8b28427a997aa839d56346dbc72"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "7173b7ba78da56bc687c35d44562981769c9b8b28427a997aa839d56346dbc72"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "7173b7ba78da56bc687c35d44562981769c9b8b28427a997aa839d56346dbc72"
+        }
+      }
+    },
+    "ArielHeight": {
+      "body": "Ariel",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "4bc7de7552247f02a81327f98c8ae6b934f12bcdc8b52e7222f981fd7f1bfc33"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "4bc7de7552247f02a81327f98c8ae6b934f12bcdc8b52e7222f981fd7f1bfc33"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "4bc7de7552247f02a81327f98c8ae6b934f12bcdc8b52e7222f981fd7f1bfc33"
+        }
+      }
+    },
+    "Ariel_NRM": {
+      "body": "Ariel",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "33b600b92300300f8c2513970dd405bf0a6402f74a9b4527bc4ae7bb8a368f08"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "33b600b92300300f8c2513970dd405bf0a6402f74a9b4527bc4ae7bb8a368f08"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "33b600b92300300f8c2513970dd405bf0a6402f74a9b4527bc4ae7bb8a368f08"
+        }
+      }
+    },
+    "CallistoBiomes": {
+      "body": "Callisto",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "8eaae309ada228c8794f09e5717eaf629374f5c1aa1f022697c05008558d683a"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "8eaae309ada228c8794f09e5717eaf629374f5c1aa1f022697c05008558d683a"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "8eaae309ada228c8794f09e5717eaf629374f5c1aa1f022697c05008558d683a"
+        }
+      }
+    },
+    "CallistoColor": {
+      "body": "Callisto",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "e931cc8ccb9b1e44a10742719e581bf031295dc74db67af0a7b3f84edacd8956"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "e931cc8ccb9b1e44a10742719e581bf031295dc74db67af0a7b3f84edacd8956"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": false,
+          "sha256": "aac36b158891554171f1e8dc5170a750cf2205b6f2dabd3cb8d2c2669431b5b1"
+        }
+      }
+    },
+    "CallistoHeight": {
+      "body": "Callisto",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "7ff266d765942a182ae3bebe0bb3f28e56e2f63a10bd73c767784b8f6d403266"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "7ff266d765942a182ae3bebe0bb3f28e56e2f63a10bd73c767784b8f6d403266"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "7ff266d765942a182ae3bebe0bb3f28e56e2f63a10bd73c767784b8f6d403266"
+        }
+      }
+    },
+    "Callisto_NRM": {
+      "body": "Callisto",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "5a0b4ad55e2d0ed80378e95f7e611ad26a0b2455bd233eca3a386d433dea5863"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "5a0b4ad55e2d0ed80378e95f7e611ad26a0b2455bd233eca3a386d433dea5863"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "5c70487819a6567e3cdc475e5a209a6ff426e88e265b3955ac811f4884d2e465"
+        }
+      }
+    },
+    "CeresBiomes": {
+      "body": "Ceres",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "b718b65745e795a9c6dda272a3a5732061f729e8fc90acc29b5282b4e2b152aa"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "b718b65745e795a9c6dda272a3a5732061f729e8fc90acc29b5282b4e2b152aa"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "b718b65745e795a9c6dda272a3a5732061f729e8fc90acc29b5282b4e2b152aa"
+        }
+      }
+    },
+    "CeresColor": {
+      "body": "Ceres",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "1c801e95cb1f2bc88f1870780a8925dd684cb90ee68ef5b5a82009269a23db75"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "1c801e95cb1f2bc88f1870780a8925dd684cb90ee68ef5b5a82009269a23db75"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 4194432,
+          "sha256": "677f304bf75cd73c599afb93281728c8b4a030f15c82c7599c3fe63a405d142f"
+        }
+      }
+    },
+    "CeresHeight": {
+      "body": "Ceres",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "5a0315a425bbd78dd4d46dfe36e023de13e0112a73375cee8e8de5ecd0ab872e"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "5a0315a425bbd78dd4d46dfe36e023de13e0112a73375cee8e8de5ecd0ab872e"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "5a0315a425bbd78dd4d46dfe36e023de13e0112a73375cee8e8de5ecd0ab872e"
+        }
+      }
+    },
+    "Ceres_NRM": {
+      "body": "Ceres",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "33197d8d82b4c87529af140963239b9f3f75a03b1130e2c8cd1fd05599df88b7"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "33197d8d82b4c87529af140963239b9f3f75a03b1130e2c8cd1fd05599df88b7"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "ad9f5cdfb84ce5c1e4db335754f80542de1321ba2fb4906bbc03527b2bbef765"
+        }
+      }
+    },
+    "CharonBiomes": {
+      "body": "Charon",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "f79e6f79e060b6e1344d27b554d7c4bb0cf9791d59c79a9588f58f6ba3f50e2a"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "f79e6f79e060b6e1344d27b554d7c4bb0cf9791d59c79a9588f58f6ba3f50e2a"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "f79e6f79e060b6e1344d27b554d7c4bb0cf9791d59c79a9588f58f6ba3f50e2a"
+        }
+      }
+    },
+    "CharonColor": {
+      "body": "Charon",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "81d751c6b5bb5df7166798c0a30de269495c928b1fb839fbe7cbbf0922a0331a"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "9facabc6879ce77441d681ee14e514f81a3a792db648d0b42c9421391d576500"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 33554560,
+          "alphaOpaque": false,
+          "sha256": "8747723b235f1c6bbbea7c9227310f370fd118c62aa63cf109082c39d399f4ab"
+        }
+      }
+    },
+    "CharonHeight": {
+      "body": "Charon",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "4dcaa1b07afdfaefe8f4393665c56f84ee508eb57965256932c595ed83a37048"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "4dcaa1b07afdfaefe8f4393665c56f84ee508eb57965256932c595ed83a37048"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "4dcaa1b07afdfaefe8f4393665c56f84ee508eb57965256932c595ed83a37048"
+        }
+      }
+    },
+    "Charon_NRM": {
+      "body": "Charon",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "1bca2073501a029db956a81fa931b9011196f5658377bbf37b0a11a35efc4124"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "858f6d12ab9b53030630e52ecd733c6fb5ec2bc967a2c50e02dfbc957324f798"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 33554560,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "8cac50a0223b46405659249b10d97295b7c5504b6b4109afefba2c4954221926"
+        }
+      }
+    },
+    "DeimosBiomes": {
+      "body": "Deimos",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "f762605c69033dbcb8cf603b90bac4f0a0d2699c168eb735653d63a2b5790165"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "f762605c69033dbcb8cf603b90bac4f0a0d2699c168eb735653d63a2b5790165"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "f762605c69033dbcb8cf603b90bac4f0a0d2699c168eb735653d63a2b5790165"
+        }
+      }
+    },
+    "DeimosColor": {
+      "body": "Deimos",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 1398248,
+          "sha256": "6343968615505bcc9551defc8c273708523f373890ce7efbde690d7f4bd72a2b"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 1398248,
+          "sha256": "6343968615505bcc9551defc8c273708523f373890ce7efbde690d7f4bd72a2b"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "alphaOpaque": true,
+          "sha256": "05e368c5d6e176c7ea817a55fc64eb1af71a819815c583140811df13f708c2d0"
+        }
+      }
+    },
+    "DeimosHeight": {
+      "body": "Deimos",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "f8b65a279cc307a2c77c0cafc25c318085a70621732c0448f9a208634326afee"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "f8b65a279cc307a2c77c0cafc25c318085a70621732c0448f9a208634326afee"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "f8b65a279cc307a2c77c0cafc25c318085a70621732c0448f9a208634326afee"
+        }
+      }
+    },
+    "Deimos_NRM": {
+      "body": "Deimos",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "584e2937252e7f52101c775cb27c30225cf66804e04263d6f3c2903818aaec68"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "584e2937252e7f52101c775cb27c30225cf66804e04263d6f3c2903818aaec68"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "a5ca047ddb229dd5e622eacf929d1711f88e1ae897430319da8466d853085644"
+        }
+      }
+    },
+    "DioneBiomes": {
+      "body": "Dione",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "0bdb1b9de178bb867fe7223ca4d07932b69754150a1fdc0e7926d6c9c2db9931"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "0bdb1b9de178bb867fe7223ca4d07932b69754150a1fdc0e7926d6c9c2db9931"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "0bdb1b9de178bb867fe7223ca4d07932b69754150a1fdc0e7926d6c9c2db9931"
+        }
+      }
+    },
+    "DioneColor": {
+      "body": "Dione",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "0a3b88a42e0d452b1d1d561e0734a8d11171b039c636c16be5ca5ee304bff54e"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 22369768,
+          "sha256": "689ddd834ff66c480dbcae5654015c9cfa56410e765049ba38ec9276edcf39b5"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 22369768,
+          "sha256": "84b0d9b3f61e2ade774b7fe59d16e5d0a83ce1fb362f89d20c82420a1f8f9754"
+        }
+      }
+    },
+    "EarthBiomes": {
+      "body": "Earth",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "e80badb20489fc2f956ea8e7a9f876457fe973c189faa7afd501d5769dbb6fcb"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "e80badb20489fc2f956ea8e7a9f876457fe973c189faa7afd501d5769dbb6fcb"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "e80badb20489fc2f956ea8e7a9f876457fe973c189faa7afd501d5769dbb6fcb"
+        }
+      }
+    },
+    "EarthHeight": {
+      "body": "Earth",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 8192,
+          "height": 4096,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 67108992,
+          "sha256": "2c6f31656d399ff9b7cd93d1e9ed37a6dfbb13e35d4c3e964c50e61f4913536d"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 268435584,
+          "zipBytes": 187842103,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "EarthSurface": {
+      "body": "Earth",
+      "kind": "Surface",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "127942ce7215f9e567fed06679d95d467d3bde5c8ba5db7569e93b6a9f772925"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "4a333d774d762f195e97a59d5b16d9ef1bf79739e8c3114b0b90f01af357c84d"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 15,
+          "install": "PluginData",
+          "bytes": 178957136,
+          "zipBytes": 49903584,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "EnceladusBiomes": {
+      "body": "Enceladus",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "1f02d875369ca3cc27b9676b9e5845fc2d91c7c36901966bd85fb68adee98309"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "1f02d875369ca3cc27b9676b9e5845fc2d91c7c36901966bd85fb68adee98309"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "1f02d875369ca3cc27b9676b9e5845fc2d91c7c36901966bd85fb68adee98309"
+        }
+      }
+    },
+    "EnceladusColor": {
+      "body": "Enceladus",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "39936c67701065132f0cf918bf1eb0c2218d70f1d2bf155c701ae3f9100d3837"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 22369768,
+          "sha256": "9109df44ad9dd7331f6d21ba0649c4d5b59f9c539498f1db8a92faf71ecb7b3e"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": true,
+          "sha256": "b4238ef38b7e9bc6076ddf1ce727eeb97270814111a6940d8e578fb437578deb"
+        }
+      }
+    },
+    "EuropaBiomes": {
+      "body": "Europa",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "576e1a1bdc6020a0d39eca975224746a6625a9cfef4a8cb8d775fa8abf7b0703"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "576e1a1bdc6020a0d39eca975224746a6625a9cfef4a8cb8d775fa8abf7b0703"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "576e1a1bdc6020a0d39eca975224746a6625a9cfef4a8cb8d775fa8abf7b0703"
+        }
+      }
+    },
+    "EuropaColor": {
+      "body": "Europa",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "f2598aa1714d7867c07f977dbb146c19e0e341f139bc7975871dc38357a76a03"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "2bd0594a9da2c65e74994ee3cc39520bf28eec99fef486dfaf093eca175e0e0d"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "2a8ea1c4b066fe6e8944a67f4b25f5eda8eac46cb26cbea9672584765e832a79"
+        }
+      }
+    },
+    "EuropaHeight": {
+      "body": "Europa",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "de6b8101629498b17677b3ebb768630716a6a4362ec06dadf5649053045aa125"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "de6b8101629498b17677b3ebb768630716a6a4362ec06dadf5649053045aa125"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "de6b8101629498b17677b3ebb768630716a6a4362ec06dadf5649053045aa125"
+        }
+      }
+    },
+    "Europa_NRM": {
+      "body": "Europa",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "71787f2205928f404f704f8f585aeaa141cd9b95e5faa5b748ce5b26869553db"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "8bbc6c80f7cc986700d5361ef0f98a332ca492f4c6bd97145423dc23ea5145e4"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "0ac66c133a88b82bd5ca0ed9d8ee3c88f85f606ffe0a5c8a73493a0b617f067f"
+        }
+      }
+    },
+    "Flat_NRM": {
+      "body": "Flat",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 64,
+          "height": 32,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 7,
+          "declaredLevels": 7,
+          "install": "PluginData",
+          "bytes": 2896,
+          "alphaOpaque": false,
+          "nrmFiller": "mixed",
+          "sha256": "7e921233003fa12914ef60e20dcd7a8724d344010b24eb3001fd5ccd30560393"
+        },
+        "8192": {
+          "width": 64,
+          "height": 32,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 7,
+          "declaredLevels": 7,
+          "install": "PluginData",
+          "bytes": 2896,
+          "alphaOpaque": false,
+          "nrmFiller": "mixed",
+          "sha256": "7e921233003fa12914ef60e20dcd7a8724d344010b24eb3001fd5ccd30560393"
+        },
+        "16384": {
+          "width": 64,
+          "height": 32,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 7,
+          "declaredLevels": 7,
+          "install": "PluginData",
+          "bytes": 2896,
+          "alphaOpaque": false,
+          "nrmFiller": "mixed",
+          "sha256": "7e921233003fa12914ef60e20dcd7a8724d344010b24eb3001fd5ccd30560393"
+        }
+      }
+    },
+    "GanymedeBiomes": {
+      "body": "Ganymede",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "ae118b4dabfcc9c9e1b89ef78235551ddd48929424cc15f995027572201a151b"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "ae118b4dabfcc9c9e1b89ef78235551ddd48929424cc15f995027572201a151b"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "ae118b4dabfcc9c9e1b89ef78235551ddd48929424cc15f995027572201a151b"
+        }
+      }
+    },
+    "GanymedeColor": {
+      "body": "Ganymede",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "ca36cba480ecc707905b125716b9a87cb6855786f0d380002c4ecc8cccab414b"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "ca36cba480ecc707905b125716b9a87cb6855786f0d380002c4ecc8cccab414b"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "ca36cba480ecc707905b125716b9a87cb6855786f0d380002c4ecc8cccab414b"
+        }
+      }
+    },
+    "GanymedeHeight": {
+      "body": "Ganymede",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "611a0936ddc8d3c0f70535cf5486ebe8546a40c1eca44774589960606f204f70"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "611a0936ddc8d3c0f70535cf5486ebe8546a40c1eca44774589960606f204f70"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "611a0936ddc8d3c0f70535cf5486ebe8546a40c1eca44774589960606f204f70"
+        }
+      }
+    },
+    "Ganymede_NRM": {
+      "body": "Ganymede",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "358a06d698742a262ea61dee7b678594476e1839e8adbd77f59f7cc6287c998b"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "358a06d698742a262ea61dee7b678594476e1839e8adbd77f59f7cc6287c998b"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "eae2b40e3be47a5654bfeebd5715172ba972b14c4f35ad529e9de4c8dabea896"
+        }
+      }
+    },
+    "IapetusBiomes": {
+      "body": "Iapetus",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "93d56138137d436655b682bcc69954bf737c8fdde8e39eb873e183bd2ab3e0e9"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "93d56138137d436655b682bcc69954bf737c8fdde8e39eb873e183bd2ab3e0e9"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "93d56138137d436655b682bcc69954bf737c8fdde8e39eb873e183bd2ab3e0e9"
+        }
+      }
+    },
+    "IapetusColor": {
+      "body": "Iapetus",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "1ca460ef9ce45308d6eed59530686b1020ef26228c87d140f5a7bd95be94f0d8"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "1ca460ef9ce45308d6eed59530686b1020ef26228c87d140f5a7bd95be94f0d8"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "e4195163ba5569af188423c2512f39ea991c52708bcb143bff773d76055743ff"
+        }
+      }
+    },
+    "IoBiomes": {
+      "body": "Io",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "864b7b4e9b33be78ef548b021499bc0053e49608b5d529d06e2fbd2d4b7e145e"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "864b7b4e9b33be78ef548b021499bc0053e49608b5d529d06e2fbd2d4b7e145e"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "864b7b4e9b33be78ef548b021499bc0053e49608b5d529d06e2fbd2d4b7e145e"
+        }
+      }
+    },
+    "IoColor": {
+      "body": "Io",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "002f5ebe8270c6f78b67ab5723cbe38ff2c35d85329b60fc8c1e3d797599be83"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "002f5ebe8270c6f78b67ab5723cbe38ff2c35d85329b60fc8c1e3d797599be83"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "002f5ebe8270c6f78b67ab5723cbe38ff2c35d85329b60fc8c1e3d797599be83"
+        }
+      }
+    },
+    "IoHeight": {
+      "body": "Io",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "a9e1f4092fcc65fc0f80d2bd933c789ea94b7e55e7358cda9a11d79184767cfb"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "a9e1f4092fcc65fc0f80d2bd933c789ea94b7e55e7358cda9a11d79184767cfb"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "a9e1f4092fcc65fc0f80d2bd933c789ea94b7e55e7358cda9a11d79184767cfb"
+        }
+      }
+    },
+    "Io_NRM": {
+      "body": "Io",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "b01c9b0bc9ef820ae902b99f9b69049aad5b43a71128f86e7ec0b1eaaa846f64"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "c25d68264859cadb6d4cce6dbf9548514b6f03aca0a8be7d0821e0e95b058636"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "c486da64e25b9bce5d91e4cd0f029a8cd7ca4b84e60b61a2b494dc4ce318e661"
+        }
+      }
+    },
+    "JupiterBiomes": {
+      "body": "Jupiter",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "86edba9a6e72535177e21208449ff4b1ceee16c30fe941bb080146f268eada45"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "86edba9a6e72535177e21208449ff4b1ceee16c30fe941bb080146f268eada45"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "86edba9a6e72535177e21208449ff4b1ceee16c30fe941bb080146f268eada45"
+        }
+      }
+    },
+    "JupiterColor": {
+      "body": "Jupiter",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "28e711b753ad417c0d25a7881c8a647c832edf4c143221f85f9527e7b0ab4399"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 22369768,
+          "sha256": "a00ddc508d898392dcd36a26bb8a580f163d9227f3b4bc8577ed4c36f15bdc04"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 15,
+          "declaredLevels": 15,
+          "install": "PluginData",
+          "bytes": 89478632,
+          "sha256": "9727d0d682a3ddf2a6eb7dd2991fadf4affac0c271667e2d6213b229650ee97d"
+        }
+      }
+    },
+    "Jupiter_NRM": {
+      "body": "Jupiter",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "91fc942e932e22a0930f1b6f2f74e4f9bb35021604b96ed74aba140f6396dbb8"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "9f77ab0582d7d4087f8d199b4fe84543e4f158375db97f3c3efa53cc6a2c2dc5"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 15,
+          "install": "PluginData",
+          "bytes": 178957136,
+          "zipBytes": 124921285,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "MarsBiomes": {
+      "body": "Mars",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "785ee66a066e5004f36568b9012f3133882eab953b1298294842037e8ff46ce8"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "785ee66a066e5004f36568b9012f3133882eab953b1298294842037e8ff46ce8"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "785ee66a066e5004f36568b9012f3133882eab953b1298294842037e8ff46ce8"
+        }
+      }
+    },
+    "MarsColor": {
+      "body": "Mars",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "96d1dddd789969dd74119ad80e2082317afbcd4e6ac54f3f2df5042c0080e8e1"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 22369768,
+          "sha256": "6ac81f4f08c0121f974395c3c31f0c8ed36b3c7d08571cca20a54c167dea96e7"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 36607849,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "MarsHeight": {
+      "body": "Mars",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 16777344,
+          "sha256": "5e7da7d39927143622c1f5c35ab1f0ad45a3804d36a4dd0399485a08b4d9404b"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 67108992,
+          "sha256": "069d186dfb58e350bc016e62e122319435b3ba4ce5dc79a7075ce24340ba0358"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 268435584,
+          "zipBytes": 188186007,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "Mars_NRM": {
+      "body": "Mars",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "28881f8fcb6027f5ccc9ab12631f51bc0095b4191b89031f929757b16ef47462"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "8a5eb73307bdb1e4cb5064e809cf4223539b5e93cc2b5cd899ba6f7e50ee308c"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 90914614,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "MercuryBiomes": {
+      "body": "Mercury",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "564db6cad5ec2c490967d10afc1af867371378381344a8b34633840679adf173"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "564db6cad5ec2c490967d10afc1af867371378381344a8b34633840679adf173"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "564db6cad5ec2c490967d10afc1af867371378381344a8b34633840679adf173"
+        }
+      }
+    },
+    "MercuryColor": {
+      "body": "Mercury",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "8d59bfc5cb2fbc1da82f75849a237d4f7dae74ed3d3c937728d497b8f9cc05a0"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "8d59bfc5cb2fbc1da82f75849a237d4f7dae74ed3d3c937728d497b8f9cc05a0"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 41523958,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "MercuryHeight": {
+      "body": "Mercury",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "72bd8acd207ed3958264efc95779e893a87f52f98c6c04b167bc4f9c9b384b33"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "72bd8acd207ed3958264efc95779e893a87f52f98c6c04b167bc4f9c9b384b33"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "72bd8acd207ed3958264efc95779e893a87f52f98c6c04b167bc4f9c9b384b33"
+        }
+      }
+    },
+    "Mercury_NRM": {
+      "body": "Mercury",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "f5ccc3d5a4f55cc161ab18ecb49e92e88e24f3f4afbf6a92c8fbca2f99a635fb"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "f5ccc3d5a4f55cc161ab18ecb49e92e88e24f3f4afbf6a92c8fbca2f99a635fb"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 71894458,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "MimasBiomes": {
+      "body": "Mimas",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "5844287a137eacd1a5d4358972ee76a5e1d08d24826f052bcc03441a1e84c8dc"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "5844287a137eacd1a5d4358972ee76a5e1d08d24826f052bcc03441a1e84c8dc"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "5844287a137eacd1a5d4358972ee76a5e1d08d24826f052bcc03441a1e84c8dc"
+        }
+      }
+    },
+    "MimasColor": {
+      "body": "Mimas",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "7cff814a67420533bcc7afa0e95825aaa11eaa8efac5f4a63ba64fccd39fecd3"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "7cff814a67420533bcc7afa0e95825aaa11eaa8efac5f4a63ba64fccd39fecd3"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "f377650a2449f2fd812f59416ae90d517cdc85cb557e3378a769fee794568ffa"
+        }
+      }
+    },
+    "MirandaBiomes": {
+      "body": "Miranda",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "97e966e26b7491449215f3ce066f661948c0dd51be06f764ddb79a299fc62bd1"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "97e966e26b7491449215f3ce066f661948c0dd51be06f764ddb79a299fc62bd1"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "97e966e26b7491449215f3ce066f661948c0dd51be06f764ddb79a299fc62bd1"
+        }
+      }
+    },
+    "MirandaColor": {
+      "body": "Miranda",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "e552590bf03d0d6bbadc47d4b64e2a53d3aa0c4e376a9491287623c87f394fd1"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "e552590bf03d0d6bbadc47d4b64e2a53d3aa0c4e376a9491287623c87f394fd1"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "e552590bf03d0d6bbadc47d4b64e2a53d3aa0c4e376a9491287623c87f394fd1"
+        }
+      }
+    },
+    "MirandaHeight": {
+      "body": "Miranda",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "294896c506270449268bf9e1501fed95498a356c45570ff043d2a5b2a9eab620"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "294896c506270449268bf9e1501fed95498a356c45570ff043d2a5b2a9eab620"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "294896c506270449268bf9e1501fed95498a356c45570ff043d2a5b2a9eab620"
+        }
+      }
+    },
+    "Miranda_NRM": {
+      "body": "Miranda",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "23d9ad3bd806d55db62c2bb01e70f698e77eb1835f01fa1620fdce647244d285"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "23d9ad3bd806d55db62c2bb01e70f698e77eb1835f01fa1620fdce647244d285"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "23d9ad3bd806d55db62c2bb01e70f698e77eb1835f01fa1620fdce647244d285"
+        }
+      }
+    },
+    "MoonBiomes": {
+      "body": "Moon",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "c7df52e3f3fdc26600fdd7ff724a5ceeb60df250705a1b4b4d7c1119cac48a91"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "c7df52e3f3fdc26600fdd7ff724a5ceeb60df250705a1b4b4d7c1119cac48a91"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "c7df52e3f3fdc26600fdd7ff724a5ceeb60df250705a1b4b4d7c1119cac48a91"
+        }
+      }
+    },
+    "MoonHeight": {
+      "body": "Moon",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 16777344,
+          "sha256": "cf2beb58a3d4857b7b68dcb55072e08f1ff33fdaa35b517a60296a83f2b365fb"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 67108992,
+          "sha256": "7e20bbb3236da9e0235000db68d87da0f61cdaa01ee44dd76d350c19061d8fcf"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "R16",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 268435584,
+          "zipBytes": 238274594,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "NeptuneBiomes": {
+      "body": "Neptune",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "96fec4c519ed03217dd627574e6cc788dd2a5697c7903beb6a6eb154c79a6c42"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "96fec4c519ed03217dd627574e6cc788dd2a5697c7903beb6a6eb154c79a6c42"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "96fec4c519ed03217dd627574e6cc788dd2a5697c7903beb6a6eb154c79a6c42"
+        }
+      }
+    },
+    "NeptuneColor": {
+      "body": "Neptune",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 1398248,
+          "sha256": "e9556f17f4a08d1829625f650bf28cd43dff971ab313bdf8ea052f2acfb4b91e"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 1398248,
+          "sha256": "e9556f17f4a08d1829625f650bf28cd43dff971ab313bdf8ea052f2acfb4b91e"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 33554560,
+          "alphaOpaque": true,
+          "sha256": "262877d7653dacb52e5987c6e0715efdb38caa179deedb4b73ae575d5767f58d"
+        }
+      }
+    },
+    "OberonBiomes": {
+      "body": "Oberon",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "1909167cdeb21a3d8f514680f904bf144ac6dd0e3af638663004e008fbceb321"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "1909167cdeb21a3d8f514680f904bf144ac6dd0e3af638663004e008fbceb321"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "1909167cdeb21a3d8f514680f904bf144ac6dd0e3af638663004e008fbceb321"
+        }
+      }
+    },
+    "OberonColor": {
+      "body": "Oberon",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "43225ce928618f5bde223deaee70df068c2a695fb0e5036dee6c4788121c46d8"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "43225ce928618f5bde223deaee70df068c2a695fb0e5036dee6c4788121c46d8"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "43225ce928618f5bde223deaee70df068c2a695fb0e5036dee6c4788121c46d8"
+        }
+      }
+    },
+    "OberonHeight": {
+      "body": "Oberon",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "076ac59d37283069b47dace9cc7665b1012a755cd535188af689874150f78a07"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "076ac59d37283069b47dace9cc7665b1012a755cd535188af689874150f78a07"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "076ac59d37283069b47dace9cc7665b1012a755cd535188af689874150f78a07"
+        }
+      }
+    },
+    "Oberon_NRM": {
+      "body": "Oberon",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "4c81b75b5c010b4e1721f224f5cfba338746734cd3d02a5b6d6afcf279b638d9"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "4c81b75b5c010b4e1721f224f5cfba338746734cd3d02a5b6d6afcf279b638d9"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "4c81b75b5c010b4e1721f224f5cfba338746734cd3d02a5b6d6afcf279b638d9"
+        }
+      }
+    },
+    "PhobosBiomes": {
+      "body": "Phobos",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "e0ea61be801f0ea029f624a70cbe116671d430711e29e73936639592788d0e8c"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "e0ea61be801f0ea029f624a70cbe116671d430711e29e73936639592788d0e8c"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "e0ea61be801f0ea029f624a70cbe116671d430711e29e73936639592788d0e8c"
+        }
+      }
+    },
+    "PhobosColor": {
+      "body": "Phobos",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 1398248,
+          "sha256": "8f36344e49d154da9bb93b4477f3214b385924bbdcf2fe88326c1dc32296c3f1"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 1398248,
+          "sha256": "8f36344e49d154da9bb93b4477f3214b385924bbdcf2fe88326c1dc32296c3f1"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "alphaOpaque": true,
+          "sha256": "ee77ccbe52eaf640129cbc01e69297d50b130b896254059c28606d314c6335c8"
+        }
+      }
+    },
+    "PhobosHeight": {
+      "body": "Phobos",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "25e1d4ba23c2aae8ae9a33a8c3038f16dcce92838bc93daf962bd1ba91f714be"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "25e1d4ba23c2aae8ae9a33a8c3038f16dcce92838bc93daf962bd1ba91f714be"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "25e1d4ba23c2aae8ae9a33a8c3038f16dcce92838bc93daf962bd1ba91f714be"
+        }
+      }
+    },
+    "Phobos_NRM": {
+      "body": "Phobos",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "047a519f740d56ed7e5358c053906073bac1ae3ad7e66a26b7a4e0d591981489"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "047a519f740d56ed7e5358c053906073bac1ae3ad7e66a26b7a4e0d591981489"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "047a519f740d56ed7e5358c053906073bac1ae3ad7e66a26b7a4e0d591981489"
+        }
+      }
+    },
+    "PlutoBiomes": {
+      "body": "Pluto",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "54cfaa4c005a516892807a69fe1943a79be6a5da0465aa362f3b749492117a4a"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "54cfaa4c005a516892807a69fe1943a79be6a5da0465aa362f3b749492117a4a"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "54cfaa4c005a516892807a69fe1943a79be6a5da0465aa362f3b749492117a4a"
+        }
+      }
+    },
+    "PlutoColor": {
+      "body": "Pluto",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "d420f6cfb120e911245927e88365beca6e4631b83eaf6b462dc12e8d8b9134d3"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "b2d02ae7d3b515ba98c42b2580713f8a8d9a619018716f4cfedeea5cdfa81f6e"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "b2d02ae7d3b515ba98c42b2580713f8a8d9a619018716f4cfedeea5cdfa81f6e"
+        }
+      }
+    },
+    "PlutoHeight": {
+      "body": "Pluto",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "83a4873c2c9b744623c2de4176fc3b41edb3c720636d197cd80c8c79984aecdb"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "83a4873c2c9b744623c2de4176fc3b41edb3c720636d197cd80c8c79984aecdb"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "83a4873c2c9b744623c2de4176fc3b41edb3c720636d197cd80c8c79984aecdb"
+        }
+      }
+    },
+    "Pluto_NRM": {
+      "body": "Pluto",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "df5fa5b88b0785b5678e89732df999c49d1d7ba8e3255963845f791a089cb858"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "83021ad15fe8e5fe7ed818351441d27d3d070e583ac37a77b710941c697d923b"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "6daa8d2905ab482d678b6fcda04f7b711fd0edbca85f4caaa844b0fe23f2bee0"
+        }
+      }
+    },
+    "RheaBiomes": {
+      "body": "Rhea",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "fe9025c1172dbcc57ef915eeb6b02078c7ee3e4e7f96da5c8d5bd5e8354b3942"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "fe9025c1172dbcc57ef915eeb6b02078c7ee3e4e7f96da5c8d5bd5e8354b3942"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "fe9025c1172dbcc57ef915eeb6b02078c7ee3e4e7f96da5c8d5bd5e8354b3942"
+        }
+      }
+    },
+    "RheaColor": {
+      "body": "Rhea",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "f71b020d4d4ffff058a15f4b585df8e0ba523fb1fb19563f917f646f2cf6346d"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "f71b020d4d4ffff058a15f4b585df8e0ba523fb1fb19563f917f646f2cf6346d"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "2a67261c4ae520ae16c60203a6e34d464ecff327c7920aa93bf8449efb803af0"
+        }
+      }
+    },
+    "SaturnBiomes": {
+      "body": "Saturn",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "2081bbe73ab38f7e5897e043b17b40211ac6114944b794ecdd243c3f61fdf6fb"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "2081bbe73ab38f7e5897e043b17b40211ac6114944b794ecdd243c3f61fdf6fb"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "2081bbe73ab38f7e5897e043b17b40211ac6114944b794ecdd243c3f61fdf6fb"
+        }
+      }
+    },
+    "SaturnColor": {
+      "body": "Saturn",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "cf6c4106ccd157220215eeaf244fb0de10aa8d669aaa2a3b4141b2b89856f4d7"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": true,
+          "sha256": "022552dab2fa324b5e6f1f7a58529dd832f9ae6c6dbd0a050e1d32499dfd4909"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 22264183,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "SaturnRing": {
+      "body": "Saturn",
+      "kind": "Ring",
+      "sets": {
+        "4096": {
+          "width": 512,
+          "height": 4,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 10,
+          "declaredLevels": 10,
+          "install": "PluginData",
+          "bytes": 4240,
+          "alphaOpaque": false,
+          "sha256": "24cc56cc32fff9e7c5cf6bfca6ce28938a40650df3144f1838bb4b1126a1a75a"
+        },
+        "8192": {
+          "width": 512,
+          "height": 4,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 10,
+          "declaredLevels": 10,
+          "install": "PluginData",
+          "bytes": 4240,
+          "alphaOpaque": false,
+          "sha256": "24cc56cc32fff9e7c5cf6bfca6ce28938a40650df3144f1838bb4b1126a1a75a"
+        },
+        "16384": {
+          "width": 512,
+          "height": 4,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 10,
+          "declaredLevels": 10,
+          "install": "PluginData",
+          "bytes": 4240,
+          "alphaOpaque": false,
+          "sha256": "24cc56cc32fff9e7c5cf6bfca6ce28938a40650df3144f1838bb4b1126a1a75a"
+        }
+      }
+    },
+    "TethysBiomes": {
+      "body": "Tethys",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "7bf792eed9ae1c2fd453016da61ac10133118426ab14b720d2a8ffce9b01ef7c"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "7bf792eed9ae1c2fd453016da61ac10133118426ab14b720d2a8ffce9b01ef7c"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "7bf792eed9ae1c2fd453016da61ac10133118426ab14b720d2a8ffce9b01ef7c"
+        }
+      }
+    },
+    "TethysColor": {
+      "body": "Tethys",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "7239f26ca43b092ecf81b59cf8c0a9580478352696b2d59a43113b28d105e7cb"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "7239f26ca43b092ecf81b59cf8c0a9580478352696b2d59a43113b28d105e7cb"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "913e4d6b97eeed80c21c61c623e44175d2dfc77af15c296201cbd1d576b92f31"
+        }
+      }
+    },
+    "TitanBiomes": {
+      "body": "Titan",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "434410cea2200bf13b1f7b78163586ce080ba4daf92072e6d47054cb527cfb3c"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "434410cea2200bf13b1f7b78163586ce080ba4daf92072e6d47054cb527cfb3c"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "434410cea2200bf13b1f7b78163586ce080ba4daf92072e6d47054cb527cfb3c"
+        }
+      }
+    },
+    "TitanColor": {
+      "body": "Titan",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "sha256": "f4a0eb698277b36a6ac52cb1d8bec5362d7f933fb045d52c298799c62b0f0c76"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "4fc1e6afe061130d2de94325da612b786b9420b081e0adddec9a36ddcd8ba529"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "sha256": "231f6a12475803f9f44bf00c638f6fe136bdd8590d5ee568d4a1100258893415"
+        }
+      }
+    },
+    "TitanHeight": {
+      "body": "Titan",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "6d944e3f2386519bce91d0050235629634911b82e3730204c9eccf45730e21ca"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 33554560,
+          "sha256": "2c01ceeb2d62bf249a0374ad718e67c3420bc863b1ae6d7118ce691f88808605"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 33554560,
+          "sha256": "2c01ceeb2d62bf249a0374ad718e67c3420bc863b1ae6d7118ce691f88808605"
+        }
+      }
+    },
+    "TitaniaBiomes": {
+      "body": "Titania",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 512,
+          "height": 256,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "30babaf585a81a3cb0921056d47cad44fd4354a8448442cdb8e778cb6e063d64"
+        },
+        "8192": {
+          "width": 512,
+          "height": 256,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "30babaf585a81a3cb0921056d47cad44fd4354a8448442cdb8e778cb6e063d64"
+        },
+        "16384": {
+          "width": 512,
+          "height": 256,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "30babaf585a81a3cb0921056d47cad44fd4354a8448442cdb8e778cb6e063d64"
+        }
+      }
+    },
+    "TitaniaColor": {
+      "body": "Titania",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "5b1d2c3d0db422b548f6d70a3d7b88c80612defc33a33f1ff9637e480961ecf1"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "5b1d2c3d0db422b548f6d70a3d7b88c80612defc33a33f1ff9637e480961ecf1"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "5b1d2c3d0db422b548f6d70a3d7b88c80612defc33a33f1ff9637e480961ecf1"
+        }
+      }
+    },
+    "TitaniaHeight": {
+      "body": "Titania",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "579262e2753abd57bffa94ee23ff697bef632866a44bdd9d6208cf06ba2b5eda"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "579262e2753abd57bffa94ee23ff697bef632866a44bdd9d6208cf06ba2b5eda"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "579262e2753abd57bffa94ee23ff697bef632866a44bdd9d6208cf06ba2b5eda"
+        }
+      }
+    },
+    "Titania_NRM": {
+      "body": "Titania",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "7dbdec7c02856f06d8ac69f4c87d297cbd85c5f4093128e0a15f66e2c1af0b4c"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "7dbdec7c02856f06d8ac69f4c87d297cbd85c5f4093128e0a15f66e2c1af0b4c"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "7dbdec7c02856f06d8ac69f4c87d297cbd85c5f4093128e0a15f66e2c1af0b4c"
+        }
+      }
+    },
+    "Titan_NRM": {
+      "body": "Titan",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "fcfeb9a5dc9d8bbc6adb397e0218643c69c165438ea442738db9c70cfcdf6949"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "dbfea054c6ac08d4ec0fac7f9ba990c03460b2463c719b5155c2d32962c4675e"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 44739408,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "da1897f9155dd78aa6e716d2a4d90f295687d0057cbaba766fdedfd075de5229"
+        }
+      }
+    },
+    "TritonBiomes": {
+      "body": "Triton",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "82ef2d6048b7bbaf9ea8abc8f234011cc0a1b44272f9a22001131d8a1937e933"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "82ef2d6048b7bbaf9ea8abc8f234011cc0a1b44272f9a22001131d8a1937e933"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "82ef2d6048b7bbaf9ea8abc8f234011cc0a1b44272f9a22001131d8a1937e933"
+        }
+      }
+    },
+    "TritonColor": {
+      "body": "Triton",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "43e8237ba515b58859473f07b2649c4011402eb830482fcb4496420800ba0722"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 5592552,
+          "sha256": "43e8237ba515b58859473f07b2649c4011402eb830482fcb4496420800ba0722"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 41687164,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "UmbrielBiomes": {
+      "body": "Umbriel",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 512,
+          "height": 256,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "0c569796cba2c9626f744a0e7ed62f53b5f9b140a23ba9bc259e1eeb0336fbc1"
+        },
+        "8192": {
+          "width": 512,
+          "height": 256,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "0c569796cba2c9626f744a0e7ed62f53b5f9b140a23ba9bc259e1eeb0336fbc1"
+        },
+        "16384": {
+          "width": 512,
+          "height": 256,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 524416,
+          "sha256": "0c569796cba2c9626f744a0e7ed62f53b5f9b140a23ba9bc259e1eeb0336fbc1"
+        }
+      }
+    },
+    "UmbrielColor": {
+      "body": "Umbriel",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "bc584326dfd889bcea6cac68b137e8b7326e343bfe0a91d5af9831c558b69cf2"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "bc584326dfd889bcea6cac68b137e8b7326e343bfe0a91d5af9831c558b69cf2"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "bc584326dfd889bcea6cac68b137e8b7326e343bfe0a91d5af9831c558b69cf2"
+        }
+      }
+    },
+    "UmbrielHeight": {
+      "body": "Umbriel",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "6cdacf7743fbd95ebc3e9e6697c12bb1e714f3d96c3b1779bf082e35ba8ea69b"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "6cdacf7743fbd95ebc3e9e6697c12bb1e714f3d96c3b1779bf082e35ba8ea69b"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "alphaOpaque": true,
+          "sha256": "6cdacf7743fbd95ebc3e9e6697c12bb1e714f3d96c3b1779bf082e35ba8ea69b"
+        }
+      }
+    },
+    "Umbriel_NRM": {
+      "body": "Umbriel",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "7d38f189aaa3a61da19c24465b0c98d38c982c0ee8e5471d8cf176c56c4f3224"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "7d38f189aaa3a61da19c24465b0c98d38c982c0ee8e5471d8cf176c56c4f3224"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "7d38f189aaa3a61da19c24465b0c98d38c982c0ee8e5471d8cf176c56c4f3224"
+        }
+      }
+    },
+    "UranusBiomes": {
+      "body": "Uranus",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "96fec4c519ed03217dd627574e6cc788dd2a5697c7903beb6a6eb154c79a6c42"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "96fec4c519ed03217dd627574e6cc788dd2a5697c7903beb6a6eb154c79a6c42"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "96fec4c519ed03217dd627574e6cc788dd2a5697c7903beb6a6eb154c79a6c42"
+        }
+      }
+    },
+    "UranusColor": {
+      "body": "Uranus",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "f344002d73b90e4cca00b4499ac534ee6dd111e2f93c2167afdfcbf5d8997bce"
+        },
+        "8192": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT1",
+          "mips": "full",
+          "levels": 14,
+          "declaredLevels": 14,
+          "install": "PluginData",
+          "bytes": 22369768,
+          "sha256": "94752e786b42c8524c86f284df0feb39cf01ef401210a2994f62aa1bd71e3cd0"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 7011814,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "VenusBiomes": {
+      "body": "Venus",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "cf452a6ed1dc6258e2b72cd90f7709b293928c5ad9666370bb851750da9bcb6b"
+        },
+        "8192": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "cf452a6ed1dc6258e2b72cd90f7709b293928c5ad9666370bb851750da9bcb6b"
+        },
+        "16384": {
+          "width": 1024,
+          "height": 512,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "cf452a6ed1dc6258e2b72cd90f7709b293928c5ad9666370bb851750da9bcb6b"
+        }
+      }
+    },
+    "VenusColor": {
+      "body": "Venus",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "83930e340a577410285d0cff9a8cc9137e33fbfed6d672da05ed254e66aa53d4"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": true,
+          "sha256": "83930e340a577410285d0cff9a8cc9137e33fbfed6d672da05ed254e66aa53d4"
+        },
+        "16384": {
+          "width": 16384,
+          "height": 8192,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "install": "PluginData",
+          "bytes": 134217856,
+          "zipBytes": 47396652,
+          "source": "release:v18.6.1",
+          "note": "exceeds GitHub file size limit; present only in the release zip"
+        }
+      }
+    },
+    "VenusHeight": {
+      "body": "Venus",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "d07995ac11a378ebb10ed2c597f65e4de98ee1de8f40f24fa296bf06b1e343b7"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "d07995ac11a378ebb10ed2c597f65e4de98ee1de8f40f24fa296bf06b1e343b7"
+        },
+        "16384": {
+          "width": 4096,
+          "height": 2048,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "d07995ac11a378ebb10ed2c597f65e4de98ee1de8f40f24fa296bf06b1e343b7"
+        }
+      }
+    },
+    "Venus_NRM": {
+      "body": "Venus",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "3a5cdb8764de5c2dc819448482f5593a99f2f73e60a2cb61b62547c3e883a26c"
+        },
+        "8192": {
+          "width": 4096,
+          "height": 2048,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 13,
+          "declaredLevels": 13,
+          "install": "PluginData",
+          "bytes": 11184976,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "3a5cdb8764de5c2dc819448482f5593a99f2f73e60a2cb61b62547c3e883a26c"
+        },
+        "16384": {
+          "width": 8192,
+          "height": 4096,
+          "format": "DXT5",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 33554560,
+          "alphaOpaque": false,
+          "nrmFiller": "replicated",
+          "sha256": "e2fff917b4373fd4e65505e28a50ac572d75e7924387d303a8f35c7b4d3d0918"
+        }
+      }
+    },
+    "VestaBiomes": {
+      "body": "Vesta",
+      "kind": "Biomes",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "b9b2755ad2933aae3782ed05ef0b5918938685f43e976d0b36d7456b9b312bc4"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "b9b2755ad2933aae3782ed05ef0b5918938685f43e976d0b36d7456b9b312bc4"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 1,
+          "install": "PluginData",
+          "bytes": 8388736,
+          "sha256": "b9b2755ad2933aae3782ed05ef0b5918938685f43e976d0b36d7456b9b312bc4"
+        }
+      }
+    },
+    "VestaColor": {
+      "body": "Vesta",
+      "kind": "Color",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": true,
+          "sha256": "7cf0e01d2c45c527d5f4f918dde4bfa0ebb6f638f42609ccfd68df449bd97642"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": true,
+          "sha256": "7cf0e01d2c45c527d5f4f918dde4bfa0ebb6f638f42609ccfd68df449bd97642"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": true,
+          "sha256": "7cf0e01d2c45c527d5f4f918dde4bfa0ebb6f638f42609ccfd68df449bd97642"
+        }
+      }
+    },
+    "VestaHeight": {
+      "body": "Vesta",
+      "kind": "Height",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "0105dd526d1bb57ee069ab9c6d07c26c09726122ebf6fb9b9c85390fa6344a5f"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "0105dd526d1bb57ee069ab9c6d07c26c09726122ebf6fb9b9c85390fa6344a5f"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "R8",
+          "mips": "none",
+          "levels": 1,
+          "declaredLevels": 0,
+          "install": "PluginData",
+          "bytes": 2097280,
+          "sha256": "0105dd526d1bb57ee069ab9c6d07c26c09726122ebf6fb9b9c85390fa6344a5f"
+        }
+      }
+    },
+    "Vesta_NRM": {
+      "body": "Vesta",
+      "kind": "_NRM",
+      "sets": {
+        "4096": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "0c9d85378417ecdce940a162bb8305b84faf2cff7b8f6b4e2e11ea158778eb66"
+        },
+        "8192": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "0c9d85378417ecdce940a162bb8305b84faf2cff7b8f6b4e2e11ea158778eb66"
+        },
+        "16384": {
+          "width": 2048,
+          "height": 1024,
+          "format": "DXT5",
+          "mips": "full",
+          "levels": 12,
+          "declaredLevels": 12,
+          "install": "PluginData",
+          "bytes": 2796368,
+          "alphaOpaque": false,
+          "nrmFiller": "white",
+          "sha256": "34810bde586000ef1d422a29804d7c3fedee974072d60f1954e7e9b33f057eaa"
+        }
+      }
+    }
+  }
+}

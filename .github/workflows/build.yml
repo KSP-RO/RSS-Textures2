@@ -26,8 +26,34 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      # Every tool must actually do something. An earlier version of scan.mjs
+      # guarded main() by comparing import.meta.url against a hand-built
+      # "file:///" + argv[1], which never matches a POSIX path - so on Linux it
+      # exited 0 having written nothing, and the failure surfaced downstream as
+      # a bare ENOENT. Assert on output, not just on exit codes.
+      - name: Smoke test the tools
+        run: |
+          set -euo pipefail
+          mkdir -p smoke
+          node tools/manifest/scan.mjs --sets 4096 --out smoke/scan.json --quiet
+          node -e '
+            const m = require("./smoke/scan.json");
+            const n = Object.keys(m.maps).length;
+            if (n < 100) throw new Error("scan produced " + n + " maps, expected 100+");
+            console.log("scan: " + n + " maps");
+          '
+          node tools/manifest/bootstrap.mjs --observed smoke/scan.json --out smoke/manifest.json
+          node -e '
+            const m = require("./smoke/manifest.json");
+            const n = Object.keys(m.bodies).length;
+            if (n < 30) throw new Error("bootstrap produced " + n + " bodies, expected 30+");
+            console.log("bootstrap: " + n + " bodies");
+          '
+          rm -rf smoke
+
       - name: Verify checkout against manifest
         run: node tools/manifest/verify.mjs --root .
+
       - name: Report what would be packaged
         run: node tools/build/build.mjs --all --dry-run
 

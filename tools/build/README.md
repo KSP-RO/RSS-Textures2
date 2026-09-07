@@ -3,16 +3,59 @@
 Builds the release assets from `manifest/textures.json`. Replaces `bin/build.pl`
 and the dead `.travis.yml`.
 
-**Prototype.** There is no texture conversion here. Files are taken from the
-existing per-set directories as-is, so a build is byte-identical to what is in
-the repository and carries no visual risk. The seam where an encoder goes is
-`resolveSource()` in `build.mjs` — it would take the source asset plus the
-manifest's `format`/`mips`/`native` fields and produce the DDS instead of
-looking one up. Nothing downstream changes when that is swapped.
+**This does not convert anything itself.** Without `--overlay` it packages the
+DDS already in the checkout, byte-identical to what shipped last time and
+carrying no visual risk. That is still the default, and it is what the release
+workflow does.
 
-Packaging is the part that is actually broken: `16384.zip` is at 95% of
-GitHub's 2 GiB per-asset limit, `build.pl` has never been able to produce it,
-and Travis has not run since travis-ci.org shut down.
+## Bringing conversion into a release
+
+```sh
+node tools/convert/convert.mjs --set 4096 --sources latest --out build/4096
+node tools/build/build.mjs --set 4096 --overlay build --out dist
+```
+
+`--overlay <root>` prefers files from a root laid out like the repository
+(`4096/`, `8192/`, …) and falls back to the checkout for anything conversion
+could not produce. The build prints which maps came from where.
+
+The fallback is the point rather than a convenience: v0.0.1 of the source
+repository covers 13 of 33 bodies, several incomplete, so a release built
+purely from sources would be missing most of the solar system. A worked
+example, converting the five bodies v0.0.1 has usable 4096 sources for:
+
+```
+=== set 4096 ===
+  17 map(s) marked pending, not part of a release
+  8 map(s) taken from the overlay, the rest from the checkout
+    EnceladusBiomes, EnceladusColor, EuropaColor, EuropaHeight, Europa_NRM,
+    MimasColor, NeptuneColor, RheaColor
+```
+
+The resulting archives extract to a tree that passes `verify.mjs`.
+
+**The release workflow now passes `--overlay` by default**, so published
+assets contain converted textures wherever sources allow. The job summary in
+the Actions UI lists exactly which maps came from conversion, so an in-game
+test knows what it is testing.
+
+What that means for a release built today:
+
+| Set | Maps conversion can feed | Rest |
+| --- | --- | --- |
+| 4096 | 17 (every shipping map with a source) | from the checkout |
+| 8192 | 14 | from the checkout |
+| 16384 | 14 | from the checkout |
+
+Still unproven, and worth knowing before trusting a build: converted output has
+never been loaded by KSP, colour mips are averaged in sRGB rather than linear
+light, and the header normalisation is unverified in game. That is precisely
+what publishing these assets is meant to find out.
+
+## Why this exists
+
+`build.pl` only knows the 2048/4096/8192 sets and cannot produce the 16384
+pack at all, and Travis has not run since travis-ci.org shut down.
 
 ## Usage
 

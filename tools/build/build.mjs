@@ -13,18 +13,36 @@
 //                             --limit (default)
 //   --limit <MiB>     split threshold, default 1900 (GitHub's cap is 2048)
 //   --level <0-9>     deflate level, default 6
+//   --overlay <dir>   prefer files from this root (laid out like the repo,
+//                     with 4096/ 8192/ ... subdirectories) over the checkout.
+//                     This is how convert.mjs output reaches a release.
+//   --overlay-report <file>
+//                     a convert.mjs --report file. Every map it claims to have
+//                     built must be present in the overlay, or the build fails
+//                     rather than silently falling back to the checkout.
 //   --dry-run         report what each asset would contain, compress nothing
 //
-// PROTOTYPE. There is no texture conversion here: files are taken from the
-// existing per-set directories as-is. The seam where an encoder goes is
-// resolveSource() below. That is deliberate - packaging is the part that is
-// currently broken (16384.zip is at 95% of GitHub's per-asset limit and
-// build.pl cannot even produce it), and it carries no visual risk.
+// This does not convert anything itself. Without --overlay it packages the DDS
+// already in the checkout, which is byte-identical to what shipped last time
+// and carries no visual risk. With --overlay it prefers converted files and
+// falls back to the checkout for everything conversion could not produce:
+//
+//   node tools/convert/convert.mjs --set 4096 --sources latest --out build/4096
+//   node tools/build/build.mjs --set 4096 --overlay build --out dist
+//
+// That two-step split is deliberate. Conversion needs sources, an encoder and
+// network; packaging needs none of those, so a release can still be cut when
+// conversion is not wanted or not possible.
 
 import { mkdir, rm, stat, readFile, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { writeZip } from './lib/zipwriter.mjs';
 import { expectedFileSize, fullChainLevels } from '../manifest/lib/dds.mjs';
+import { splitMapName } from '../manifest/lib/mapname.mjs';
+
+async function exists(p) {
+  try { await stat(p); return true; } catch { return false; }
+}
 
 const MIB = 1024 * 1024;
 const GITHUB_ASSET_LIMIT = 2048; // MiB
@@ -33,6 +51,7 @@ function parseArgs(argv) {
   const o = {
     manifest: 'manifest/textures.json', root: '.', out: 'dist',
     sets: null, all: false, split: 'auto', limit: 1900, level: 6, dryRun: false,
+    overlay: null, overlayReport: null,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -44,6 +63,8 @@ function parseArgs(argv) {
     else if (a === '--split') o.split = argv[++i];
     else if (a === '--limit') o.limit = Number(argv[++i]);
     else if (a === '--level') o.level = Number(argv[++i]);
+    else if (a === '--overlay') o.overlay = argv[++i];
+    else if (a === '--overlay-report') o.overlayReport = argv[++i];
     else if (a === '--dry-run') o.dryRun = true;
     else throw new Error('unknown option: ' + a);
   }
@@ -51,18 +72,63 @@ function parseArgs(argv) {
   return o;
 }
 
-/**
- * Where a texture's bytes come from for a given set.
- *
- * Today: the pre-built file in that set's directory. This is the single point
- * a conversion step replaces - it would take the source asset plus the
- * manifest's format/mips/native fields and produce the DDS, rather than
- * looking one up. Everything downstream is unchanged by that swap.
- */
-function resolveSource(root, setName, mapName, install) {
+function setPath(root, setName, mapName, install) {
   return install === '.'
     ? join(root, setName, mapName + '.dds')
     : join(root, setName, install, mapName + '.dds');
+}
+
+/**
+ * Where a texture's bytes come from for a given set.
+ *
+ * An overlay root wins over the repository's own set directory. That is how
+ * conversion output gets into a release: convert.mjs writes the maps it has
+ * sources for, and everything it could not produce falls back to the file that
+ * already ships.
+ *
+ * The fallback is the point. The source set is partial - 13 of 33 bodies in
+ * v0.0.1, several of those incomplete - so a release built purely from sources
+ * would be missing most of the solar system. Mixing is the only way forward
+ * until sources are complete, and the build reports the split so a release is
+ * never quietly half-converted without anyone noticing.
+ */
+async function resolveSource(root, overlay, setName, mapName, install) {
+  if (overlay) {
+    const candidate = setPath(overlay, setName, mapName, install);
+    if (await exists(candidate)) return { path: candidate, from: 'overlay' };
+  }
+  return { path: setPath(root, setName, mapName, install), from: 'repo' };
+}
+
+/**
+ * Cross-check the overlay against the conversion report.
+ *
+ * Silent fallback is the hazard here. If conversion dies partway - and a large
+ * decode getting killed by the OS produces no output at all - the overlay is
+ * simply smaller, every missing map quietly falls back to the checkout, and
+ * the build succeeds having published a half-converted pack that nobody
+ * ordered. The report says what conversion believed it produced; if the
+ * overlay does not match, that is a failure, not a fallback.
+ */
+async function checkOverlayAgainstReport(reportPath, overlay, setName, manifest) {
+  const report = JSON.parse(await readFile(reportPath, 'utf8'));
+  if (report.set !== setName) {
+    throw new Error(reportPath + ' is for set ' + report.set + ', not ' + setName);
+  }
+  const absent = [];
+  for (const entry of report.built ?? []) {
+    const { body, kind } = splitMapName(entry.mapName);
+    const install = manifest.bodies[body]?.maps?.[kind]?.install ?? manifest.kinds[kind]?.install;
+    if (!install) continue;
+    if (!(await exists(setPath(overlay, setName, entry.mapName, install)))) absent.push(entry.mapName);
+  }
+  if (absent.length) {
+    throw new Error(
+      'conversion reported building ' + (report.built ?? []).length + ' map(s) but ' +
+      absent.length + ' are not in the overlay: ' + absent.join(', ') + '\n' +
+      'The overlay is incomplete; refusing to package a partial conversion.');
+  }
+  return (report.built ?? []).length;
 }
 
 /** Path inside the archive. Installs to GameData/RSS-Textures. */
@@ -72,14 +138,11 @@ function archivePath(mapName, install) {
     : 'GameData/RSS-Textures/' + install + '/' + mapName + '.dds';
 }
 
-async function exists(p) {
-  try { await stat(p); return true; } catch { return false; }
-}
-
 /** Collect every file that belongs in a set, bucketed by packaging group. */
-async function collect(manifest, root, setName) {
+async function collect(manifest, root, overlay, setName) {
   const groups = new Map();
   const missing = [];
+  const fromOverlay = [];
 
   let pending = 0;
   for (const [bodyName, body] of Object.entries(manifest.bodies)) {
@@ -94,7 +157,7 @@ async function collect(manifest, root, setName) {
 
       const mapName = bodyName + kind;
       const install = map.install ?? manifest.kinds[kind].install;
-      const source = resolveSource(root, setName, mapName, install);
+      const { path: source, from } = await resolveSource(root, overlay, setName, mapName, install);
       if (!(await exists(source))) {
         // Size it from the manifest so the split decision still sees roughly
         // the right total. The 16384 set is short its 17 largest textures in a
@@ -111,6 +174,7 @@ async function collect(manifest, root, setName) {
         });
         continue;
       }
+      if (from === 'overlay') fromOverlay.push(mapName);
       const bucket = groups.get(groupName) ?? [];
       bucket.push({ source, name: archivePath(mapName, install), bytes: (await stat(source)).size });
       groups.set(groupName, bucket);
@@ -127,7 +191,7 @@ async function collect(manifest, root, setName) {
     }
   }
 
-  return { groups, missing, pending };
+  return { groups, missing, pending, fromOverlay };
 }
 
 /**
@@ -177,11 +241,20 @@ async function main() {
 
   const summary = [];
   for (const setName of setNames) {
-    const { groups, missing, pending } = await collect(manifest, opts.root, setName);
+    if (opts.overlayReport) {
+      const n = await checkOverlayAgainstReport(opts.overlayReport, opts.overlay, setName, manifest);
+      console.log('=== set ' + setName + ' ===');
+      console.log('  overlay matches its conversion report (' + n + ' map(s))');
+    }
+    const { groups, missing, pending, fromOverlay } = await collect(manifest, opts.root, opts.overlay, setName);
     const plan = planAssets(setName, groups, opts.split, opts.limit, missing);
 
-    console.log('=== set ' + setName + ' ===');
+    if (!opts.overlayReport) console.log('=== set ' + setName + ' ===');
     if (pending) console.log('  ' + pending + ' map(s) marked pending, not part of a release');
+    if (opts.overlay) {
+      console.log('  ' + fromOverlay.length + ' map(s) taken from the overlay, the rest from the checkout');
+      if (fromOverlay.length) console.log('    ' + fromOverlay.sort().join(', '));
+    }
     if (missing.length) {
       console.log('  ' + missing.length + ' file(s) absent from the checkout, omitted:');
       for (const m of missing.slice(0, 20)) console.log('    ' + m.map);

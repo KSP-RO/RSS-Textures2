@@ -103,7 +103,14 @@ function decodeSource(data, kind, mapName) {
     if (img.bitDepth === 8) {
       notes.push('source is 8-bit; elevation has at most 256 levels');
     }
-    return { grey16: png.toGrey16(img), width: img.width, height: img.height, img, notes };
+    // Return scalars, not `img`. Holding the decoded image would pin its
+    // `samples` array - 768 MB for a 16384x8192 16-bit source - for the whole
+    // conversion, on top of the RGBA copy, the resample and the mip chain.
+    // Two of those concurrently is enough to be killed outright.
+    return {
+      grey16: png.toGrey16(img), width: img.width, height: img.height,
+      bitDepth: img.bitDepth, colourType: img.colourType, notes,
+    };
   }
 
   const rgba = png.toRGBA8(img);
@@ -158,7 +165,12 @@ function decodeSource(data, kind, mapName) {
       (img.colourType === 2 || img.colourType === 0 ? ' (no alpha channel in the PNG)' : ''));
   }
 
-  return { rgba, width: img.width, height: img.height, img, notes };
+  // Same reasoning as the height path above: keep the scalars, drop the
+  // decoded samples so they can be collected while we still hold the RGBA.
+  return {
+    rgba, width: img.width, height: img.height,
+    bitDepth: img.bitDepth, colourType: img.colourType, notes,
+  };
 }
 
 /** Read pixels out of an existing DDS in another set (the --from path). */
@@ -262,7 +274,7 @@ async function convertMap(opts, manifest, ctx, bodyName, kind, map) {
       const out = Buffer.alloc(g.width * g.height);
       for (let i = 0; i < out.length; i++) out[i] = g.data[i] >> 8;
       await writeDDS(outPath, target, [out]);
-      if (src.img?.bitDepth === 16) {
+      if (src.bitDepth === 16) {
         result.notes.push('16-bit source written as R8 because the manifest says R8');
       }
     } else {

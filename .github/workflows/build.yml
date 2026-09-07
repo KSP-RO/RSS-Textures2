@@ -4,8 +4,12 @@ name: Build
 # encrypted key that no longer works, and bin/build.pl, which only knows the
 # 2048/4096/8192 sets and cannot produce the 16384 pack at all.
 #
-# PROTOTYPE. Packaging only: assets are taken from the per-set directories
-# as-is, with no texture conversion. See tools/build/README.md.
+# Each build job converts everything the source release can produce into an
+# overlay, then packages that overlay on top of the textures in the checkout.
+# Maps with no source, or a source below the set's target resolution, fall back
+# to the file that already ships. The job summary lists exactly which textures
+# in a release came from conversion, so an in-game test knows what it is
+# testing. See tools/build/README.md and tools/convert/README.md.
 
 # Tags only. Building a set is a multi-gigabyte job, so it runs when a release
 # is actually being cut, not on every push or pull request.
@@ -20,6 +24,12 @@ on:
 
 permissions:
   contents: write
+
+env:
+  # Source release to convert from. Pinned rather than "latest" so a release is
+  # reproducible and so the download cache has a stable key. Bump it when a new
+  # source release lands.
+  SOURCE_TAG: v0.0.1
 
 jobs:
   # Gate the build: the manifest must be internally consistent, the checkout
@@ -105,8 +115,82 @@ jobs:
       - name: Show available disk
         run: df -h .
 
+      - name: Cache Compressonator
+        id: cache-compressonator
+        uses: actions/cache@v4
+        with:
+          path: tools/.bin
+          key: compressonator-4.5.52-${{ runner.os }}
+
+      - name: Fetch Compressonator
+        if: steps.cache-compressonator.outputs.cache-hit != 'true'
+        run: node tools/convert/get-compressonator.mjs
+
+      # Source archives are ~2.5 GiB across 13 bodies. Cached on the release
+      # tag, which is immutable, so this downloads once per source release.
+      - name: Cache source assets
+        uses: actions/cache@v4
+        with:
+          path: .cache/sources
+          key: rss-sources-${{ env.SOURCE_TAG }}
+
+      # Convert everything the sources can produce into an overlay. Maps with
+      # no source, or a source below this set's target resolution, are skipped
+      # and fall back to the texture already in the checkout.
+      #
+      # --jobs 2, not the default 4: EarthColor is 16384x8192 16-bit RGB, which
+      # is 768 MB of samples plus 512 MB as RGBA8 plus a mip chain. Four of
+      # those at once does not fit in a hosted runner.
+      - name: Convert ${{ matrix.set }} from sources
+        run: |
+          set -euo pipefail
+          COMPRESSONATOR="$(node tools/convert/get-compressonator.mjs --print)"
+          export COMPRESSONATOR
+          node tools/convert/convert.mjs \
+            --set ${{ matrix.set }} \
+            --sources "${SOURCE_TAG}" \
+            --jobs 2 \
+            --out "overlay/${{ matrix.set }}" \
+            --report "convert-${{ matrix.set }}.json"
+
+      # --overlay-report makes a half-finished conversion fatal. Without it a
+      # conversion that died partway would just produce a smaller overlay,
+      # every missing map would quietly fall back to the checkout, and the
+      # build would succeed having published a half-converted pack.
       - name: Build ${{ matrix.set }}
-        run: node tools/build/build.mjs --set ${{ matrix.set }} --out dist
+        run: |
+          node tools/build/build.mjs \
+            --set ${{ matrix.set }} \
+            --overlay overlay \
+            --overlay-report "convert-${{ matrix.set }}.json" \
+            --out dist
+
+      # Make it obvious in the Actions UI which textures in this release came
+      # from conversion rather than from the checkout, so an in-game test knows
+      # what it is actually testing.
+      - name: Summarise what was converted
+        if: always()
+        run: |
+          {
+            echo "### Set ${{ matrix.set }}"
+            echo
+            if [ -f "convert-${{ matrix.set }}.json" ]; then
+              node -e '
+                const r = require("./convert-${{ matrix.set }}.json");
+                const built = r.built ?? [];
+                console.log("Converted from sources: **" + built.length + "**");
+                console.log("");
+                for (const b of built.sort((a, c) => a.mapName.localeCompare(c.mapName))) {
+                  console.log("- `" + b.mapName + "` " + b.size + " " + b.format +
+                    (b.notes && b.notes.length ? " — " + b.notes.join("; ") : ""));
+                }
+                const skipped = r.skipped ?? [];
+                if (skipped.length) console.log("\n" + skipped.length + " map(s) fell back to the checkout.");
+              '
+            else
+              echo "Conversion did not run."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
 
       # Proves the archives are readable and that what comes out of them still
       # matches the manifest - the same check run locally in tools/build/README.md.

@@ -7,18 +7,24 @@ name: Build
 # PROTOTYPE. Packaging only: assets are taken from the per-set directories
 # as-is, with no texture conversion. See tools/build/README.md.
 
+# Tags only. Building a set is a multi-gigabyte job, so it runs when a release
+# is actually being cut, not on every push or pull request.
+#
+# workflow_dispatch is kept because it is now the only way to exercise CI
+# without publishing: cutting a tag is a poor way to find out whether the Linux
+# Compressonator build loads. Run it from the Actions tab against any branch.
 on:
   push:
     tags: ['v*']
-  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  # Cheap gate on every PR: the manifest must be internally consistent and the
-  # checkout must not have drifted from it in ways nobody recorded.
+  # Gate the build: the manifest must be internally consistent, the checkout
+  # must not have drifted from it in ways nobody recorded, and every tool must
+  # actually do something.
   verify:
     runs-on: ubuntu-latest
     steps:
@@ -57,6 +63,29 @@ jobs:
       - name: Report what would be packaged
         run: node tools/build/build.mjs --all --dry-run
 
+      # The encoder is pinned. A new Compressonator release can change block
+      # selection and silently alter every colour map in the pack, so bumping
+      # the version in get-compressonator.mjs should be a deliberate act with a
+      # visual diff, not something a build picks up on its own.
+      - name: Cache Compressonator
+        id: cache-compressonator
+        uses: actions/cache@v4
+        with:
+          path: tools/.bin
+          key: compressonator-4.5.52-${{ runner.os }}
+
+      - name: Fetch Compressonator
+        if: steps.cache-compressonator.outputs.cache-hit != 'true'
+        run: node tools/convert/get-compressonator.mjs
+
+      - name: Conversion self-test
+        run: |
+          set -euo pipefail
+          COMPRESSONATOR="$(node tools/convert/get-compressonator.mjs --print)"
+          export COMPRESSONATOR
+          node tools/convert/convert.mjs --preflight
+          node tools/convert/selftest.mjs
+
   # One job per set. Splitting the matrix keeps each runner's disk use down:
   # a full checkout is ~3.4 GB of textures on top of a ~2.9 GB clone, and a
   # hosted runner has roughly 14 GB free.
@@ -90,6 +119,8 @@ jobs:
           node tools/manifest/verify.mjs --root check/root --sets ${{ matrix.set }}
           rm -rf check
 
+      # A manual run against a branch: keep the zips as artifacts so they can be
+      # inspected, and publish nothing. This is the dry run for a release.
       - uses: actions/upload-artifact@v4
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
@@ -97,6 +128,8 @@ jobs:
           path: dist/*.zip
           retention-days: 5
 
+      # A tag: publish. --clobber so re-running a tag replaces its assets
+      # rather than failing on the second attempt.
       - name: Attach to release
         if: startsWith(github.ref, 'refs/tags/')
         env:

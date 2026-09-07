@@ -109,6 +109,7 @@ The constraints encoded here are load-bearing, not stylistic:
 | `derivedFrom` | The map on the same body this one was generated from, for assets with no independent primary source. |
 | `generation` | Bumped when a derived asset is deliberately regenerated. |
 | `rss` | Heightmaps only: the `offset` and `deformity` the RSS Kopernicus configs assume. |
+| `status` | `"pending"` when a source asset exists but the map has never shipped. `verify.mjs` expects it to be absent rather than reporting it missing. |
 | `todo` | Fields not yet filled in. |
 
 #### On `derivedFrom`
@@ -144,6 +145,27 @@ Each imported entry records the `node` type and the `file:line` it came from,
 so a disagreement can be traced without re-grepping the RSS tree. If a map is
 defined more than once with different values the importer refuses to guess and
 prints every variant with its source.
+
+#### On `status`
+
+Source releases run ahead of the pack. `RSS-Textures-Source` v0.0.1 carries
+heightmaps and normal maps for four Saturnian moons that currently point at
+`Flat_NRM.dds` and have no `VertexHeightMap` node at all, plus two bodies
+(Eris, Hyperion) that RSS has no config for.
+
+Those maps are declared with `"status": "pending"`: buildable from source,
+absent from every shipped set, and not a fault. Drop the field once the map
+ships.
+
+```sh
+node tools/manifest/add-sources.mjs --sources v0.0.1          # report
+node tools/manifest/add-sources.mjs --sources v0.0.1 --write  # add entries
+```
+
+It reads each source archive's central directory over a range request first,
+so it only downloads bodies that actually carry something new, and derives
+`native` and `format` from the PNG rather than from a guess. Bodies the
+manifest does not know need a packaging group (`--group Eris=Pluto`).
 
 #### On `topoconv`
 

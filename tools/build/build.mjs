@@ -81,9 +81,17 @@ async function collect(manifest, root, setName) {
   const groups = new Map();
   const missing = [];
 
+  let pending = 0;
   for (const [bodyName, body] of Object.entries(manifest.bodies)) {
     const groupName = body.group ?? 'Ungrouped';
     for (const [kind, map] of Object.entries(body.maps)) {
+      // A pending map is declared from a source asset but has never shipped.
+      // It is not part of a release, so it must not be packaged and must not
+      // be counted toward the size estimate that decides whether to split -
+      // sizing a release by textures that do not exist is how you conclude a
+      // pack needs splitting when it does not, or the reverse.
+      if (map.status === 'pending') { pending++; continue; }
+
       const mapName = bodyName + kind;
       const install = map.install ?? manifest.kinds[kind].install;
       const source = resolveSource(root, setName, mapName, install);
@@ -119,7 +127,7 @@ async function collect(manifest, root, setName) {
     }
   }
 
-  return { groups, missing };
+  return { groups, missing, pending };
 }
 
 /**
@@ -169,10 +177,11 @@ async function main() {
 
   const summary = [];
   for (const setName of setNames) {
-    const { groups, missing } = await collect(manifest, opts.root, setName);
+    const { groups, missing, pending } = await collect(manifest, opts.root, setName);
     const plan = planAssets(setName, groups, opts.split, opts.limit, missing);
 
     console.log('=== set ' + setName + ' ===');
+    if (pending) console.log('  ' + pending + ' map(s) marked pending, not part of a release');
     if (missing.length) {
       console.log('  ' + missing.length + ' file(s) absent from the checkout, omitted:');
       for (const m of missing.slice(0, 20)) console.log('    ' + m.map);

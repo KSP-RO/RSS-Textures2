@@ -60,14 +60,15 @@
     },
     "Saturn": {
       "bodies": [
-        "Saturn",
-        "Mimas",
-        "Enceladus",
-        "Tethys",
         "Dione",
+        "Enceladus",
+        "Hyperion",
+        "Iapetus",
+        "Mimas",
         "Rhea",
-        "Titan",
-        "Iapetus"
+        "Saturn",
+        "Tethys",
+        "Titan"
       ]
     },
     "Uranus": {
@@ -88,8 +89,9 @@
     },
     "Pluto": {
       "bodies": [
-        "Pluto",
-        "Charon"
+        "Charon",
+        "Eris",
+        "Pluto"
       ]
     },
     "Shared": {
@@ -538,6 +540,41 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Dione.zip#RSS-Textures-src-Dione/DioneHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Dione.zip#RSS-Textures-src-Dione/Dione_NRM.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
         }
       }
     },
@@ -656,6 +693,107 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Enceladus.zip#RSS-Textures-src-Enceladus/EnceladusHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Enceladus.zip#RSS-Textures-src-Enceladus/Enceladus_NRM.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
+        }
+      }
+    },
+    "Eris": {
+      "group": "Pluto",
+      "maps": {
+        "Biomes": {
+          "native": [
+            1024,
+            512
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/ErisBiomes.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
+        },
+        "Color": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT1",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/ErisColor.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/ErisHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/Eris_NRM.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
         }
       }
     },
@@ -818,6 +956,46 @@
         }
       }
     },
+    "Hyperion": {
+      "group": "Saturn",
+      "maps": {
+        "Biomes": {
+          "native": [
+            512,
+            256
+          ],
+          "format": "A8B8G8R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Hyperion.zip#RSS-Textures-src-Hyperion/HyperionBiomes.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
+        },
+        "Height": {
+          "native": [
+            512,
+            256
+          ],
+          "format": "R16",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Hyperion.zip#RSS-Textures-src-Hyperion/HyperionHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        }
+      }
+    },
     "Iapetus": {
       "group": "Saturn",
       "maps": {
@@ -848,6 +1026,41 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Iapetus.zip#RSS-Textures-src-Iapetus/IapetusHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Iapetus.zip#RSS-Textures-src-Iapetus/Iapetus_NRM.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
         }
       }
     },
@@ -1138,6 +1351,41 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Mimas.zip#RSS-Textures-src-Mimas/MimasHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Mimas.zip#RSS-Textures-src-Mimas/Mimas_NRM.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
         }
       }
     },
@@ -1555,6 +1803,28 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R16",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Rhea.zip#RSS-Textures-src-Rhea/RheaHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
         }
       }
     },
@@ -1808,6 +2078,41 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/RSS-Textures-src-Triton.zip#RSS-Textures-src-Triton/TritonHeight.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            8192,
+            4096
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/RSS-Textures-src-Triton.zip#RSS-Textures-src-Triton/Triton_NRM.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "status": "pending",
+          "todo": []
         }
       }
     },

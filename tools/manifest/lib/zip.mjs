@@ -35,15 +35,19 @@ export function parseCentralDirectory(buf) {
   const entries = [];
   for (let i = 0; i + 46 <= buf.length; i++) {
     if (buf.readUInt32LE(i) !== CDFH_SIGNATURE) continue;
+    const compressionMethod = buf.readUInt16LE(i + 10);
     const compressedSize = buf.readUInt32LE(i + 20);
     const uncompressedSize = buf.readUInt32LE(i + 24);
     const nameLen = buf.readUInt16LE(i + 28);
     const extraLen = buf.readUInt16LE(i + 30);
     const commentLen = buf.readUInt16LE(i + 32);
+    // Offset of this entry's local file header, needed to extract it. Only
+    // meaningful when the whole archive was read, not just its tail.
+    const localHeaderOffset = buf.readUInt32LE(i + 42);
     if (nameLen === 0 || nameLen > 4096 || i + 46 + nameLen > buf.length) continue;
     const name = buf.toString('utf8', i + 46, i + 46 + nameLen);
     if (!/^[\w\-./ ()+]+$/.test(name)) continue;
-    entries.push({ name, compressedSize, uncompressedSize });
+    entries.push({ name, compressedSize, uncompressedSize, compressionMethod, localHeaderOffset });
     i += 45 + nameLen + extraLen + commentLen;
   }
   return entries;

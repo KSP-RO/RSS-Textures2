@@ -174,6 +174,16 @@ async function main() {
         const want = expectedFor(map, setName);
         const got = obs?.sets?.[setName];
         if (!got) {
+          // A pending map is declared from a source asset but has never
+          // shipped, so its absence is the expected state rather than a fault.
+          // It still gets checked once it does appear.
+          if (map.status === 'pending') {
+            found.push({
+              map: mapName, set: setName, kind: 'missing', pending: true,
+              reason: 'declared as pending: source exists but this map has not shipped yet',
+            });
+            continue;
+          }
           const oversize = !observed.release && tooBigForGit(want);
           found.push({
             map: mapName, set: setName, kind: 'missing',
@@ -221,10 +231,12 @@ async function main() {
     }
   }
 
-  const isKnown = (d) => !opts.strict && (known.has(deviationKey(d)) || d.oversize === true);
+  const isKnown = (d) => !opts.strict &&
+    (known.has(deviationKey(d)) || d.oversize === true || d.pending === true);
   const errors = found.filter((d) => !isKnown(d));
   const warnings = found.filter(isKnown);
   const oversizeCount = warnings.filter((d) => d.oversize).length;
+  const pendingCount = warnings.filter((d) => d.pending).length;
 
   // Provenance completeness, reported always but only fatal under --strict.
   const todo = [];
@@ -281,6 +293,10 @@ async function main() {
       if (oversizeCount) {
         console.log('  ' + oversizeCount + ' of these are files above the GitHub 100 MiB limit, absent from');
         console.log('  the checkout by design - pass --release latest to check them too');
+      }
+      if (pendingCount) {
+        console.log('  ' + pendingCount + ' are maps marked pending: a source asset exists but the');
+        console.log('  map has never shipped in this set');
       }
       console.log('');
     }

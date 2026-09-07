@@ -18,3 +18,8 @@ tools/TopoConv/x64
 /Release
 # Build output
 /dist
+# Downloaded tools
+/tools/compressonatorcli-*
+# Source asset cache
+/.cache
+/tools/.bin

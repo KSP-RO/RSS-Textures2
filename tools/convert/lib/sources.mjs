@@ -28,19 +28,25 @@ export async function listRelease(tag = 'latest', repo = SOURCE_REPO) {
   const release = await res.json();
 
   const byBody = new Map();
+  const byName = new Map();
   for (const asset of release.assets) {
-    // RSS-Textures-src-<Body>.zip
-    const m = asset.name.match(/^RSS-Textures-src-(.+)\.zip$/i);
-    if (!m) continue;
-    byBody.set(m[1], {
-      body: m[1],
+    const entry = {
       asset: asset.name,
       url: asset.browser_download_url,
       size: asset.size,
       id: asset.id,
-    });
+    };
+    // Every asset by its own name, so things that are not per-body texture
+    // zips can be found too - raw DEMs, in particular, which heights.mjs
+    // looks up by the name the manifest's `dems` entry declares.
+    byName.set(asset.name, entry);
+
+    // RSS-Textures-src-<Body>.zip
+    const m = asset.name.match(/^RSS-Textures-src-(.+)\.zip$/i);
+    if (!m) continue;
+    byBody.set(m[1], { body: m[1], ...entry });
   }
-  return { tag: release.tag_name, bodies: byBody };
+  return { tag: release.tag_name, bodies: byBody, assets: byName };
 }
 
 async function exists(p) {

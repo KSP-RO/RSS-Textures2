@@ -5,11 +5,19 @@ name: Build
 # 2048/4096/8192 sets and cannot produce the 16384 pack at all.
 #
 # Each build job converts everything the source release can produce into an
-# overlay, then packages that overlay on top of the textures in the checkout.
-# Maps with no source, or a source below the set's target resolution, fall back
-# to the file that already ships. The job summary lists exactly which textures
-# in a release came from conversion, so an in-game test knows what it is
-# testing. See tools/build/README.md and tools/convert/README.md.
+# overlay, generates heightmaps from the release's DEMs with TopoConv into the
+# same overlay, then packages that overlay on top of the textures in the
+# checkout. Maps with no source, or a source below the set's target resolution,
+# fall back to the file that already ships. The job summary lists exactly which
+# textures in a release came from conversion, so an in-game test knows what it
+# is testing. See tools/build/README.md and tools/convert/README.md.
+#
+# Heightmaps used to live in a separate manual workflow because the DEM was in
+# no repository. Now that DEMs ship on the source release they are part of this
+# build. A DEM that disagrees with the shipped terrain warns loudly - on the run
+# and in the job summary - and still publishes: changing the DEM is sometimes
+# the whole point, and it may go out with a coordinated RealSolarSystem config
+# release, so the call belongs to a person rather than to an exit code.
 
 # Tags only. Building a set is a multi-gigabyte job, so it runs when a release
 # is actually being cut, not on every push or pull request.
@@ -96,6 +104,25 @@ jobs:
           node tools/convert/convert.mjs --preflight
           node tools/convert/selftest.mjs
 
+      # TopoConv is built from source rather than using the committed
+      # bin/TopoConv.exe, which is why this can run on Linux at all. Both
+      # builds were verified to produce byte-identical heightmaps, on
+      # synthetic DEMs and on the real 43200x21600 topo30.raw.
+      #
+      # Built and exercised here, in the cheap gate job, so a broken heights
+      # path fails in seconds instead of after each build job has downloaded
+      # a 1.74 GiB DEM. --dry-run needs no DEM.
+      - name: Build TopoConv and smoke test heightmaps
+        run: |
+          set -euo pipefail
+          make -C tools/TopoConv
+          node tools/convert/heights.mjs --list
+          for s in 4096 8192 16384; do
+            node tools/convert/heights.mjs --set "$s" --out /tmp/h --dry-run \
+              | grep -q -- '-width' \
+              || { echo "heights.mjs produced no command for set $s"; exit 1; }
+          done
+
   # One job per set. Splitting the matrix keeps each runner's disk use down:
   # a full checkout is ~3.4 GB of textures on top of a ~2.9 GB clone, and a
   # hosted runner has roughly 14 GB free.
@@ -126,13 +153,20 @@ jobs:
         if: steps.cache-compressonator.outputs.cache-hit != 'true'
         run: node tools/convert/get-compressonator.mjs
 
-      # Source archives are ~2.5 GiB across 13 bodies. Cached on the release
-      # tag, which is immutable, so this downloads once per source release.
+      # Source archives are ~2.5 GiB across 13 bodies, plus the DEMs the
+      # heightmap step fetches - topo30.raw alone is 1.74 GiB, so this cache
+      # entry is around 4.2 GiB. Cached on the release tag, which is
+      # immutable, so it downloads once per source release. Watch the disk
+      # step above if this grows: a hosted runner has roughly 14 GB free and
+      # the checkout already takes 6.
       - name: Cache source assets
         uses: actions/cache@v4
         with:
           path: .cache/sources
           key: rss-sources-${{ env.SOURCE_TAG }}
+
+      - name: Build TopoConv
+        run: make -C tools/TopoConv
 
       # Convert everything the sources can produce into an overlay. Maps with
       # no source, or a source below this set's target resolution, are skipped
@@ -152,6 +186,61 @@ jobs:
             --jobs 2 \
             --out "overlay/${{ matrix.set }}" \
             --report "convert-${{ matrix.set }}.json"
+
+      # Heightmaps come from the DEM, not from a larger heightmap: TopoConv
+      # resamples the source DEM at each target width, and halving an 8192
+      # heightmap misses the shipped 4096 by a mean of 56 m. So they are
+      # generated here rather than by convert.mjs, into the same overlay.
+      #
+      # After the conversion step, deliberately: if a source release ever adds
+      # an EarthHeight.png, convert.mjs would produce one, and the DEM-derived
+      # map is the authoritative one - so it lands last and wins.
+      #
+      # This is the one texture the release genuinely cannot carry from git.
+      # EarthHeight is absent from the checkout for the 8192 and 16384 sets
+      # (256 MiB at 16384 breaches GitHub's 100 MiB file limit), so today those
+      # packs ship without Earth terrain. Generating it fills that gap.
+      #
+      # Drift is reported, not enforced. Regenerating a heightmap moves
+      # terrain, and terrain that moves puts landed craft underground - but
+      # changing the DEM is a deliberate act, sometimes going out alongside a
+      # coordinated RealSolarSystem config release. A build that refused to
+      # package moved terrain would leave no way to ship that change, so the
+      # comparison is surfaced as a warning annotation and in the job summary,
+      # and the release still gets cut.
+      #
+      # --compare 4096 for every set because that is the only set with a
+      # shipped EarthHeight to compare against; at 16384 the geometry differs
+      # and it reports that instead.
+      - name: Generate heightmaps for ${{ matrix.set }}
+        run: |
+          set -euo pipefail
+          node tools/convert/heights.mjs \
+            --sources "${SOURCE_TAG}" \
+            --set ${{ matrix.set }} \
+            --out "overlay/${{ matrix.set }}" \
+            --compare 4096 \
+            --report "heights-${{ matrix.set }}.json" \
+            | tee "heights-${{ matrix.set }}.log"
+
+      # A ::warning:: annotation so moved terrain is visible on the run itself,
+      # not only to whoever opens the log. Deliberately not ::error::: the job
+      # has to finish and publish.
+      - name: Flag moved terrain
+        if: always()
+        run: |
+          f="heights-${{ matrix.set }}.json"
+          [ -f "$f" ] || exit 0
+          node -e '
+            const r = require("./" + process.argv[1]);
+            for (const d of r.drifted ?? []) {
+              console.log("::warning title=Terrain moved (set " + r.set + ")::" +
+                d.map + " differs from the shipped heightmap by a mean of " +
+                d.mean.toFixed(1) + " m and a maximum of " + d.max.toFixed(0) +
+                " m. Expected if the DEM changed on purpose - say so in the " +
+                "release notes and check the offset/deformity values in RSS.");
+            }
+          ' "$f"
 
       # --overlay-report makes a half-finished conversion fatal. Without it a
       # conversion that died partway would just produce a smaller overlay,
@@ -189,6 +278,37 @@ jobs:
               '
             else
               echo "Conversion did not run."
+            fi
+            if [ -f "heights-${{ matrix.set }}.log" ]; then
+              echo
+              echo "#### Heightmaps from the DEM"
+              echo
+              if [ -f "heights-${{ matrix.set }}.json" ]; then
+                node -e '
+                  const r = require("./" + process.argv[1]);
+                  const d = r.drifted ?? [];
+                  if (!d.length) {
+                    console.log("Terrain matches what already shipped.");
+                  } else {
+                    console.log("> [!WARNING]");
+                    console.log("> **Terrain moved.** " + d.length + " heightmap(s) differ from the");
+                    console.log("> maps this pack already ships:");
+                    console.log(">");
+                    for (const x of d) {
+                      console.log("> - `" + x.map + "` mean **" + x.mean.toFixed(1) +
+                        " m**, max **" + x.max.toFixed(0) + " m**");
+                    }
+                    console.log(">");
+                    console.log("> Expected if the DEM changed on purpose. Anything landed on the old");
+                    console.log("> terrain will sit above or below it, so say so in the release notes");
+                    console.log("> and check that the offset/deformity values in RSS still match.");
+                  }
+                ' "heights-${{ matrix.set }}.json"
+                echo
+              fi
+              echo '```'
+              cat "heights-${{ matrix.set }}.log"
+              echo '```'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 

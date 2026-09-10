@@ -1,9 +1,5 @@
 
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <malloc.h>
-#include <io.h>
+#include "compat.h"
 
 #include "ReadTiff.h"
 

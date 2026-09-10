@@ -1,5 +1,15 @@
 A tool for converting DEM data from NASA and similar sources to DDS heightmaps.
 
+BUILDING
+
+  Linux/macOS   make         -> bin/TopoConv
+  Windows       TopoConv.sln -> bin/TopoConv.exe
+
+bin/TopoConv.exe is committed because every heightmap in this pack was produced by it.
+The Linux build exists so heightmaps can be regenerated in CI without a Windows runner.
+
+Both builds produce byte-identical output.
+
 topoconv <infilename> [outfilename] [opts]
   infilename should be raw 16-bit signed integer or 32-bit float topo data
   outfilename is saved as DDS

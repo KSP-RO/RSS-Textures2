@@ -1,12 +1,8 @@
 // dds_converter.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <ddraw.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <malloc.h>
-#include <io.h>
-#include <math.h>
+#include "compat.h"
+
 #include <algorithm>
 #include <numeric>
 #include <map>
@@ -30,6 +26,10 @@ typedef struct {
     DWORD           dwCaps4;
     DWORD           dwReserved2;
 } DDS_HEADER;
+
+// dwSize is set from sizeof() and the struct is fwrite'd raw, so this must be
+// the spec's 124 bytes on every compiler.
+static_assert(sizeof(DDS_HEADER) == 124, "DDS header must be 124 bytes");
 
 constexpr uint32_t DDSMagic = 0x20534444;
 
@@ -839,9 +839,19 @@ int main(int argc, const char** argv)
     {
         if (!outfilename)
         {
+            // Was strcpy_s + strcat_s(ofn, 10, ...), where 10 was passed as
+            // the destination buffer size rather than the appended length --
+            // MSVC's annex-K would have tripped its invalid-parameter handler
+            // on any input name longer than a couple of characters. Nothing
+            // reaches it (heights.mjs always passes an output path), but it
+            // could not be shimmed faithfully without porting a latent abort,
+            // so it is one snprintf now.
             char* ofn = (char*)alloca(MAX_PATH);
-            strcpy_s(ofn, MAX_PATH, infilename);
-            strcat_s(ofn, 10, "_conv.dds");
+            if (snprintf(ofn, MAX_PATH, "%s_conv.dds", infilename) >= MAX_PATH)
+            {
+                printf("Output filename too long\n");
+                return 1;
+            }
             outfilename = ofn;
         }
 

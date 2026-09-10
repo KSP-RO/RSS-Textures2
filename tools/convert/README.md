@@ -97,6 +97,191 @@ This is what the manifest's `topoconv` field is for. Heights are *generated per
 set* by TopoConv from the DEM, not derived from each other, and the invocation
 belongs next to the `rss` offset/deformity values it determines.
 
+## Heightmaps from a DEM
+
+DEMs ship on the source release alongside the texture zips, so a run fetches
+them the same way `convert.mjs` fetches sources — same `--sources` tag, same
+`.cache/sources`:
+
+```sh
+node tools/convert/heights.mjs --list
+node tools/convert/heights.mjs --sources v0.0.1 --set 8192 --out overlay/8192
+node tools/convert/heights.mjs --dem topo30=D:/topo30.raw --set 8192 --out overlay/8192
+```
+
+Which asset holds a DEM is the manifest's to say — `dems.<id>.asset`. They are
+published raw rather than zipped: `topo30.raw` is 1.74 GiB, inside GitHub's
+2 GiB per-asset limit, and a zip that size cannot be inflated in memory, so a
+zipped DEM is refused with that explanation rather than half-supported.
+`--dem <id>=<path>` still overrides with a local file, which is the fast way to
+work offline.
+
+Output drops straight into an overlay root, so it composes with the texture
+converter:
+
+```
+=== set 4096 ===
+  1 map(s) taken from the overlay, the rest from the checkout
+    EarthHeight
+```
+
+**Widths come from what a set actually ships, not `min(native, cap)`.** The
+4096 set carries `EarthHeight` at 8192×4096, which the manifest records in
+`knownDeviations`. Generating at the rule's width would replace a shipped
+texture with one of half the resolution, and nothing downstream would object:
+`build.mjs` packages whatever the overlay contains without re-checking its
+geometry.
+
+This is also the one texture a release cannot carry from git. `EarthHeight` is
+absent from the checkout for the 8192 and 16384 sets — 256 MiB at 16384
+breaches GitHub's 100 MiB file limit — so those packs currently ship with no
+Earth terrain at all. Generating from the DEM fills that in:
+
+```
+=== set 16384 ===                        before          after
+  files absent from the checkout         17              16
+  EarthHeight                            omitted         from the overlay
+```
+
+**`heightscale` and `heightoffs` are not parameters.** They are derived from
+the manifest's `rss` values, because they are the same two numbers:
+
+```
+deformity = 65535 / heightscale     ->  heightscale = 65535 / deformity
+offset    = -heightoffs             ->  heightoffs  = -offset
+```
+
+TopoConv's `-autoscale -autooffset` print exactly these, which is how the
+shipped values were obtained originally. Deriving them means the DEM-to-16-bit
+mapping is identical at every width and cannot drift from what RSS expects. If
+those numbers disagree, terrain sits at the wrong altitude.
+
+Each generated file's geometry and format are checked against the manifest;
+a mismatch fails the run.
+
+### topo30.raw is *nearly* the right DEM
+
+Running `-autoscale -autooffset` on it reports `heightscale 3.3426 (use
+deformity=19606)` and `heightoffs 10921` — exactly the values in RSS's
+`Earth.cfg`. So this is the right data, in the right units, big-endian int16
+at 43200×21600.
+
+But it does not reproduce the shipped map:
+
+| Region | Shipped mean | This DEM | Delta |
+| --- | --- | --- | --- |
+| 40°S–40°N | −2678 m | −2678 m | **0 m** |
+| Greenland band (60–80°N) | −58 m | −1034 m | −976 m |
+| Antarctica (>70°S) | +43 m | −2647 m | **−2690 m** |
+
+Maxima are identical everywhere (2190 m, 4035 m, 7152 m), and between 62°S and
+51°N the two are 98–99% identical texel for texel. The difference is confined
+to the ice sheets: this DEM lacks the ice-surface fill the shipped map has.
+Overall that is a mean of 286 m and a maximum of 7896 m.
+
+Publishing it would drop Antarctic terrain by roughly 2.7 km.
+
+**That is what `--max-drift` is for, and it is what makes this safe to run in
+the release build.** `--compare <set>` measures the generated map against the
+one that set ships; `--max-drift <metres>` turns a drift past that limit into a
+failed run instead of a warning nobody reads:
+
+```
+  EarthHeight     8192x4096   R16      8.0 s   range -10825.9 / 7891.91
+      vs shipped: identical 87.34%   mean 286.4 m   max 7896 m
+      DRIFT: differs from the shipped heightmap by more than 1 m on average.
+
+1 heightmap(s) drifted past --max-drift 1 m:
+  EarthHeight  mean 286.4 m, max 7896 m
+Refusing to publish regenerated terrain that does not match what shipped.
+```
+
+So with *this* DEM the release build stops rather than repositioning
+Antarctica. A DEM that carries the ice-surface fill passes and the heightmap is
+regenerated; one that does not fails loudly. Either way the decision is a
+person's, coordinated with the offset/deformity values in RSS, which is what
+the old manual-only workflow was protecting.
+
+Only the 4096 set has a shipped `EarthHeight` to compare against, so the build
+passes `--compare 4096` for every set. At 8192 the generated width matches it
+and the gate is real; at 16384 the geometry differs and it says so instead:
+
+```
+      vs shipped: shipped is 8192x4096, generated is 16384x8192
+```
+
+### TopoConv builds on Linux
+
+It was a Windows x64 console binary, and `tools/TopoConv/bin/TopoConv.exe` is
+still committed because every heightmap in the pack came out of it. But the
+source was never Windows-specific — no Windows API, no graphics, only MSVC
+dialect and `<ddraw.h>` for `DWORD` and `DDPIXELFORMAT` — so it is a native
+build rather than a Wine gamble:
+
+```sh
+make -C tools/TopoConv
+```
+
+`tools/convert/heights.mjs` picks `bin/TopoConv` or `bin/TopoConv.exe` by
+platform. Portability is confined to `tools/TopoConv/compat.h`; the `.cpp`
+files differ from the originals only in their includes, and one `strcat_s`
+call with a wrong buffer-size argument that could not be shimmed faithfully.
+
+**The port is only worth anything if it is bit-identical**, because the output
+positions terrain. Measured on `EarthHeight` at 4096 from the real
+43200×21600 `topo30.raw`, all three agree to the byte:
+
+| Binary | Source | Toolchain | sha256 |
+| --- | --- | --- | --- |
+| committed `TopoConv.exe` | pre-port | MSVC v142 | `4f917285…` |
+| rebuilt `TopoConv.exe` | ported | MSVC 14.51 | `4f917285…` |
+| `TopoConv` | ported | GCC 15.2 | `4f917285…` |
+
+Eight synthetic cases covering the other code paths — bilinear, nearest,
+median with both odd and even window sizes, `ra8`/`r1` output, `coastdefine`,
+`autoscale` — matched as well.
+
+Identical is plausible rather than lucky: the resampling calls no
+transcendental functions — only `ceil`, `floor` and `sqrt`, which IEEE 754
+requires to be correctly rounded — and median is `nth_element`, a selection
+rather than an arithmetic result. Every parallel loop writes its own output
+row, so output does not depend on thread count either. The one real hazard is
+FMA contraction, which GCC enables by default and MSVC does not; the Makefile
+passes `-ffp-contract=off`, and dropping that flag is the one change most
+likely to move terrain without touching a line of logic.
+
+There is no automated parity check. If you edit the source or bump a
+compiler, generate the same heightmap before and after and compare the bytes.
+
+### Running it in CI
+
+Part of the release build — `.github/workflows/build.yml`, one step per set,
+after the conversion step and into the same overlay. There is no separate
+heightmap workflow any more.
+
+It sits after `convert.mjs` deliberately: if a source release ever adds an
+`EarthHeight.png`, the converter would produce one, and the DEM-derived map is
+the authoritative one, so it lands last and wins.
+
+The two things that used to keep this out of the release build are both
+answered rather than ignored:
+
+- **The DEM is nowhere CI can reach.** No longer true — DEMs ship on the source
+  release, so the existing `.cache/sources` cache covers them. That cache entry
+  grows to roughly 4.2 GiB, which is worth watching against a hosted runner's
+  ~14 GB of free disk and a 6 GB checkout.
+- **Regenerated terrain moves.** Still true, and now enforced instead of
+  deferred: `--max-drift 1` fails the release rather than shipping a heightmap
+  that disagrees with the terrain already published.
+
+TopoConv is built from source (`make -C tools/TopoConv`) in both the gate job
+and each build job. The gate job also runs `--list` and a `--dry-run` for every
+set, which needs no DEM, so a broken heightmap path fails in seconds instead of
+after three jobs have each pulled 1.74 GiB.
+
+Only `EarthHeight` has a `topoconv` spec so far. The other 28 heightmaps have
+no recorded invocation, so they cannot be regenerated — `--list` names them.
+
 ## Sources
 
 ```sh

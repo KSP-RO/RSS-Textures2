@@ -11,6 +11,10 @@ GameData
 /.vs
 tools/TopoConv/.vs
 tools/TopoConv/x64
+# TopoConv Linux build output. bin/TopoConv.exe stays committed; the ELF is
+# built by `make -C tools/TopoConv` and must not be.
+tools/TopoConv/*.o
+tools/TopoConv/bin/TopoConv
 *.user
 *.iobj
 *.ipdb

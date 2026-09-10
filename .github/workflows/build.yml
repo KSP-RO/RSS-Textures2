@@ -5,11 +5,17 @@ name: Build
 # 2048/4096/8192 sets and cannot produce the 16384 pack at all.
 #
 # Each build job converts everything the source release can produce into an
-# overlay, then packages that overlay on top of the textures in the checkout.
-# Maps with no source, or a source below the set's target resolution, fall back
-# to the file that already ships. The job summary lists exactly which textures
-# in a release came from conversion, so an in-game test knows what it is
-# testing. See tools/build/README.md and tools/convert/README.md.
+# overlay, generates heightmaps from the release's DEMs with TopoConv into the
+# same overlay, then packages that overlay on top of the textures in the
+# checkout. Maps with no source, or a source below the set's target resolution,
+# fall back to the file that already ships. The job summary lists exactly which
+# textures in a release came from conversion, so an in-game test knows what it
+# is testing. See tools/build/README.md and tools/convert/README.md.
+#
+# Heightmaps used to live in a separate manual workflow because the DEM was in
+# no repository. Now that DEMs ship on the source release they are part of this
+# build, gated by --max-drift so a DEM that disagrees with the shipped terrain
+# fails the release instead of silently repositioning Antarctica.
 
 # Tags only. Building a set is a multi-gigabyte job, so it runs when a release
 # is actually being cut, not on every push or pull request.
@@ -96,6 +102,25 @@ jobs:
           node tools/convert/convert.mjs --preflight
           node tools/convert/selftest.mjs
 
+      # TopoConv is built from source rather than using the committed
+      # bin/TopoConv.exe, which is why this can run on Linux at all. Both
+      # builds were verified to produce byte-identical heightmaps, on
+      # synthetic DEMs and on the real 43200x21600 topo30.raw.
+      #
+      # Built and exercised here, in the cheap gate job, so a broken heights
+      # path fails in seconds instead of after each build job has downloaded
+      # a 1.74 GiB DEM. --dry-run needs no DEM.
+      - name: Build TopoConv and smoke test heightmaps
+        run: |
+          set -euo pipefail
+          make -C tools/TopoConv
+          node tools/convert/heights.mjs --list
+          for s in 4096 8192 16384; do
+            node tools/convert/heights.mjs --set "$s" --out /tmp/h --dry-run \
+              | grep -q -- '-width' \
+              || { echo "heights.mjs produced no command for set $s"; exit 1; }
+          done
+
   # One job per set. Splitting the matrix keeps each runner's disk use down:
   # a full checkout is ~3.4 GB of textures on top of a ~2.9 GB clone, and a
   # hosted runner has roughly 14 GB free.
@@ -126,13 +151,20 @@ jobs:
         if: steps.cache-compressonator.outputs.cache-hit != 'true'
         run: node tools/convert/get-compressonator.mjs
 
-      # Source archives are ~2.5 GiB across 13 bodies. Cached on the release
-      # tag, which is immutable, so this downloads once per source release.
+      # Source archives are ~2.5 GiB across 13 bodies, plus the DEMs the
+      # heightmap step fetches - topo30.raw alone is 1.74 GiB, so this cache
+      # entry is around 4.2 GiB. Cached on the release tag, which is
+      # immutable, so it downloads once per source release. Watch the disk
+      # step above if this grows: a hosted runner has roughly 14 GB free and
+      # the checkout already takes 6.
       - name: Cache source assets
         uses: actions/cache@v4
         with:
           path: .cache/sources
           key: rss-sources-${{ env.SOURCE_TAG }}
+
+      - name: Build TopoConv
+        run: make -C tools/TopoConv
 
       # Convert everything the sources can produce into an overlay. Maps with
       # no source, or a source below this set's target resolution, are skipped
@@ -152,6 +184,36 @@ jobs:
             --jobs 2 \
             --out "overlay/${{ matrix.set }}" \
             --report "convert-${{ matrix.set }}.json"
+
+      # Heightmaps come from the DEM, not from a larger heightmap: TopoConv
+      # resamples the source DEM at each target width, and halving an 8192
+      # heightmap misses the shipped 4096 by a mean of 56 m. So they are
+      # generated here rather than by convert.mjs, into the same overlay.
+      #
+      # After the conversion step, deliberately: if a source release ever adds
+      # an EarthHeight.png, convert.mjs would produce one, and the DEM-derived
+      # map is the authoritative one - so it lands last and wins.
+      #
+      # This is the one texture the release genuinely cannot carry from git.
+      # EarthHeight is absent from the checkout for the 8192 and 16384 sets
+      # (256 MiB at 16384 breaches GitHub's 100 MiB file limit), so today those
+      # packs ship without Earth terrain. Generating it fills that gap.
+      #
+      # --max-drift is the gate. Regenerating a heightmap moves terrain, and
+      # terrain that moves puts landed craft underground, so the build compares
+      # against the heightmap the 4096 set ships and fails rather than
+      # publishing a map that disagrees with it. --compare 4096 for every set
+      # because that is the only set with a shipped EarthHeight to compare
+      # against; at 16384 the geometry differs and it reports that instead.
+      - name: Generate heightmaps for ${{ matrix.set }}
+        run: |
+          set -euo pipefail
+          node tools/convert/heights.mjs \
+            --sources "${SOURCE_TAG}" \
+            --set ${{ matrix.set }} \
+            --out "overlay/${{ matrix.set }}" \
+            --compare 4096 \
+            --max-drift 1 | tee "heights-${{ matrix.set }}.log"
 
       # --overlay-report makes a half-finished conversion fatal. Without it a
       # conversion that died partway would just produce a smaller overlay,
@@ -189,6 +251,17 @@ jobs:
               '
             else
               echo "Conversion did not run."
+            fi
+            if [ -f "heights-${{ matrix.set }}.log" ]; then
+              echo
+              echo "#### Heightmaps from the DEM"
+              echo
+              echo '```'
+              cat "heights-${{ matrix.set }}.log"
+              echo '```'
+              echo
+              echo "Terrain that moves is terrain that puts landed craft underground."
+              echo "Coordinate any change here with the offset/deformity values in RSS."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 

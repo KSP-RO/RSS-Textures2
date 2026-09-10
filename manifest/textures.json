@@ -641,10 +641,19 @@
             "node": "VertexHeightMap",
             "source": "GameData/RealSolarSystem/RSSKopernicus/Earth/Earth.cfg:439"
           },
-          "topoconv": null,
+          "topoconv": {
+            "dem": "topo30",
+            "srcEndian": "big",
+            "resample": "median",
+            "outMeridian": 90,
+            "flip": [
+              "x",
+              "y"
+            ],
+            "format": "r16"
+          },
           "todo": [
-            "source",
-            "topoconv"
+            "source"
           ]
         },
         "Surface": {
@@ -3165,5 +3174,20 @@
       "actual": "DXT5",
       "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     }
-  ]
+  ],
+  "dems": {
+    "topo30": {
+      "description": "Global 30 arc-second land topography and ocean bathymetry.",
+      "width": 43200,
+      "height": 21600,
+      "format": "int16be",
+      "units": "metres",
+      "bytes": 1866240000,
+      "note": "Verified against the shipped EarthHeight: TopoConv -autoscale -autooffset reports heightscale 3.3426 (deformity 19606) and heightoffs 10921, exactly the values in RSS Earth.cfg. Between 62S and 51N the regenerated map is 98-99% identical to the shipped one. Antarctica and Greenland are NOT: this DEM lacks the ice-surface fill the shipped map has, and sits 2690 m lower over Antarctica and 976 m lower over Greenland. See tools/convert/README.md.",
+      "asset": "topo30.raw",
+      "assetNote": "Name of the release asset on KSP-RO/RSS-Textures-Source carrying this DEM, fetched by tools/convert/heights.mjs --sources. Published raw rather than zipped: at 1.74 GiB it is inside GitHub's 2 GiB per-asset limit, and a zip that size cannot be inflated in memory. Change this one field if the release names it differently.",
+      "url": null,
+      "sha256": null
+    }
+  }
 }

@@ -249,8 +249,24 @@ async function testNameMatching() {
   const index = manifestMapIndex(manifest);
   let declared = 0;
   for (const body of Object.values(manifest.bodies)) declared += Object.keys(body.maps).length;
+  declared += Object.keys(manifest.shared ?? {}).length;
   check(index.size === declared,
     declared + ' manifest maps stay distinct when folded', 'collapsed to ' + index.size);
+
+  // Every name the manifest declares must be found by its own index, shared
+  // textures included. add-sources.mjs looked names up in a set of canonical
+  // spellings while folding the source names first, so nothing ever matched
+  // and all 126 declared maps read as undeclared - one --write from rebuilding
+  // the manifest out of the source archives.
+  const canonical = [
+    ...Object.entries(manifest.bodies).flatMap(([b, body]) => Object.keys(body.maps).map((k) => b + k)),
+    ...Object.keys(manifest.shared ?? {}),
+  ];
+  const unfound = canonical.filter((name) => !index.has(normalizeMapName(name)));
+  check(unfound.length === 0,
+    'every declared map is found by its own folded name',
+    unfound.slice(0, 5).join(', ') + (unfound.length > 5 ? ' and ' + (unfound.length - 5) + ' more' : ''));
+
   console.log('   ' + declared + ' map names, ' + groups.length + ' spelling groups checked');
 }
 

@@ -77,6 +77,35 @@ Release packaging groups, one per planetary system. `16384.zip` is currently
 split; these are the intended split boundaries. Largest group today is Earth +
 Moon at roughly 655 MiB compressed, which leaves substantial headroom.
 
+### `shared`
+
+Textures that belong to no body and are packaged into **every** asset, the way
+`README.txt` is.
+
+```json
+"shared": {
+  "Flat_NRM": { "native": [64, 32], "format": "DXT5", "mips": "full", "install": "PluginData" }
+}
+```
+
+`Flat_NRM` is a 64x32 placeholder normal map, identical in all three sets,
+that ten RSS configs point at where a body has no real one — Dione, Enceladus,
+Iapetus, Mimas, Neptune, Rhea, Saturn, Tethys, Triton and Uranus.
+
+It was originally modelled as a body called `Flat` in a packaging group called
+`Shared`, because `bootstrap.mjs` derives bodies from filenames and
+`Flat_NRM` splits into body `Flat` + kind `_NRM`. Two symptoms followed:
+
+- every count of bodies needed a hardcoded `&& b !== 'Flat'`, in the preflight
+  and again in `add-sources`
+- a per-group split emitted an `RSS-Textures-<set>-Shared.zip` holding one
+  2896-byte file, and the texture reached users only if they happened to
+  install that group
+
+Both are gone. `verify.mjs` rejects a manifest that declares the same texture
+as both shared and a body map, and `bootstrap.mjs` recognises the name rather
+than inventing a body for it.
+
 ### `kinds`
 
 Defaults per map kind, keyed by filename suffix (`Color`, `Height`, `Biomes`,
@@ -109,7 +138,6 @@ The constraints encoded here are load-bearing, not stylistic:
 | `derivedFrom` | The map on the same body this one was generated from, for assets with no independent primary source. |
 | `generation` | Bumped when a derived asset is deliberately regenerated. |
 | `rss` | Heightmaps only: the `offset` and `deformity` the RSS Kopernicus configs assume. |
-| `status` | `"pending"` when a source asset exists but the map has never shipped. `verify.mjs` expects it to be absent rather than reporting it missing. |
 | `todo` | Fields not yet filled in. |
 
 #### On `derivedFrom`
@@ -146,20 +174,28 @@ so a disagreement can be traced without re-grepping the RSS tree. If a map is
 defined more than once with different values the importer refuses to guess and
 prints every variant with its source.
 
-#### On `status`
+#### Maps the sources have and the pack does not
 
 Source releases run ahead of the pack. `RSS-Textures-Source` v0.0.1 carries
 heightmaps and normal maps for four Saturnian moons that currently point at
 `Flat_NRM.dds` and have no `VertexHeightMap` node at all, plus two bodies
 (Eris, Hyperion) that RSS has no config for.
 
-Those maps are declared with `"status": "pending"`: buildable from source,
-absent from every shipped set, and not a fault. Drop the field once the map
-ships.
+Everything the sources can produce is packaged. There used to be a
+`"status": "pending"` field that held such maps back — declared, buildable, and
+deliberately left out of the release. It was the wrong default twice over: the
+build converted those maps into the overlay and then discarded them, and a map
+nobody ships is a map nobody tests.
+
+What remains is the ordinary record. A declared map absent from the checkout is
+a `missing` entry in `knownDeviations`, the same as any other gap, so
+`verify.mjs --root .` stays green and the list is explicit. Delete the entry
+once the map ships.
 
 ```sh
-node tools/manifest/add-sources.mjs --sources v0.0.1          # report
-node tools/manifest/add-sources.mjs --sources v0.0.1 --write  # add entries
+node tools/manifest/add-sources.mjs                   # report, latest release
+node tools/manifest/add-sources.mjs --write           # add entries
+node tools/manifest/add-sources.mjs --sources v0.0.1  # pin an older release
 ```
 
 It reads each source archive's central directory over a range request first,
@@ -190,10 +226,11 @@ the fix worked.
 
 ## The current backlog
 
-105 deviations, from the v18.6.1 release plus the working tree:
+171 deviations, from the v18.6.1 release plus the working tree:
 
 | Count | Kind | What it is |
 | --- | --- | --- |
+| 66 | missing | Declared from a source asset and produced by the build, but no DDS for it has ever shipped, so a checkout has none. 22 maps across three sets — heightmaps and normal maps for the outer moons, plus Eris and Hyperion. `add-sources.mjs` writes these as it declares each map, and they clear themselves as the maps ship. |
 | 48 | format | DXT5 textures whose alpha channel is uniformly opaque. DXT1 carries the same colour data at half the size. In the 16k set alone this is ~103 MiB against a 200 MiB headroom. |
 | 18 | mips | Missing mip chains, all in the 16384 set, including eight of the largest textures. Causes shimmering at distance. |
 | 17 | missing | Textures above GitHub's 100 MiB limit, present only in the release zip. |

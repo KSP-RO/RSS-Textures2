@@ -93,11 +93,19 @@
         "Eris",
         "Pluto"
       ]
-    },
-    "Shared": {
-      "bodies": [
-        "Flat"
-      ]
+    }
+  },
+  "shared": {
+    "Flat_NRM": {
+      "native": [
+        64,
+        32
+      ],
+      "format": "DXT5",
+      "mips": "full",
+      "install": "PluginData",
+      "source": null,
+      "note": "Placeholder normal map, 64x32, identical in every set. Referenced by Dione, Enceladus, Iapetus, Mimas, Neptune, Rhea, Saturn, Tethys, Triton and Uranus in RSS as a stand-in where no real normal map exists. Packaged into every asset like README.txt, not owned by a packaging group."
     }
   },
   "kinds": {
@@ -157,6 +165,21 @@
         "DXT5"
       ],
       "note": "Alpha is meaningful (ring gaps)."
+    }
+  },
+  "dems": {
+    "topo30": {
+      "description": "Global 30 arc-second land topography and ocean bathymetry.",
+      "width": 43200,
+      "height": 21600,
+      "format": "int16be",
+      "units": "metres",
+      "bytes": 1866240000,
+      "note": "Verified against the shipped EarthHeight: TopoConv -autoscale -autooffset reports heightscale 3.3426 (deformity 19606) and heightoffs 10921, exactly the values in RSS Earth.cfg. Between 62S and 51N the regenerated map is 98-99% identical to the shipped one. Antarctica and Greenland are NOT: this DEM lacks the ice-surface fill the shipped map has, and sits 2690 m lower over Antarctica and 976 m lower over Greenland. See tools/convert/README.md.",
+      "asset": "topo30.raw",
+      "assetNote": "Name of the release asset on KSP-RO/RSS-Textures-Source carrying this DEM, fetched by tools/convert/heights.mjs --sources. Published raw rather than zipped: at 1.74 GiB it is inside GitHub's 2 GiB per-asset limit, and a zip that size cannot be inflated in memory. Change this one field if the release names it differently.",
+      "url": null,
+      "sha256": null
     }
   },
   "bodies": {
@@ -551,7 +574,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Dione.zip#RSS-Textures-src-Dione/DioneHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -573,7 +595,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Dione.zip#RSS-Textures-src-Dione/Dione_NRM.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         }
       }
@@ -713,7 +734,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Enceladus.zip#RSS-Textures-src-Enceladus/EnceladusHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -735,7 +755,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Enceladus.zip#RSS-Textures-src-Enceladus/Enceladus_NRM.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         }
       }
@@ -753,7 +772,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/ErisBiomes.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         },
         "Color": {
@@ -766,7 +784,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/ErisColor.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         },
         "Height": {
@@ -779,7 +796,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/ErisHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -801,7 +817,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Eris.zip#RSS-Textures-src-Eris/Eris_NRM.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         }
       }
@@ -864,25 +879,6 @@
           "native": [
             8192,
             4096
-          ],
-          "format": "DXT5",
-          "mips": "full",
-          "source": null,
-          "derivedFrom": null,
-          "generation": 1,
-          "todo": [
-            "source"
-          ]
-        }
-      }
-    },
-    "Flat": {
-      "group": "Shared",
-      "maps": {
-        "_NRM": {
-          "native": [
-            64,
-            32
           ],
           "format": "DXT5",
           "mips": "full",
@@ -978,7 +974,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Hyperion.zip#RSS-Textures-src-Hyperion/HyperionBiomes.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         },
         "Height": {
@@ -991,7 +986,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Hyperion.zip#RSS-Textures-src-Hyperion/HyperionHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -1046,7 +1040,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Iapetus.zip#RSS-Textures-src-Iapetus/IapetusHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -1068,7 +1061,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Iapetus.zip#RSS-Textures-src-Iapetus/Iapetus_NRM.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         }
       }
@@ -1371,7 +1363,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Mimas.zip#RSS-Textures-src-Mimas/MimasHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -1393,7 +1384,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Mimas.zip#RSS-Textures-src-Mimas/Mimas_NRM.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         }
       }
@@ -1569,6 +1559,18 @@
           "todo": [
             "source"
           ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/Neptune.zip#Neptune/Neptune_Normal.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": []
         }
       }
     },
@@ -1823,7 +1825,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Rhea.zip#RSS-Textures-src-Rhea/RheaHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -1834,6 +1835,18 @@
             "rss.deformity",
             "topoconv"
           ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/Rhea.zip#Rhea/Rhea_Normal.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": []
         }
       }
     },
@@ -1881,6 +1894,18 @@
           "todo": [
             "source"
           ]
+        },
+        "_NRM": {
+          "native": [
+            16384,
+            8192
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/Saturn.zip#Saturn/Saturn_Normal.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": []
         }
       }
     },
@@ -1914,6 +1939,39 @@
           "todo": [
             "source"
           ]
+        },
+        "Height": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "R8",
+          "mips": "none",
+          "source": "release:v0.0.1/Tethys.zip#Tethys/Tethys_Height.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "rss": {
+            "offset": null,
+            "deformity": null
+          },
+          "topoconv": null,
+          "todo": [
+            "rss.offset",
+            "rss.deformity",
+            "topoconv"
+          ]
+        },
+        "_NRM": {
+          "native": [
+            4096,
+            2048
+          ],
+          "format": "DXT5",
+          "mips": "full",
+          "source": "release:v0.0.1/Tethys.zip#Tethys/Tethys_Normal.png",
+          "derivedFrom": null,
+          "generation": 1,
+          "todo": []
         }
       }
     },
@@ -2098,7 +2156,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Triton.zip#RSS-Textures-src-Triton/TritonHeight.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "rss": {
             "offset": null,
             "deformity": null
@@ -2120,7 +2177,6 @@
           "source": "release:v0.0.1/RSS-Textures-src-Triton.zip#RSS-Textures-src-Triton/Triton_NRM.png",
           "derivedFrom": null,
           "generation": 1,
-          "status": "pending",
           "todo": []
         }
       }
@@ -2483,6 +2539,42 @@
       "reason": "missing mip chain causes shimmering at distance"
     },
     {
+      "map": "Dione_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Dione_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Dione_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "DioneHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "DioneHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "DioneHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
       "map": "Earth_NRM",
       "set": "16384",
       "kind": "missing",
@@ -2521,6 +2613,24 @@
       "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
     },
     {
+      "map": "Enceladus_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Enceladus_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Enceladus_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
       "map": "EnceladusColor",
       "set": "16384",
       "kind": "format",
@@ -2529,6 +2639,96 @@
       "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     },
     {
+      "map": "EnceladusHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "EnceladusHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "EnceladusHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Eris_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Eris_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Eris_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisBiomes",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisBiomes",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisBiomes",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisColor",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisColor",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "ErisHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
       "map": "GanymedeColor",
       "set": "16384",
       "kind": "format",
@@ -2553,6 +2753,60 @@
       "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     },
     {
+      "map": "HyperionBiomes",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "HyperionBiomes",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "HyperionBiomes",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "HyperionHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "HyperionHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "HyperionHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Iapetus_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Iapetus_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Iapetus_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
       "map": "IapetusColor",
       "set": "4096",
       "kind": "format",
@@ -2567,6 +2821,24 @@
       "expected": "DXT5",
       "actual": "DXT1",
       "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "IapetusHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "IapetusHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "IapetusHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
       "map": "IoColor",
@@ -2601,19 +2873,13 @@
     {
       "map": "Mars_NRM",
       "set": "16384",
-      "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
-    },
-    {
-      "map": "Mars_NRM",
-      "set": "16384",
       "kind": "mips",
       "expected": "full",
       "actual": "none",
       "reason": "missing mip chain causes shimmering at distance"
     },
     {
-      "map": "MarsColor",
+      "map": "Mars_NRM",
       "set": "16384",
       "kind": "missing",
       "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
@@ -2633,6 +2899,12 @@
       "expected": "full",
       "actual": "none",
       "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "MarsColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
     },
     {
       "map": "MarsHeight",
@@ -2643,16 +2915,16 @@
     {
       "map": "Mercury_NRM",
       "set": "16384",
-      "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
-    },
-    {
-      "map": "Mercury_NRM",
-      "set": "16384",
       "kind": "mips",
       "expected": "full",
       "actual": "none",
       "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "Mercury_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
     },
     {
       "map": "Mercury_NRM",
@@ -2661,12 +2933,6 @@
       "expected": 8192,
       "actual": 4096,
       "reason": "set ships a resolution that is not min(native, setCap)"
-    },
-    {
-      "map": "MercuryColor",
-      "set": "16384",
-      "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
     },
     {
       "map": "MercuryColor",
@@ -2686,11 +2952,53 @@
     },
     {
       "map": "MercuryColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "MercuryColor",
       "set": "8192",
       "kind": "size",
       "expected": 8192,
       "actual": 4096,
       "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "Mimas_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Mimas_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Mimas_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "MimasHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "MimasHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "MimasHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
       "map": "MirandaColor",
@@ -2749,22 +3057,40 @@
     {
       "map": "MoonColor",
       "set": "16384",
-      "kind": "missing",
-      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
-    },
-    {
-      "map": "MoonColor",
-      "set": "16384",
       "kind": "format",
       "expected": "DXT1",
       "actual": "DXT5",
       "reason": "format differs from the intent for this map kind"
     },
     {
+      "map": "MoonColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, full mips, 170.7 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
       "map": "MoonHeight",
       "set": "16384",
       "kind": "missing",
       "reason": "shipped file (R16, none mips, 256.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "Neptune_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Neptune_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Neptune_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
       "map": "NeptuneColor",
@@ -2863,6 +3189,24 @@
       "reason": "missing mip chain causes shimmering at distance"
     },
     {
+      "map": "Rhea_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Rhea_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Rhea_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
       "map": "RheaColor",
       "set": "4096",
       "kind": "format",
@@ -2879,10 +3223,40 @@
       "reason": "format differs from the intent for this map kind"
     },
     {
-      "map": "SaturnColor",
+      "map": "RheaHeight",
       "set": "16384",
       "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "RheaHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "RheaHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Saturn_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Saturn_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Saturn_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
       "map": "SaturnColor",
@@ -2902,6 +3276,12 @@
     },
     {
       "map": "SaturnColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "SaturnColor",
       "set": "4096",
       "kind": "format",
       "expected": "DXT1",
@@ -2917,74 +3297,122 @@
       "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     },
     {
-      "map": "TethysColor",
-      "set": "4096",
-      "kind": "format",
-      "expected": "DXT5",
-      "actual": "DXT1",
-      "reason": "format differs from the intent for this map kind"
-    },
-    {
-      "map": "TethysColor",
-      "set": "8192",
-      "kind": "format",
-      "expected": "DXT5",
-      "actual": "DXT1",
-      "reason": "format differs from the intent for this map kind"
-    },
-    {
-      "map": "TitaniaColor",
-      "set": "16384",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "TitaniaColor",
-      "set": "4096",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "TitaniaColor",
-      "set": "8192",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "TitaniaHeight",
-      "set": "16384",
-      "kind": "format",
-      "expected": "R8",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "TitaniaHeight",
-      "set": "4096",
-      "kind": "format",
-      "expected": "R8",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "TitaniaHeight",
-      "set": "8192",
-      "kind": "format",
-      "expected": "R8",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "TritonColor",
+      "map": "Tethys_NRM",
       "set": "16384",
       "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Tethys_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Tethys_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "TethysColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "TethysColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT5",
+      "actual": "DXT1",
+      "reason": "format differs from the intent for this map kind"
+    },
+    {
+      "map": "TethysHeight",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "TethysHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "TethysHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "TitaniaColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "TitaniaHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "Triton_NRM",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Triton_NRM",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Triton_NRM",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
       "map": "TritonColor",
@@ -3001,6 +3429,12 @@
       "expected": "full",
       "actual": "none",
       "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "TritonColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
     },
     {
       "map": "TritonColor",
@@ -3011,58 +3445,70 @@
       "reason": "set ships a resolution that is not min(native, setCap)"
     },
     {
-      "map": "UmbrielColor",
-      "set": "16384",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "UmbrielColor",
-      "set": "4096",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "UmbrielColor",
-      "set": "8192",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "UmbrielHeight",
-      "set": "16384",
-      "kind": "format",
-      "expected": "R8",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "UmbrielHeight",
-      "set": "4096",
-      "kind": "format",
-      "expected": "R8",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "UmbrielHeight",
-      "set": "8192",
-      "kind": "format",
-      "expected": "R8",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
-    },
-    {
-      "map": "UranusColor",
+      "map": "TritonHeight",
       "set": "16384",
       "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "TritonHeight",
+      "set": "4096",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "TritonHeight",
+      "set": "8192",
+      "kind": "missing",
+      "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "UmbrielColor",
+      "set": "16384",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielColor",
+      "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielColor",
+      "set": "8192",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielHeight",
+      "set": "16384",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielHeight",
+      "set": "4096",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "UmbrielHeight",
+      "set": "8192",
+      "kind": "format",
+      "expected": "R8",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     },
     {
       "map": "UranusColor",
@@ -3079,6 +3525,12 @@
       "expected": "full",
       "actual": "none",
       "reason": "missing mip chain causes shimmering at distance"
+    },
+    {
+      "map": "UranusColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
     },
     {
       "map": "UranusColor",
@@ -3107,12 +3559,6 @@
     {
       "map": "VenusColor",
       "set": "16384",
-      "kind": "missing",
-      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
-    },
-    {
-      "map": "VenusColor",
-      "set": "16384",
       "kind": "format",
       "expected": "DXT1",
       "actual": "DXT5",
@@ -3128,7 +3574,21 @@
     },
     {
       "map": "VenusColor",
+      "set": "16384",
+      "kind": "missing",
+      "reason": "shipped file (DXT5, none mips, 128.0 MiB) exceeds the GitHub 100 MiB limit; present only in the release zip"
+    },
+    {
+      "map": "VenusColor",
       "set": "4096",
+      "kind": "format",
+      "expected": "DXT1",
+      "actual": "DXT5",
+      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
+    },
+    {
+      "map": "VenusColor",
+      "set": "8192",
       "kind": "format",
       "expected": "DXT1",
       "actual": "DXT5",
@@ -3141,14 +3601,6 @@
       "expected": 8192,
       "actual": 4096,
       "reason": "set ships a resolution that is not min(native, setCap)"
-    },
-    {
-      "map": "VenusColor",
-      "set": "8192",
-      "kind": "format",
-      "expected": "DXT1",
-      "actual": "DXT5",
-      "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     },
     {
       "map": "VestaColor",
@@ -3174,20 +3626,5 @@
       "actual": "DXT5",
       "reason": "DXT5 with a fully opaque alpha channel; DXT1 is half the size"
     }
-  ],
-  "dems": {
-    "topo30": {
-      "description": "Global 30 arc-second land topography and ocean bathymetry.",
-      "width": 43200,
-      "height": 21600,
-      "format": "int16be",
-      "units": "metres",
-      "bytes": 1866240000,
-      "note": "Verified against the shipped EarthHeight: TopoConv -autoscale -autooffset reports heightscale 3.3426 (deformity 19606) and heightoffs 10921, exactly the values in RSS Earth.cfg. Between 62S and 51N the regenerated map is 98-99% identical to the shipped one. Antarctica and Greenland are NOT: this DEM lacks the ice-surface fill the shipped map has, and sits 2690 m lower over Antarctica and 976 m lower over Greenland. See tools/convert/README.md.",
-      "asset": "topo30.raw",
-      "assetNote": "Name of the release asset on KSP-RO/RSS-Textures-Source carrying this DEM, fetched by tools/convert/heights.mjs --sources. Published raw rather than zipped: at 1.74 GiB it is inside GitHub's 2 GiB per-asset limit, and a zip that size cannot be inflated in memory. Change this one field if the release names it differently.",
-      "url": null,
-      "sha256": null
-    }
-  }
+  ]
 }

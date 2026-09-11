@@ -15,6 +15,16 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { splitMapName } from './lib/mapname.mjs';
 import { SETS } from './lib/sets.mjs';
 
+// Textures that belong to no body.
+//
+// Flat_NRM is a placeholder normal map that ten RSS configs point at where a
+// body has no real one. Deriving bodies from filenames alone invented a body
+// called "Flat" and a packaging group to hold it, which then needed a
+// hardcoded exclusion everywhere bodies were counted - and put the texture in
+// exactly one group asset instead of all of them, so which groups you
+// installed decided whether you got it.
+const SHARED = new Set(['Flat_NRM']);
+
 // Release packaging groups. Sizes in the header comment are compressed bytes
 // from the v18.6.1 16384.zip, as a sanity check that no group approaches
 // GitHub's 2 GiB per-asset limit.
@@ -29,7 +39,6 @@ const GROUPS = {
   Uranus:  { bodies: ['Uranus', 'Miranda', 'Ariel', 'Umbriel', 'Titania', 'Oberon'] },
   Neptune: { bodies: ['Neptune', 'Triton'] },
   Pluto:   { bodies: ['Pluto', 'Charon'] },
-  Shared:  { bodies: ['Flat'] },
 };
 
 const KINDS = {
@@ -98,10 +107,29 @@ async function main() {
 
   const observed = JSON.parse(await readFile(observedPath, 'utf8'));
   const bodies = {};
+  const shared = {};
   const knownDeviations = [];
 
   for (const [mapName, m] of Object.entries(observed.maps)) {
     const { body, kind } = splitMapName(mapName);
+
+    // Shared textures are identical in every set and owned by no body, so they
+    // get a flat entry rather than being forced into the body/kind shape.
+    if (SHARED.has(mapName)) {
+      const cell = SETS.map((s) => m.sets[s]).find(Boolean);
+      if (cell) {
+        shared[mapName] = {
+          native: [cell.width, cell.height],
+          format: cell.format,
+          mips: cell.mips,
+          install: cell.install === '.' ? '.' : 'PluginData',
+          source: null,
+          note: 'Belongs to no body; packaged into every asset. See tools/manifest/README.md.',
+        };
+      }
+      continue;
+    }
+
     if (!KINDS[kind]) {
       knownDeviations.push({ map: mapName, kind: 'unclassified', reason: 'filename does not end in a known map kind' });
       continue;
@@ -196,6 +224,7 @@ async function main() {
     readme: 'tools/manifest/README.md',
     sets: Object.fromEntries(SETS.map((s) => [s, { cap: Number(s), package: true }])),
     groups: GROUPS,
+    shared,
     kinds: KINDS,
     bodies: Object.fromEntries(Object.entries(bodies).sort(([a], [b]) => a.localeCompare(b))),
     knownDeviations: knownDeviations.sort(
@@ -209,6 +238,7 @@ async function main() {
   for (const d of knownDeviations) byKind[d.kind] = (byKind[d.kind] ?? 0) + 1;
   console.log('wrote ' + outPath);
   console.log('  bodies: ' + Object.keys(manifest.bodies).length);
+  console.log('  shared: ' + Object.keys(shared).join(', '));
   console.log('  maps:   ' + Object.values(bodies).reduce((n, b) => n + Object.keys(b.maps).length, 0));
   console.log('  known deviations: ' + knownDeviations.length +
     ' (' + Object.entries(byKind).map(([k, v]) => k + ' ' + v).join(', ') + ')');

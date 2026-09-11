@@ -19,14 +19,42 @@ import { normalizeMapName } from '../../manifest/lib/mapname.mjs';
 
 const SOURCE_REPO = 'KSP-RO/RSS-Textures-Source';
 
+const GH = { accept: 'application/vnd.github+json' };
+
+/**
+ * Resolve a tag to a release.
+ *
+ * "latest" is the default because no tag is pinned anywhere: a build takes
+ * whatever the sources repo published most recently. GitHub's /releases/latest
+ * ignores prereleases and 404s when every release is one, which is a plausible
+ * state for a repository still finding its footing - so fall back to the
+ * newest non-draft release rather than failing.
+ */
+async function fetchRelease(tag, repo) {
+  if (tag && tag !== 'latest') {
+    const url = 'https://api.github.com/repos/' + repo + '/releases/tags/' + tag;
+    const res = await fetch(url, { headers: GH });
+    if (!res.ok) throw new Error('GitHub API ' + res.status + ' for ' + url);
+    return res.json();
+  }
+
+  const latest = await fetch('https://api.github.com/repos/' + repo + '/releases/latest', { headers: GH });
+  if (latest.ok) return latest.json();
+  if (latest.status !== 404) {
+    throw new Error('GitHub API ' + latest.status + ' for the latest release of ' + repo);
+  }
+
+  const url = 'https://api.github.com/repos/' + repo + '/releases?per_page=30';
+  const res = await fetch(url, { headers: GH });
+  if (!res.ok) throw new Error('GitHub API ' + res.status + ' for ' + url);
+  const all = (await res.json()).filter((r) => !r.draft);
+  if (!all.length) throw new Error(repo + ' has published no releases');
+  return all[0];
+}
+
 /** Everything published on a source release, indexed by body. */
 export async function listRelease(tag = 'latest', repo = SOURCE_REPO) {
-  const url = tag === 'latest'
-    ? 'https://api.github.com/repos/' + repo + '/releases/latest'
-    : 'https://api.github.com/repos/' + repo + '/releases/tags/' + tag;
-  const res = await fetch(url, { headers: { accept: 'application/vnd.github+json' } });
-  if (!res.ok) throw new Error('GitHub API ' + res.status + ' for ' + url);
-  const release = await res.json();
+  const release = await fetchRelease(tag, repo);
 
   const byBody = new Map();
   const byName = new Map();

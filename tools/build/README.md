@@ -26,7 +26,6 @@ example, converting the five bodies v0.0.1 has usable 4096 sources for:
 
 ```
 === set 4096 ===
-  17 map(s) marked pending, not part of a release
   8 map(s) taken from the overlay, the rest from the checkout
     EnceladusBiomes, EnceladusColor, EuropaColor, EuropaHeight, Europa_NRM,
     MimasColor, NeptuneColor, RheaColor
@@ -89,11 +88,17 @@ checkout are sized from the manifest rather than skipped, and the run says how
 many were inferred that way; without that the 16384 set would price itself at a
 third of reality and decide it needs no split.
 
-Current estimates: 4096 at 362 MiB, 8192 at 709 MiB, 16384 at 1717 MiB against
-a 1900 MiB threshold. So on intended formats the 16k pack still fits as one
-asset — it is 1848 MiB today because six opaque colour maps ship as DXT5. The
-gas giant moon upgrades are what tip it over, and `auto` flips on its own when
-they land.
+Current estimates: 4096 at 452 MiB, 8192 at 921 MiB, 16384 at **1991 MiB**
+against a 1900 MiB threshold — so `auto` now splits the 16k pack into ten
+per-group assets, and leaves the other two as single assets.
+
+It tipped over when `Saturn_NRM` was declared: 16384x8192 DXT5 with a full mip
+chain is 170.7 MiB on its own. That was the predicted trigger and `auto`
+flipped without being asked, but it is not a silent change — **a split 16384
+release needs its NetKAN PR to land with it**, for the reason in
+[Asset naming and CKAN](#asset-naming-and-ckan) below. Until that is ready,
+`--split none --limit 2048` still produces a single `16384.zip`, which fits
+under GitHub's hard cap but not by much.
 
 ## Determinism
 

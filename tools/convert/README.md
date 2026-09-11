@@ -90,12 +90,29 @@ and nearest matches it outright — the signature of two independent resamplings
 of the same terrain rather than one derived from the other. TopoConv resamples
 the source DEM at each target width; that is what produced the shipped files.
 
-Downscaling instead would move terrain by tens of metres and put landed craft
-underground. `--allow-height-downscale` overrides it for experiments.
-
 This is what the manifest's `topoconv` field is for. Heights are *generated per
 set* by TopoConv from the DEM, not derived from each other, and the invocation
 belongs next to the `rss` offset/deformity values it determines.
+
+### ...but only where a DEM exists
+
+That measurement compares a downscale against a DEM resample, so it argues for
+preferring the DEM — not against downscaling as such. Most heightmaps have no
+DEM behind them at all: the PNG is the primary source, or the map was derived
+from a normal map in someone's image editor. Refusing to downscale those means
+the 4096 and 8192 packs ship no terrain for those bodies, which is strictly
+worse than terrain resampled a little differently.
+
+So `convert.mjs` downscales a heightmap from its source PNG — 16-bit
+throughout, median-filtered, the same filter TopoConv uses — and defers to
+`heights.mjs` only for maps that declare a `topoconv` spec, which would
+otherwise be generated twice and overwritten. A downscaled heightmap says so in
+its conversion report note.
+
+The caution that motivated the old restriction still holds, and is handled
+where it belongs: a regenerated heightmap moves terrain under landed craft, so
+`heights.mjs --compare` reports drift against what already shipped, the build
+raises it as a warning annotation, and the release still gets cut.
 
 ## Heightmaps from a DEM
 
@@ -105,7 +122,7 @@ them the same way `convert.mjs` fetches sources — same `--sources` tag, same
 
 ```sh
 node tools/convert/heights.mjs --list
-node tools/convert/heights.mjs --sources v0.0.1 --set 8192 --out overlay/8192
+node tools/convert/heights.mjs --set 8192 --out overlay/8192
 node tools/convert/heights.mjs --dem topo30=D:/topo30.raw --set 8192 --out overlay/8192
 ```
 
@@ -272,9 +289,9 @@ The two things that used to keep this out of the release build are both
 answered rather than ignored:
 
 - **The DEM is nowhere CI can reach.** No longer true — DEMs ship on the source
-  release, so the existing `.cache/sources` cache covers them. That cache entry
-  grows to roughly 4.2 GiB, which is worth watching against a hosted runner's
-  ~14 GB of free disk and a 6 GB checkout.
+  release, so the shared `.cache/sources` entry covers them. That entry is
+  7.78 GiB, which is worth watching against a hosted runner's ~14 GB of free
+  disk and a 6 GB checkout, and against the 10 GB per-repository cache limit.
 - **Regenerated terrain moves.** Still true, and now surfaced instead of
   deferred. The build compares against the shipped heightmap and, when they
   disagree, emits a `::warning::` annotation on the run and a callout in the
@@ -288,18 +305,61 @@ set, which needs no DEM, so a broken heightmap path fails in seconds instead of
 after three jobs have each pulled 1.74 GiB.
 
 Only `EarthHeight` has a `topoconv` spec so far. The other 28 heightmaps have
-no recorded invocation, so they cannot be regenerated — `--list` names them.
+no recorded invocation, so they cannot be regenerated from a DEM — `--list`
+names them, and `convert.mjs` produces their set variants by downscaling the
+source PNG.
 
 ## Sources
 
+No source release is pinned anywhere: every tool defaults to the latest
+release of `KSP-RO/RSS-Textures-Source`, and `--sources <tag>` pins an older
+one when a build has to be reproduced.
+
 ```sh
-node tools/convert/convert.mjs --preflight --sources v0.0.1
+node tools/convert/convert.mjs --preflight
+node tools/convert/convert.mjs --set 4096 --out build/4096
+node tools/convert/convert.mjs --print-tag            # which release that is
 node tools/convert/convert.mjs --set 4096 --sources v0.0.1 --out build/4096
 ```
+
+The workflow resolves the tag once, in the gate job, and passes it to all
+three build jobs — so the sets in one release always come from the same source
+release even if one is published mid-run, and so the download cache still has
+an immutable key.
 
 Bodies are fetched on demand and cached by asset id and size, so a rebuild
 downloads nothing. Only the bodies a run needs are pulled — the full set is
 2.5 GiB compressed, 5.7 GiB of PNG.
+
+### Fetching once, for all three sets
+
+```sh
+node tools/convert/fetch-sources.mjs --dry-run   # what a build will pull
+node tools/convert/fetch-sources.mjs             # pull it into .cache/sources
+```
+
+The three sets build as a matrix, one runner each, and every one of them wants
+the same 34 body archives and the same DEM:
+
+```
+source release v0.0.1: 35 asset(s), 7.78 GiB
+  dem  topo30      1779.8 MiB  topo30.raw
+  body Venus       1089.0 MiB  Venus.zip
+  body Earth        739.3 MiB  Earth.zip
+  ...
+```
+
+Left to themselves that is **23 GiB per run to deliver 7.8 GiB of distinct
+bytes**, and on a cold cache all three also race to write the same cache entry,
+so two lose and warn. So a `sources` job runs between the gate and the matrix:
+it fetches once and saves the cache, and the build jobs restore it without ever
+writing it. A restore miss is a warning, not a failure — the converter fetches
+whatever is absent, so the build is still correct, just slower.
+
+Note that matrix jobs get a runner each, so this was never three copies on one
+disk; the cost was bandwidth and time, and the risk was three sets built from
+different bytes. Run the same tool locally before going offline and every
+subsequent build is local.
 
 The set being partial is a first-class case, not an error. A run reports:
 

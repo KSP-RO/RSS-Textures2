@@ -6,7 +6,8 @@
 //   node tools/convert/heights.mjs --list
 //
 //   --sources <tag>    release tag on KSP-RO/RSS-Textures-Source to fetch DEMs
-//                      from ("latest" works), the same tag convert.mjs takes
+//                      from, the same tag convert.mjs takes. Defaults to the
+//                      latest release
 //   --cache <dir>      where downloaded DEMs live, default .cache/sources
 //   --dem <id>=<path>  use a local file for a DEM instead of downloading it.
 //                      Repeatable; wins over --sources.
@@ -51,8 +52,7 @@ import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { readHeader } from '../manifest/lib/dds.mjs';
-import { readLevels } from './lib/dds-io.mjs';
-import { unpack16 } from './lib/pixels.mjs';
+import { compareAgainstShipped } from './lib/heightdiff.mjs';
 import { buildCommand } from './lib/topoconv.mjs';
 import { listRelease, fetchAsset } from './lib/sources.mjs';
 
@@ -66,7 +66,7 @@ function parseArgs(argv) {
   const o = {
     manifest: 'manifest/textures.json', set: null, out: null, only: null,
     dems: {}, topoconv: process.env.TOPOCONV || DEFAULT_TOPOCONV,
-    sources: null, cache: join('.cache', 'sources'),
+    sources: 'latest', cache: join('.cache', 'sources'),
     compare: null, driftWarn: 1, report: null, list: false, dryRun: false,
   };
   for (let i = 0; i < argv.length; i++) {
@@ -177,37 +177,6 @@ async function locateDems(manifest, opts, needed) {
   return located;
 }
 
-/** Compare a generated heightmap against the one a set currently ships. */
-async function compareAgainstShipped(generated, shipped, rss) {
-  if (!(await exists(shipped))) return { note: 'no shipped counterpart at ' + shipped };
-  const hg = await readHeader(generated);
-  const hs = await readHeader(shipped);
-  if (hg.width !== hs.width || hg.height !== hs.height) {
-    return { note: 'shipped is ' + hs.width + 'x' + hs.height + ', generated is ' + hg.width + 'x' + hg.height };
-  }
-  if (hg.format !== 'R16' || hs.format !== 'R16') {
-    return { note: 'comparison only implemented for R16 (' + hs.format + ' vs ' + hg.format + ')' };
-  }
-  const [lg] = await readLevels(generated, { format: 'R16', width: hg.width, height: hg.height, levels: 1 });
-  const [ls] = await readLevels(shipped, { format: 'R16', width: hs.width, height: hs.height, levels: 1 });
-  const G = unpack16(lg, hg.width, hg.height);
-  const S = unpack16(ls, hs.width, hs.height);
-
-  const metresPerUnit = rss.deformity / 65535;
-  let same = 0, sum = 0, max = 0;
-  for (let i = 0; i < G.length; i++) {
-    const d = Math.abs(G[i] - S[i]);
-    if (d === 0) same++;
-    sum += d;
-    if (d > max) max = d;
-  }
-  return {
-    identicalPct: same / G.length * 100,
-    meanMetres: (sum / G.length) * metresPerUnit,
-    maxMetres: max * metresPerUnit,
-  };
-}
-
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const manifest = JSON.parse(await readFile(opts.manifest, 'utf8'));
@@ -269,7 +238,7 @@ async function main() {
     const demPath = demPaths[s.spec.dem];
     if (!demPath) {
       skipped.push({ map: s.mapName, why: 'DEM "' + s.spec.dem + '" not supplied' +
-        (opts.sources ? '' : ' (pass --sources <tag> or --dem ' + s.spec.dem + '=<path>)') });
+        (opts.sources ? '' : ' (pass --dem ' + s.spec.dem + '=<path>)') });
       continue;
     }
     if (!opts.dryRun && !(await exists(demPath))) {
@@ -343,10 +312,14 @@ async function main() {
     const c = b.comparison;
     if (!c) continue;
     if (c.note) { console.log('      vs shipped: ' + c.note); continue; }
+    // Metres need rss.deformity. A map that has not had its Kopernicus values
+    // imported yet still gets compared, just in channel units.
     console.log('      vs shipped: identical ' + c.identicalPct.toFixed(2) + '%   ' +
-      'mean ' + c.meanMetres.toFixed(1) + ' m   max ' + c.maxMetres.toFixed(0) + ' m');
+      (c.meanMetres === null
+        ? 'mean ' + c.meanUnits.toFixed(1) + '   max ' + c.maxUnits + ' units (no rss.deformity, so no metres)'
+        : 'mean ' + c.meanMetres.toFixed(1) + ' m   max ' + c.maxMetres.toFixed(0) + ' m'));
 
-    if (c.meanMetres > opts.driftWarn) {
+    if (c.meanMetres !== null && c.meanMetres > opts.driftWarn) {
       b.drifted = true;
       drifted.push({ map: b.map, mean: c.meanMetres, max: c.maxMetres });
       console.log('      TERRAIN MOVED: more than ' + opts.driftWarn +

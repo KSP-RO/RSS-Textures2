@@ -27,6 +27,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { expectedFileSize, fullChainLevels } from './lib/dds.mjs';
 import { SETS, parseSets } from './lib/sets.mjs';
+import { splitMapName } from './lib/mapname.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 
 // GitHub refuses any push containing a file above this, which is why 17 of the
@@ -125,6 +126,24 @@ function validateManifest(m) {
       if (!m.bodies[b]) problems.push('group ' + gName + ' lists unknown body ' + b);
     }
   }
+
+  // Shared textures belong to no body and are packaged into every asset, so
+  // they must not also appear as one. A shared texture that is secretly a body
+  // map would ship twice and be checked under two sets of rules.
+  for (const [mapName, map] of Object.entries(m.shared ?? {})) {
+    const { body, kind } = splitMapName(mapName);
+    if (m.bodies[body]?.maps?.[kind]) {
+      problems.push(mapName + ': declared both as a shared texture and as ' + body + '.' + kind);
+    }
+    const [w, h] = map.native ?? [];
+    if (!isPow2(w) || !isPow2(h)) {
+      problems.push(mapName + ': native ' + w + 'x' + h + ' is not power-of-two');
+    }
+    const spec = m.kinds[kind];
+    if (spec && !spec.formats.includes(map.format)) {
+      problems.push(mapName + ': format ' + map.format + ' not allowed for ' + kind);
+    }
+  }
   return problems;
 }
 
@@ -166,24 +185,25 @@ async function main() {
   const found = [];
   const setsToCheck = opts.set ? [opts.set] : opts.sets;
 
+  // Every texture the manifest declares: body maps, plus the shared textures
+  // that belong to no body (see manifest.shared).
+  const allMaps = [];
   for (const [bodyName, body] of Object.entries(manifest.bodies)) {
     for (const [kind, map] of Object.entries(body.maps)) {
-      const mapName = bodyName + kind;
+      allMaps.push({ mapName: bodyName + kind, kind, map });
+    }
+  }
+  for (const [mapName, map] of Object.entries(manifest.shared ?? {})) {
+    allMaps.push({ mapName, kind: splitMapName(mapName).kind, map, shared: true });
+  }
+
+  {
+    for (const { mapName, kind, map } of allMaps) {
       const obs = observed.maps[mapName];
       for (const setName of setsToCheck) {
         const want = expectedFor(map, setName);
         const got = obs?.sets?.[setName];
         if (!got) {
-          // A pending map is declared from a source asset but has never
-          // shipped, so its absence is the expected state rather than a fault.
-          // It still gets checked once it does appear.
-          if (map.status === 'pending') {
-            found.push({
-              map: mapName, set: setName, kind: 'missing', pending: true,
-              reason: 'declared as pending: source exists but this map has not shipped yet',
-            });
-            continue;
-          }
           const oversize = !observed.release && tooBigForGit(want);
           found.push({
             map: mapName, set: setName, kind: 'missing',
@@ -212,7 +232,7 @@ async function main() {
             expected: got.sizeMismatch.expected + ' B', actual: got.sizeMismatch.actual + ' B',
           });
         }
-        const wantInstall = map.install ?? manifest.kinds[kind].install;
+        const wantInstall = map.install ?? manifest.kinds[kind]?.install;
         if (got.install && got.install !== wantInstall) {
           found.push({ map: mapName, set: setName, kind: 'install', expected: wantInstall, actual: got.install });
         }
@@ -220,11 +240,9 @@ async function main() {
     }
   }
 
-  // Anything in the tree the manifest has never heard of.
-  const declared = new Set();
-  for (const [bodyName, body] of Object.entries(manifest.bodies)) {
-    for (const kind of Object.keys(body.maps)) declared.add(bodyName + kind);
-  }
+  // Anything in the tree the manifest has never heard of. allMaps already
+  // covers both body maps and shared textures.
+  const declared = new Set(allMaps.map((m) => m.mapName));
   for (const mapName of Object.keys(observed.maps)) {
     if (!declared.has(mapName)) {
       found.push({ map: mapName, set: '*', kind: 'undeclared', reason: 'present in the tree but absent from the manifest' });
@@ -232,11 +250,10 @@ async function main() {
   }
 
   const isKnown = (d) => !opts.strict &&
-    (known.has(deviationKey(d)) || d.oversize === true || d.pending === true);
+    (known.has(deviationKey(d)) || d.oversize === true);
   const errors = found.filter((d) => !isKnown(d));
   const warnings = found.filter(isKnown);
   const oversizeCount = warnings.filter((d) => d.oversize).length;
-  const pendingCount = warnings.filter((d) => d.pending).length;
 
   // Provenance completeness, reported always but only fatal under --strict.
   const todo = [];
@@ -293,10 +310,6 @@ async function main() {
       if (oversizeCount) {
         console.log('  ' + oversizeCount + ' of these are files above the GitHub 100 MiB limit, absent from');
         console.log('  the checkout by design - pass --release latest to check them too');
-      }
-      if (pendingCount) {
-        console.log('  ' + pendingCount + ' are maps marked pending: a source asset exists but the');
-        console.log('  map has never shipped in this set');
       }
       console.log('');
     }

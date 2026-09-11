@@ -143,18 +143,11 @@ async function collect(manifest, root, overlay, setName) {
   const groups = new Map();
   const missing = [];
   const fromOverlay = [];
+  const shared = [];
 
-  let pending = 0;
   for (const [bodyName, body] of Object.entries(manifest.bodies)) {
     const groupName = body.group ?? 'Ungrouped';
     for (const [kind, map] of Object.entries(body.maps)) {
-      // A pending map is declared from a source asset but has never shipped.
-      // It is not part of a release, so it must not be packaged and must not
-      // be counted toward the size estimate that decides whether to split -
-      // sizing a release by textures that do not exist is how you conclude a
-      // pack needs splitting when it does not, or the reverse.
-      if (map.status === 'pending') { pending++; continue; }
-
       const mapName = bodyName + kind;
       const install = map.install ?? manifest.kinds[kind].install;
       const { path: source, from } = await resolveSource(root, overlay, setName, mapName, install);
@@ -181,6 +174,30 @@ async function collect(manifest, root, overlay, setName) {
     }
   }
 
+  // Textures that belong to no body go into every asset, for the same reason
+  // the README does: a user who takes only some groups must still get them.
+  // Flat_NRM is the placeholder normal map ten RSS configs point at; when it
+  // was modelled as a body called "Flat" it landed in exactly one group, so
+  // which groups you installed decided whether you got it.
+  for (const [mapName, map] of Object.entries(manifest.shared ?? {})) {
+    const install = map.install ?? 'PluginData';
+    const { path: source, from } = await resolveSource(root, overlay, setName, mapName, install);
+    if (!(await exists(source))) {
+      missing.push({
+        map: mapName, set: setName, source,
+        expectedBytes: expectedFileSize(map.format, map.native[0], map.native[1],
+          map.mips === 'full' ? fullChainLevels(map.native[0], map.native[1]) : 1),
+      });
+      continue;
+    }
+    if (from === 'overlay') fromOverlay.push(mapName);
+    const bytes = (await stat(source)).size;
+    for (const bucket of groups.values()) {
+      bucket.push({ source, name: archivePath(mapName, install), bytes });
+    }
+    shared.push(mapName);
+  }
+
   // Documentation ships in every asset, so a partial download is still
   // self-describing and still carries its licence terms.
   for (const doc of ['README.txt']) {
@@ -191,7 +208,7 @@ async function collect(manifest, root, overlay, setName) {
     }
   }
 
-  return { groups, missing, pending, fromOverlay };
+  return { groups, missing, fromOverlay, shared };
 }
 
 /**
@@ -246,11 +263,11 @@ async function main() {
       console.log('=== set ' + setName + ' ===');
       console.log('  overlay matches its conversion report (' + n + ' map(s))');
     }
-    const { groups, missing, pending, fromOverlay } = await collect(manifest, opts.root, opts.overlay, setName);
+    const { groups, missing, fromOverlay, shared } = await collect(manifest, opts.root, opts.overlay, setName);
     const plan = planAssets(setName, groups, opts.split, opts.limit, missing);
 
     if (!opts.overlayReport) console.log('=== set ' + setName + ' ===');
-    if (pending) console.log('  ' + pending + ' map(s) marked pending, not part of a release');
+    if (shared.length) console.log('  ' + shared.length + ' shared texture(s) in every asset: ' + shared.join(', '));
     if (opts.overlay) {
       console.log('  ' + fromOverlay.length + ' map(s) taken from the overlay, the rest from the checkout');
       if (fromOverlay.length) console.log('    ' + fromOverlay.sort().join(', '));

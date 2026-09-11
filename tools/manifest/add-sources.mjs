@@ -5,7 +5,7 @@
 //   node tools/manifest/add-sources.mjs --sources v0.0.1 --write
 //   node tools/manifest/add-sources.mjs --sources v0.0.1 --group Eris=Pluto --write
 //
-//   --sources <tag>   release tag on KSP-RO/RSS-Textures-Source
+//   --sources <tag>   release tag on KSP-RO/RSS-Textures-Source, default latest
 //   --cache <dir>     source download cache, default .cache/sources
 //   --manifest <file> default manifest/textures.json
 //   --group B=G       packaging group for a body the manifest does not know
@@ -17,11 +17,13 @@
 // how a manifest drifts out of step with reality, so this derives each entry
 // from the actual PNG.
 //
-// New entries are marked "status": "pending": declared, buildable, but not yet
-// shipped in any set. verify.mjs expects them to be absent rather than
-// reporting them as missing.
+// An entry added here is a map the next release ships. Nothing marks it as
+// provisional: everything the sources can produce goes into the package, so a
+// map that is declared but absent from the checkout is a gap for the build to
+// fill rather than a state to record.
 
 import { readFile, writeFile } from 'node:fs/promises';
+import { SETS } from './lib/sets.mjs';
 import { readZipDirectory } from './lib/zip.mjs';
 import { splitMapName, normalizeMapName, manifestMapIndex } from './lib/mapname.mjs';
 import { listRelease, fetchAsset, indexZip, extractEntry } from '../convert/lib/sources.mjs';
@@ -36,7 +38,7 @@ const DEFAULT_GROUPS = {
 
 function parseArgs(argv) {
   const o = {
-    sources: null, cache: '.cache/sources',
+    sources: 'latest', cache: '.cache/sources',
     manifest: 'manifest/textures.json', write: false, groups: { ...DEFAULT_GROUPS },
   };
   for (let i = 0; i < argv.length; i++) {
@@ -51,7 +53,6 @@ function parseArgs(argv) {
       o.groups[body] = group;
     } else throw new Error('unknown option: ' + a);
   }
-  if (!o.sources) throw new Error('need --sources <tag>');
   return o;
 }
 
@@ -96,10 +97,12 @@ async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const manifest = JSON.parse(await readFile(opts.manifest, 'utf8'));
 
-  const declared = new Set();
-  for (const [bodyName, body] of Object.entries(manifest.bodies)) {
-    for (const kind of Object.keys(body.maps)) declared.add(bodyName + kind);
-  }
+  // Keyed on the normalized name, because that is what the source spellings
+  // are folded to below: a zip carrying Earth_Color.png must match a manifest
+  // entry called EarthColor. Comparing against the canonical spellings instead
+  // made every source map look undeclared, which would have rewritten the
+  // entire manifest from the sources.
+  const declared = manifestMapIndex(manifest);
 
   // Read each archive's central directory over a range request first, so we
   // only download bodies that actually carry something new.
@@ -159,7 +162,6 @@ async function main() {
         source: 'release:' + rel.tag + '/' + entry.asset + '#' + zipEntry.name,
         derivedFrom: null,
         generation: 1,
-        status: 'pending',
       };
       if (kind === 'Height') {
         map.rss = { offset: null, deformity: null };
@@ -168,6 +170,24 @@ async function main() {
       map.todo = kind === 'Height' ? ['rss.offset', 'rss.deformity', 'topoconv'] : [];
 
       manifest.bodies[mapBody].maps[kind] = map;
+
+      // The map is declared but no DDS for it is in the checkout - it has
+      // never shipped. Record that the way every other gap is recorded, so
+      // verify.mjs stays green and the list of maps waiting on a release is
+      // explicit rather than a rule hidden in the verifier. Each entry clears
+      // itself once the map ships, because a deviation that does not fire is
+      // never consulted.
+      const mapName = mapBody + kind;
+      const seen = new Set(manifest.knownDeviations.map((d) => d.map + '|' + d.set + '|' + d.kind));
+      for (const set of SETS) {
+        if (seen.has(mapName + '|' + set + '|missing')) continue;
+        manifest.knownDeviations.push({
+          map: mapName, set, kind: 'missing',
+          reason: 'declared from a source asset and produced by the build; no DDS for it ' +
+            'has ever shipped, so a checkout does not have one. Delete this entry once the map ships.',
+        });
+      }
+
       added.push({
         map: stem, body: mapBody, kind, format,
         size: img.width + 'x' + img.height,
@@ -189,13 +209,17 @@ async function main() {
     for (const p of problems) console.log('  ' + p);
   }
 
-  // Sort bodies so the file stays diffable.
+  // Sort bodies and deviations so the file stays diffable.
   manifest.bodies = Object.fromEntries(
     Object.entries(manifest.bodies).sort(([a], [b]) => a.localeCompare(b)));
+  manifest.knownDeviations.sort((a, b) =>
+    a.map.localeCompare(b.map) ||
+    String(a.set).localeCompare(String(b.set)) ||
+    a.kind.localeCompare(b.kind));
 
   if (opts.write) {
     await writeFile(opts.manifest, JSON.stringify(manifest, null, 2) + '\n');
-    console.log('\nupdated ' + opts.manifest + ' (' + added.length + ' entries, status "pending")');
+    console.log('\nupdated ' + opts.manifest + ' (' + added.length + ' entries)');
   } else {
     console.log('\n(dry run - pass --write to update the manifest)');
   }

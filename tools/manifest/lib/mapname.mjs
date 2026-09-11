@@ -107,5 +107,12 @@ export function manifestMapIndex(manifest) {
       index.set(normalizeMapName(bodyName + kind), bodyName + kind);
     }
   }
+  // Shared textures belong to no body, so they are not reachable through
+  // bodies/maps - but they are declared, and a caller asking "does the manifest
+  // know this name" must be told yes. Leaving them out made Flat_NRM.png in a
+  // source archive look like art nobody had declared.
+  for (const mapName of Object.keys(manifest.shared ?? {})) {
+    index.set(normalizeMapName(mapName), mapName);
+  }
   return index;
 }

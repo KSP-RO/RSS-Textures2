@@ -33,23 +33,32 @@ on:
 permissions:
   contents: write
 
-env:
-  # Source release to convert from. Pinned rather than "latest" so a release is
-  # reproducible and so the download cache has a stable key. Bump it when a new
-  # source release lands.
-  SOURCE_TAG: v0.0.1
-
 jobs:
   # Gate the build: the manifest must be internally consistent, the checkout
   # must not have drifted from it in ways nobody recorded, and every tool must
   # actually do something.
   verify:
     runs-on: ubuntu-latest
+    outputs:
+      source_tag: ${{ steps.sources.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      # No source release is pinned: a build converts whatever the sources repo
+      # published most recently. Resolved once, here, and handed to every build
+      # job - so all three sets come from the same release even if one is
+      # published mid-run, and so the download cache still has a stable key.
+      - name: Resolve the source release
+        id: sources
+        run: |
+          set -euo pipefail
+          tag="$(node tools/convert/convert.mjs --print-tag)"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "source release: $tag"
+
       # Every tool must actually do something. An earlier version of scan.mjs
       # guarded main() by comparing import.meta.url against a hand-built
       # "file:///" + argv[1], which never matches a POSIX path - so on Linux it
@@ -123,11 +132,60 @@ jobs:
               || { echo "heights.mjs produced no command for set $s"; exit 1; }
           done
 
+  # Fetch the source assets once, for all three sets.
+  #
+  # Each build job needs the same 6.04 GiB of body archives and the same
+  # 1.74 GiB DEM, and matrix jobs get a runner each, so left alone the three of
+  # them pull 23 GiB per run to deliver 7.8 GiB of distinct bytes. They also
+  # all miss the same cold cache and then all race to write it, so two lose and
+  # warn. Downloading here instead makes it one fetch, and makes it impossible
+  # for the three sets in a release to come from different source bytes because
+  # a new source release landed mid-run.
+  #
+  # Sparse checkout because this job needs the tools and the manifest, not the
+  # 3.4 GB of textures - and blob:none so the clone does not carry them either.
+  sources:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools
+            manifest
+          filter: blob:none
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # lookup-only, so a warm cache costs an index read rather than a 6 GiB
+      # restore this job would do nothing with.
+      - name: Look for a populated cache
+        id: lookup
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/sources
+          key: rss-sources-${{ needs.verify.outputs.source_tag }}
+          lookup-only: true
+
+      - name: Fetch source assets
+        if: steps.lookup.outputs.cache-hit != 'true'
+        run: |
+          df -h .
+          node tools/convert/fetch-sources.mjs --sources "${{ needs.verify.outputs.source_tag }}"
+
+      - name: Save source assets
+        if: steps.lookup.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/sources
+          key: rss-sources-${{ needs.verify.outputs.source_tag }}
+
   # One job per set. Splitting the matrix keeps each runner's disk use down:
   # a full checkout is ~3.4 GB of textures on top of a ~2.9 GB clone, and a
   # hosted runner has roughly 14 GB free.
   build:
-    needs: verify
+    needs: [verify, sources]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -153,17 +211,29 @@ jobs:
         if: steps.cache-compressonator.outputs.cache-hit != 'true'
         run: node tools/convert/get-compressonator.mjs
 
-      # Source archives are ~2.5 GiB across 13 bodies, plus the DEMs the
-      # heightmap step fetches - topo30.raw alone is 1.74 GiB, so this cache
-      # entry is around 4.2 GiB. Cached on the release tag, which is
-      # immutable, so it downloads once per source release. Watch the disk
-      # step above if this grows: a hosted runner has roughly 14 GB free and
-      # the checkout already takes 6.
-      - name: Cache source assets
-        uses: actions/cache@v4
+      # Restore what the sources job fetched: 7.78 GiB of body archives and
+      # DEMs, keyed on the release tag, which is immutable. Restore only - this
+      # job never writes the entry, so the three sets cannot race each other
+      # for it.
+      #
+      # A miss is survivable rather than fatal: convert.mjs and heights.mjs
+      # fetch whatever is absent, so the build still produces the right bytes,
+      # just by downloading them three times. Worth a warning, not a failure.
+      # Watch the disk step above if this grows: a hosted runner has roughly
+      # 14 GB free and the checkout already takes 6.
+      - name: Restore source assets
+        id: sources
+        uses: actions/cache/restore@v4
         with:
           path: .cache/sources
-          key: rss-sources-${{ env.SOURCE_TAG }}
+          key: rss-sources-${{ needs.verify.outputs.source_tag }}
+
+      - name: Warn on a source cache miss
+        if: steps.source-cache.outputs.cache-hit != 'true'
+        run: >-
+          echo "::warning title=Source cache miss::No cache entry for
+          ${{ needs.verify.outputs.source_tag }}, so this job downloads the source assets itself.
+          The build is still correct, just slower and three times over."
 
       - name: Build TopoConv
         run: make -C tools/TopoConv
@@ -182,15 +252,17 @@ jobs:
           export COMPRESSONATOR
           node tools/convert/convert.mjs \
             --set ${{ matrix.set }} \
-            --sources "${SOURCE_TAG}" \
+            --sources "${{ needs.verify.outputs.source_tag }}" \
             --jobs 2 \
             --out "overlay/${{ matrix.set }}" \
             --report "convert-${{ matrix.set }}.json"
 
-      # Heightmaps come from the DEM, not from a larger heightmap: TopoConv
-      # resamples the source DEM at each target width, and halving an 8192
-      # heightmap misses the shipped 4096 by a mean of 56 m. So they are
-      # generated here rather than by convert.mjs, into the same overlay.
+      # Where a DEM exists, the heightmap comes from it rather than from a
+      # larger heightmap: TopoConv resamples the DEM at each target width, and
+      # halving an 8192 heightmap misses the shipped 4096 by a mean of 56 m.
+      # Only the maps carrying a `topoconv` spec have one; the rest are
+      # resampled from their source PNG by the step above, which is the only
+      # input they have.
       #
       # After the conversion step, deliberately: if a source release ever adds
       # an EarthHeight.png, convert.mjs would produce one, and the DEM-derived
@@ -216,7 +288,7 @@ jobs:
         run: |
           set -euo pipefail
           node tools/convert/heights.mjs \
-            --sources "${SOURCE_TAG}" \
+            --sources "${{ needs.verify.outputs.source_tag }}" \
             --set ${{ matrix.set }} \
             --out "overlay/${{ matrix.set }}" \
             --compare 4096 \
@@ -229,6 +301,21 @@ jobs:
       - name: Flag moved terrain
         if: always()
         run: |
+          c="convert-${{ matrix.set }}.json"
+          if [ -f "$c" ]; then
+            node -e '
+              const r = require("./" + process.argv[1]);
+              for (const b of r.built ?? []) {
+                const d = b.comparison;
+                if (!d || d.note || !(d.meanMetres > 1)) continue;
+                console.log("::warning title=Terrain moved (set " + process.argv[2] + ")::" +
+                  b.mapName + " was downscaled from its source heightmap and differs from " +
+                  "the shipped map by a mean of " + d.meanMetres.toFixed(1) + " m and a " +
+                  "maximum of " + d.maxMetres.toFixed(0) + " m. There is no DEM for this " +
+                  "map, so the source PNG is the only way to produce this set.");
+              }
+            ' "$c" "${{ matrix.set }}"
+          fi
           f="heights-${{ matrix.set }}.json"
           [ -f "$f" ] || exit 0
           node -e '

@@ -23,7 +23,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { readZipDirectory } from './lib/zip.mjs';
-import { splitMapName } from './lib/mapname.mjs';
+import { splitMapName, normalizeMapName, manifestMapIndex } from './lib/mapname.mjs';
 import { listRelease, fetchAsset, indexZip, extractEntry } from '../convert/lib/sources.mjs';
 import * as png from '../convert/lib/png.mjs';
 
@@ -110,7 +110,7 @@ async function main() {
     const stems = entries
       .filter((e) => !e.name.endsWith('/'))
       .map((e) => e.name.split('/').pop().replace(/\.[^.]+$/, ''));
-    const fresh = stems.filter((s) => !declared.has(s));
+    const fresh = stems.filter((s) => !declared.has(normalizeMapName(s)));
     if (fresh.length) needed.push({ body, entry, fresh });
   }
 
@@ -132,7 +132,7 @@ async function main() {
       const { body: mapBody, kind } = splitMapName(stem);
       if (!manifest.kinds[kind]) { problems.push(stem + ': unrecognised map kind'); continue; }
 
-      const zipEntry = index.byMap.get(stem);
+      const zipEntry = index.byMap.get(normalizeMapName(stem));
       const img = png.decode(extractEntry(index.buf, zipEntry));
       const rgba = kind === 'Height' ? null : png.toRGBA8(img);
       const format = chooseFormat(kind, img, rgba);

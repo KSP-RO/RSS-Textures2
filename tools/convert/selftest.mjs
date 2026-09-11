@@ -9,6 +9,7 @@
 //   2. header validity      every header we write parses back to what we meant
 //   3. resampling           downscale invariants on real image data
 //   4. swizzle              DXT5nm pack/unpack is lossless where it must be
+//   5. source name matching how loosely a source filename may be spelled
 //
 // Exits non-zero on any failure.
 
@@ -19,6 +20,7 @@ import { readHeader, HEADER_BYTES, levelBytes } from '../manifest/lib/dds.mjs';
 import { parseSets, SETS } from '../manifest/lib/sets.mjs';
 import { writeDDS, readLevels, buildHeader, levelGeometry } from './lib/dds-io.mjs';
 import { unpackToRGBA, packFromRGBA, resampleHalf, buildMipChain, wrapX, clampY } from './lib/pixels.mjs';
+import { splitMapName, normalizeMapName, manifestMapIndex } from '../manifest/lib/mapname.mjs';
 
 const REPO = process.cwd();
 let failures = 0;
@@ -204,6 +206,54 @@ function testSwizzle() {
   console.log('   ' + n + ' values checked through the swizzle');
 }
 
+async function testNameMatching() {
+  console.log('5. source name matching');
+  // Source assets are hand-authored by several people, so the same texture
+  // turns up as EarthColor.png, Earth_Color.png or earth_color.png. All three
+  // have to resolve, or a file is silently invisible to the build - which
+  // looks exactly like it not having been added yet.
+  // The source repository does not use the pack's kind names: it writes
+  // <Body>_Normal where the pack says _NRM, and <Body>_Rings where the pack
+  // says Ring. Both spellings have to land on the same texture.
+  const groups = [
+    ['EarthColor', 'Earth_Color', 'earth_color', 'EARTHCOLOR', 'eArTh_CoLoR'],
+    ['Earth_NRM', 'EarthNRM', 'earth_nrm', 'EARTH_NRM', 'Earth_Normal', 'earth_normal'],
+    ['SaturnRing', 'Saturn_Ring', 'saturn_ring', 'Saturn_Rings', 'SaturnRings'],
+    ['EarthBiomes', 'Earth_Biomes'],
+    ['EarthHeight', 'Earth_Height'],
+    ['EarthSurface', 'Earth_Surface'],
+  ];
+  for (const group of groups) {
+    const keys = new Set(group.map(normalizeMapName));
+    check(keys.size === 1, group[0] + ': all spellings fold together', [...keys].join(' vs '));
+  }
+
+  // The kind comes back canonical whatever the file used, so a new map gets
+  // the right manifest entry.
+  for (const [input, body, kind] of [
+    ['Earth_Color', 'Earth', 'Color'],
+    ['earth_nrm', 'earth', '_NRM'],
+    ['EarthNRM', 'Earth', '_NRM'],
+    ['Earth_Normal', 'Earth', '_NRM'],
+    ['Saturn_Rings', 'Saturn', 'Ring'],
+    ['Mars_Height', 'Mars', 'Height'],
+    ['SomethingElse', 'SomethingElse', 'Other'],
+  ]) {
+    const got = splitMapName(input);
+    check(got.body === body && got.kind === kind,
+      input + ' splits to ' + body + ' + ' + kind, JSON.stringify(got));
+  }
+
+  // Folding must not pair up two textures that are genuinely different.
+  const manifest = JSON.parse(await readFile('manifest/textures.json', 'utf8'));
+  const index = manifestMapIndex(manifest);
+  let declared = 0;
+  for (const body of Object.values(manifest.bodies)) declared += Object.keys(body.maps).length;
+  check(index.size === declared,
+    declared + ' manifest maps stay distinct when folded', 'collapsed to ' + index.size);
+  console.log('   ' + declared + ' map names, ' + groups.length + ' spelling groups checked');
+}
+
 async function main() {
   const args = process.argv.slice(2);
   let sets = SETS;
@@ -219,6 +269,7 @@ async function main() {
     testHeaders();
     await testResample(sets, tmp);
     testSwizzle();
+    await testNameMatching();
   } finally {
     await rm(tmp, { recursive: true, force: true });
   }

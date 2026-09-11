@@ -32,6 +32,7 @@ import {
 } from './lib/pixels.mjs';
 import { encodeLevel, backendFor, backendStatus } from './lib/encoders.mjs';
 import { listRelease, fetchAsset, indexZip, extractEntry } from './lib/sources.mjs';
+import { normalizeMapName, manifestMapIndex } from '../manifest/lib/mapname.mjs';
 import * as png from './lib/png.mjs';
 
 // How each kind is resampled when a set target is smaller than native.
@@ -214,7 +215,7 @@ async function convertMap(opts, manifest, ctx, bodyName, kind, map) {
   if (opts.from) {
     src = await loadFromSet(opts, mapName, install, kind);
   } else {
-    const found = ctx.sourceIndex.get(mapName);
+    const found = ctx.sourceIndex.get(normalizeMapName(mapName));
     if (!found) return { mapName, skipped: 'no source asset (the source set is partial)' };
     src = decodeSource(extractEntry(found.zip.buf, found.entry), kind, mapName);
   }
@@ -336,23 +337,26 @@ async function loadSources(opts, wantedBodies, manifest) {
   const loaded = [];
   const unknownToManifest = [];
 
-  const declared = new Set();
-  for (const [bodyName, body] of Object.entries(manifest.bodies)) {
-    for (const kind of Object.keys(body.maps)) declared.add(bodyName + kind);
-  }
+  // Keyed on the normalized name, so a source spelled Earth_Color.png is found
+  // by a manifest entry called EarthColor and vice versa.
+  const declared = manifestMapIndex(manifest);
 
   for (const [body, entry] of rel.bodies) {
     if (wantedBodies && !wantedBodies.has(body)) continue;
     const { path, cached } = await fetchAsset(entry, opts.cache);
     const zip = await indexZip(path);
     loaded.push({ body, asset: entry.asset, mib: entry.size / 1048576, cached, files: zip.byMap.size });
-    for (const [stem, e] of zip.byMap) {
-      if (!declared.has(stem)) unknownToManifest.push({ body, map: stem });
-      if (index.has(stem)) continue;
-      index.set(stem, { zip, entry: e, body });
+    for (const [key, e] of zip.byMap) {
+      // Report the spelling the file actually used, not the folded key.
+      if (!declared.has(key)) unknownToManifest.push({ body: entry.body, map: e.stem });
+      if (index.has(key)) continue;
+      index.set(key, { zip, entry: e, body });
     }
   }
-  return { tag: rel.tag, index, loaded, unknownToManifest, bodiesInRelease: [...rel.bodies.keys()] };
+  return {
+    tag: rel.tag, index, loaded, unknownToManifest, shadowed: rel.shadowed ?? [],
+    bodiesInRelease: [...rel.bodies.values()].map((b) => b.body),
+  };
 }
 
 async function main() {
@@ -378,11 +382,20 @@ async function main() {
     if (opts.sources) {
       const rel = await listRelease(opts.sources);
       console.log('\nsource release ' + rel.tag + ': ' + rel.bodies.size + ' bodies');
-      const known = new Set(Object.keys(manifest.bodies));
-      const extra = [...rel.bodies.keys()].filter((b) => !known.has(b));
-      const missing = [...known].filter((b) => !rel.bodies.has(b) && b !== 'Flat');
+      // rel.bodies is keyed on the lowercased body name; entry.body keeps the
+      // spelling the asset used.
+      const known = new Set(Object.keys(manifest.bodies).map((b) => b.toLowerCase()));
+      const extra = [...rel.bodies.values()]
+        .filter((b) => !known.has(b.body.toLowerCase())).map((b) => b.body);
+      const missing = Object.keys(manifest.bodies)
+        .filter((b) => !rel.bodies.has(b.toLowerCase()) && b !== 'Flat');
       console.log('  in the release but not the manifest: ' + (extra.join(', ') || 'none'));
-      console.log('  in the manifest but not the release: ' + missing.length + ' bodies');
+      console.log('  in the manifest but not the release: ' + missing.length + ' bodies' +
+        (missing.length ? ' (' + missing.join(', ') + ')' : ''));
+      if (rel.shadowed?.length) {
+        console.log('  published under both naming schemes, using the unprefixed asset: ' +
+          rel.shadowed.map((s) => s.body).join(', '));
+      }
     }
     return;
   }
@@ -404,13 +417,20 @@ async function main() {
 
   const ctx = { sourceIndex: new Map() };
   if (opts.sources) {
-    const wanted = new Set(tasks.map((t) => t.bodyName));
+    const wanted = new Set(tasks.map((t) => t.bodyName.toLowerCase()));
     const s = await loadSources(opts, wanted, manifest);
     ctx.sourceIndex = s.index;
     console.log('source release ' + s.tag + ', ' + s.loaded.length + ' body archive(s)');
     for (const l of s.loaded) {
       console.log('  ' + l.body.padEnd(12) + l.mib.toFixed(1).padStart(8) + ' MiB  ' +
         l.files + ' file(s)  ' + (l.cached ? 'cached' : 'downloaded'));
+    }
+    if (s.shadowed?.length) {
+      console.log('  ' + s.shadowed.length + ' body(ies) published under both naming schemes; ' +
+        'used the unprefixed asset:');
+      for (const sh of s.shadowed) {
+        console.log('    ' + sh.body.padEnd(12) + sh.used + '   (ignored ' + sh.ignored + ')');
+      }
     }
     if (s.unknownToManifest.length) {
       console.log('  ' + s.unknownToManifest.length + ' source file(s) with no manifest entry: ' +

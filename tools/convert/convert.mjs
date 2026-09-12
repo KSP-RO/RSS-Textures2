@@ -371,7 +371,7 @@ async function pool(items, limit, fn) {
  * manifest, and silently ignoring them would hide new art.
  */
 async function loadSources(opts, wantedBodies, manifest) {
-  const rel = await listRelease(opts.sources);
+  const rel = await listRelease(opts.sources, undefined, { cacheDir: opts.cache });
   const index = new Map();
   const loaded = [];
   const unknownToManifest = [];
@@ -408,7 +408,7 @@ async function main() {
   if (!opts.from) opts.sources ??= 'latest';
 
   if (opts.printTag) {
-    console.log((await listRelease(opts.sources)).tag);
+    console.log((await listRelease(opts.sources, undefined, { cacheDir: opts.cache })).tag);
     return;
   }
 
@@ -431,7 +431,7 @@ async function main() {
       console.log('  ' + String(v).padStart(4) + '  ' + k);
     }
     if (opts.sources) {
-      const rel = await listRelease(opts.sources);
+      const rel = await listRelease(opts.sources, undefined, { cacheDir: opts.cache });
       console.log('\nsource release ' + rel.tag + ': ' + rel.bodies.size + ' bodies');
       // rel.bodies is keyed on the lowercased body name; entry.body keeps the
       // spelling the asset used.

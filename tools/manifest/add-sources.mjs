@@ -106,7 +106,7 @@ async function main() {
 
   // Read each archive's central directory over a range request first, so we
   // only download bodies that actually carry something new.
-  const rel = await listRelease(opts.sources);
+  const rel = await listRelease(opts.sources, undefined, { cacheDir: opts.cache });
   const needed = [];
   for (const [body, entry] of rel.bodies) {
     const { entries } = await readZipDirectory(entry.url);

@@ -19,7 +19,87 @@ import { normalizeMapName } from '../../manifest/lib/mapname.mjs';
 
 const SOURCE_REPO = 'KSP-RO/RSS-Textures-Source';
 
-const GH = { accept: 'application/vnd.github+json' };
+/**
+ * Headers for an api.github.com request.
+ *
+ * Unauthenticated API access is 60 requests an hour *per source IP*, and
+ * GitHub-hosted runners leave through shared NAT per Azure region - so a
+ * handful of jobs anywhere in that region can exhaust it and every later
+ * request comes back 403. That is what killed one set of a three-set release
+ * while the other two, on runners elsewhere, sailed through.
+ *
+ * A token raises it to 1000 an hour for the repository. GITHUB_TOKEN is
+ * enough: a token grants API read access to any public repository, so the one
+ * minted for this repo can read the sources repo's releases.
+ */
+function ghHeaders() {
+  const h = { accept: 'application/vnd.github+json' };
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  if (token) h.authorization = 'Bearer ' + token;
+  return h;
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** What the API said, rather than a bare status code. */
+async function describe(res, url) {
+  let detail = '';
+  try {
+    const body = await res.json();
+    if (body?.message) detail = ': ' + body.message;
+  } catch { /* not JSON; the status is all we have */ }
+
+  const remaining = res.headers.get('x-ratelimit-remaining');
+  if (remaining === '0') {
+    const reset = Number(res.headers.get('x-ratelimit-reset'));
+    const mins = Number.isFinite(reset) ? Math.max(0, Math.ceil((reset * 1000 - Date.now()) / 60000)) : null;
+    detail += '\nRate limit exhausted' + (mins === null ? '' : ', resets in ~' + mins + ' min') + '.' +
+      (process.env.GITHUB_TOKEN || process.env.GH_TOKEN
+        ? ''
+        : '\nNo GITHUB_TOKEN/GH_TOKEN in the environment, so this request was' +
+          ' unauthenticated: 60/hour shared with every other runner on this IP.');
+  }
+  return 'GitHub API ' + res.status + ' for ' + url + detail;
+}
+
+/**
+ * GET from the API, retrying the failures that are worth retrying.
+ *
+ * 403 and 429 are rate limiting, 5xx is GitHub having a moment; both are
+ * transient and both otherwise fail a multi-gigabyte build at its first step.
+ * A rate limit that resets further out than the cap is not worth sleeping
+ * through - report it instead.
+ */
+async function ghFetch(url, { attempts = 3, maxWaitMs = 30000 } = {}) {
+  let last;
+  for (let i = 0; i < attempts; i++) {
+    const res = await fetch(url, { headers: ghHeaders() });
+    if (res.ok || res.status === 404) return res;
+    last = res;
+    if (![403, 429, 500, 502, 503, 504].includes(res.status)) break;
+    if (i === attempts - 1) break;
+
+    // Precedence matters, and the smallest wait is the wrong choice: an
+    // exhausted rate limit does not clear in two seconds, so backing off
+    // exponentially against one just burns the remaining attempts and buries
+    // the real reason. Take what the server said, and only invent a delay when
+    // it said nothing.
+    const retryAfter = Number(res.headers.get('retry-after'));
+    const reset = Number(res.headers.get('x-ratelimit-reset'));
+    let wait;
+    if (Number.isFinite(retryAfter) && retryAfter > 0) {
+      wait = retryAfter * 1000;
+    } else if (res.headers.get('x-ratelimit-remaining') === '0' && Number.isFinite(reset)) {
+      wait = reset * 1000 - Date.now();
+    } else {
+      wait = 2000 * 2 ** i;
+    }
+    if (!(wait > 0) || wait > maxWaitMs) break;
+    console.log('  GitHub API ' + res.status + ', retrying in ' + Math.ceil(wait / 1000) + 's');
+    await sleep(wait);
+  }
+  return last;
+}
 
 /**
  * Resolve a tag to a release.
@@ -33,28 +113,61 @@ const GH = { accept: 'application/vnd.github+json' };
 async function fetchRelease(tag, repo) {
   if (tag && tag !== 'latest') {
     const url = 'https://api.github.com/repos/' + repo + '/releases/tags/' + tag;
-    const res = await fetch(url, { headers: GH });
-    if (!res.ok) throw new Error('GitHub API ' + res.status + ' for ' + url);
+    const res = await ghFetch(url);
+    if (!res.ok) throw new Error(await describe(res, url));
     return res.json();
   }
 
-  const latest = await fetch('https://api.github.com/repos/' + repo + '/releases/latest', { headers: GH });
+  const latestUrl = 'https://api.github.com/repos/' + repo + '/releases/latest';
+  const latest = await ghFetch(latestUrl);
   if (latest.ok) return latest.json();
-  if (latest.status !== 404) {
-    throw new Error('GitHub API ' + latest.status + ' for the latest release of ' + repo);
-  }
+  if (latest.status !== 404) throw new Error(await describe(latest, latestUrl));
 
   const url = 'https://api.github.com/repos/' + repo + '/releases?per_page=30';
-  const res = await fetch(url, { headers: GH });
-  if (!res.ok) throw new Error('GitHub API ' + res.status + ' for ' + url);
+  const res = await ghFetch(url);
+  if (!res.ok) throw new Error(await describe(res, url));
   const all = (await res.json()).filter((r) => !r.draft);
   if (!all.length) throw new Error(repo + ' has published no releases');
   return all[0];
 }
 
+/** Where a resolved release index is remembered, next to the assets it describes. */
+function indexPath(cacheDir, repo, tag) {
+  return join(cacheDir, 'release-' + repo.replace(/[^A-Za-z0-9._-]/g, '-') + '-' + tag + '.json');
+}
+
+/**
+ * The release index, from the cache directory if it is already there.
+ *
+ * A build with a fully warm asset cache should not need the network at all,
+ * and until this existed it did: every job called the API purely to map a body
+ * name onto an asset id it already had on disk. One rate-limited request then
+ * failed a build that had everything it needed locally.
+ *
+ * Only for an explicit tag. "latest" means "whatever is newest", which is a
+ * question that has to be asked rather than remembered.
+ */
+async function cachedRelease(tag, repo, cacheDir) {
+  if (!cacheDir || !tag || tag === 'latest') return null;
+  try {
+    return JSON.parse(await readFile(indexPath(cacheDir, repo, tag), 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
 /** Everything published on a source release, indexed by body. */
-export async function listRelease(tag = 'latest', repo = SOURCE_REPO) {
-  const release = await fetchRelease(tag, repo);
+export async function listRelease(tag = 'latest', repo = SOURCE_REPO, { cacheDir = null } = {}) {
+  const release = (await cachedRelease(tag, repo, cacheDir)) ?? await fetchRelease(tag, repo);
+
+  // Remember it under the tag it resolved to, so a "latest" run that later
+  // becomes an explicit --sources run finds it too.
+  if (cacheDir && release.tag_name) {
+    try {
+      await mkdir(cacheDir, { recursive: true });
+      await writeFile(indexPath(cacheDir, repo, release.tag_name), JSON.stringify(release));
+    } catch { /* the cache is an optimisation; a build without it still works */ }
+  }
 
   const byBody = new Map();
   const byName = new Map();

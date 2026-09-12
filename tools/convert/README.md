@@ -361,6 +361,42 @@ disk; the cost was bandwidth and time, and the risk was three sets built from
 different bytes. Run the same tool locally before going offline and every
 subsequent build is local.
 
+### The release index is cached too
+
+In v19.0.6 the 4096 set failed with a bare `GitHub API 403` while 8192 and
+16384 finished. It had restored all 7.3 GB of sources seconds earlier: what it
+could not do was ask `api.github.com` which asset id `Mars.zip` has.
+
+Unauthenticated API access is 60 requests an hour **per source IP**, and
+GitHub-hosted runners leave through shared NAT per Azure region — so the budget
+is shared with every other runner in the region and can already be spent when a
+job starts. Nothing about the pack's own usage was excessive; two calls per job.
+
+Three things changed, in descending order of how much they matter:
+
+1. **A warm cache makes no API calls at all.** `fetch-sources.mjs` writes the
+   resolved release index next to the assets as
+   `release-<repo>-<tag>.json`, and `listRelease` reads it when given an
+   explicit tag. A build that has the bytes no longer phones home to find out
+   what they are called. `latest` still asks every time — "whatever is newest"
+   is a question, not something to remember.
+2. **Requests are authenticated** when `GITHUB_TOKEN` or `GH_TOKEN` is set,
+   which raises the limit to 1000/hour for the repository. The workflow sets it
+   once at the top level. Any valid token grants API read access to public
+   repositories, so the token minted for this repo can read the sources repo.
+3. **Failures retry and explain themselves.** `retry-after` and
+   `x-ratelimit-reset` are honoured when the wait is short; an exhausted limit
+   with a distant reset fails immediately rather than burning its attempts on
+   backoff that cannot help. The message now carries the API's own reason, when
+   the limit resets, and whether the request was authenticated:
+
+```
+GitHub API 403 for .../releases/tags/v0.0.1: API rate limit exceeded for 20.55.x.x.
+Rate limit exhausted, resets in ~40 min.
+No GITHUB_TOKEN/GH_TOKEN in the environment, so this request was unauthenticated:
+60/hour shared with every other runner on this IP.
+```
+
 The set being partial is a first-class case, not an error. A run reports:
 
 - maps with no source asset yet (skipped)

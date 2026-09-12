@@ -68,8 +68,17 @@ export async function findReleaseAsset(repo, tag, assetName) {
   const url = tag === 'latest'
     ? 'https://api.github.com/repos/' + repo + '/releases/latest'
     : 'https://api.github.com/repos/' + repo + '/releases/tags/' + tag;
-  const res = await fetch(url, { headers: { accept: 'application/vnd.github+json' } });
-  if (!res.ok) throw new Error('GitHub API ' + res.status + ' for ' + url);
+  // Authenticated where a token is available: unauthenticated API access is
+  // 60/hour per source IP, which CI runners share per region.
+  const headers = { accept: 'application/vnd.github+json' };
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  if (token) headers.authorization = 'Bearer ' + token;
+
+  const res = await fetch(url, { headers });
+  if (!res.ok) {
+    const why = res.headers.get('x-ratelimit-remaining') === '0' ? ' (rate limit exhausted)' : '';
+    throw new Error('GitHub API ' + res.status + why + ' for ' + url);
+  }
   const release = await res.json();
   const asset = release.assets.find((a) => a.name === assetName);
   if (!asset) {

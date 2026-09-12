@@ -33,6 +33,19 @@ on:
 permissions:
   contents: write
 
+# Every tool that reads the sources repo's release index goes through
+# api.github.com, and unauthenticated access there is 60 requests an hour *per
+# source IP*. GitHub-hosted runners leave through shared NAT per Azure region,
+# so that budget is shared with every other runner in the region and can
+# already be spent when a job starts. It is what failed the 4096 set of
+# v19.0.6 with a bare 403 while the other two sets, on runners elsewhere,
+# finished - and it had every source asset on disk at the time.
+#
+# A token raises the limit to 1000/hour for this repository. GITHUB_TOKEN is
+# enough: any valid token grants API read access to public repositories.
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   # Gate the build: the manifest must be internally consistent, the checkout
   # must not have drifted from it in ways nobody recorded, and every tool must
@@ -216,13 +229,17 @@ jobs:
       # job never writes the entry, so the three sets cannot race each other
       # for it.
       #
+      # The entry carries the resolved release index as well as the assets, so
+      # a hit here means this job makes no api.github.com calls at all - which
+      # is what the 4096 set of v19.0.6 needed and did not have.
+      #
       # A miss is survivable rather than fatal: convert.mjs and heights.mjs
       # fetch whatever is absent, so the build still produces the right bytes,
       # just by downloading them three times. Worth a warning, not a failure.
       # Watch the disk step above if this grows: a hosted runner has roughly
       # 14 GB free and the checkout already takes 6.
       - name: Restore source assets
-        id: sources
+        id: source-cache
         uses: actions/cache/restore@v4
         with:
           path: .cache/sources

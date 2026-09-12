@@ -151,7 +151,7 @@ async function locateDems(manifest, opts, needed) {
       continue;
     }
 
-    release ??= await listRelease(opts.sources);
+    release ??= await listRelease(opts.sources, undefined, { cacheDir: opts.cache });
     const entry = release.assets.get(dem.asset);
     if (!entry) {
       problems.push('release ' + release.tag + ' has no asset "' + dem.asset +

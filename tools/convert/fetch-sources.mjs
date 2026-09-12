@@ -98,7 +98,7 @@ function plan(manifest, rel) {
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const manifest = JSON.parse(await readFile(opts.manifest, 'utf8'));
-  const rel = await listRelease(opts.sources);
+  const rel = await listRelease(opts.sources, undefined, { cacheDir: opts.cache });
 
   const { wanted, problems } = plan(manifest, rel);
   if (problems.length) throw new Error(problems.join('\n'));

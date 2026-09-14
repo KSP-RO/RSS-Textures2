@@ -19,8 +19,9 @@ so explanatory text lives in `note` fields and in this file.
 
 ## Running the tools
 
-All of these are dependency-free Node scripts. Node 20+ is preinstalled on GitHub
-Actions runners, so CI needs no setup step.
+All of these are dependency-free Node scripts. CI pins Node 24 with
+actions/setup-node - 24 is what the runner images preinstall, so the setup step 
+resolves without a download.
 
 ```sh
 # What is actually on disk, as a table

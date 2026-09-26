@@ -1393,8 +1393,8 @@
       "maps": {
         "Biomes": {
           "native": [
-            2048,
-            1024
+            1024,
+            512
           ],
           "format": "A8B8G8R8",
           "mips": "none",
@@ -1579,8 +1579,8 @@
       "maps": {
         "Biomes": {
           "native": [
-            2048,
-            1024
+            1024,
+            512
           ],
           "format": "A8B8G8R8",
           "mips": "none",
@@ -2359,8 +2359,8 @@
       "maps": {
         "Biomes": {
           "native": [
-            2048,
-            1024
+            1024,
+            512
           ],
           "format": "A8B8G8R8",
           "mips": "none",
@@ -3097,6 +3097,30 @@
       "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
+      "map": "MirandaBiomes",
+      "set": "16384",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "MirandaBiomes",
+      "set": "4096",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "MirandaBiomes",
+      "set": "8192",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
       "map": "MirandaColor",
       "set": "16384",
       "kind": "format",
@@ -3229,6 +3253,30 @@
       "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
+      "map": "OberonBiomes",
+      "set": "16384",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "OberonBiomes",
+      "set": "4096",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "OberonBiomes",
+      "set": "8192",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
       "map": "OberonColor",
       "set": "16384",
       "kind": "format",
@@ -3729,6 +3777,30 @@
       "expected": 8192,
       "actual": 4096,
       "reason": "set ships a resolution that is not min(native, setCap)"
+    },
+    {
+      "map": "VestaBiomes",
+      "set": "16384",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "VestaBiomes",
+      "set": "4096",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "VestaBiomes",
+      "set": "8192",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
       "map": "VestaColor",

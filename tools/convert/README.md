@@ -400,7 +400,13 @@ No GITHUB_TOKEN/GH_TOKEN in the environment, so this request was unauthenticated
 The set being partial is a first-class case, not an error. A run reports:
 
 - maps with no source asset yet (skipped)
-- sources smaller than the set's target resolution (skipped, with both sizes)
+- sources smaller than the set's target resolution (built at the source's
+  own resolution, never upscaled, with both sizes in the note). These used to
+  be skipped, which fell back to older art in the checkout: the 4096 set got
+  the new `Neptune_Color.png` while 8192 and 16384 shipped two different old
+  maps. A set with a source must show that source. The manifest's `native`
+  should match the source, or `verify.mjs` on the built assets reports a size
+  deviation.
 - **source files the manifest has no entry for** — v0.0.1 carries
   `DioneHeight`, `Dione_NRM`, `EnceladusHeight`, `Enceladus_NRM`,
   `MimasHeight`, `Mimas_NRM`, `RheaHeight`, none of which exist in the

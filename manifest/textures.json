@@ -188,8 +188,8 @@
       "maps": {
         "Biomes": {
           "native": [
-            2048,
-            1024
+            1024,
+            512
           ],
           "format": "A8B8G8R8",
           "mips": "none",
@@ -840,8 +840,8 @@
         },
         "Color": {
           "native": [
-            8192,
-            4096
+            4096,
+            2048
           ],
           "format": "DXT5",
           "mips": "full",
@@ -877,8 +877,8 @@
         },
         "_NRM": {
           "native": [
-            8192,
-            4096
+            4096,
+            2048
           ],
           "format": "DXT5",
           "mips": "full",
@@ -1004,8 +1004,8 @@
       "maps": {
         "Biomes": {
           "native": [
-            2048,
-            1024
+            1024,
+            512
           ],
           "format": "A8B8G8R8",
           "mips": "none",
@@ -1121,8 +1121,8 @@
         },
         "_NRM": {
           "native": [
-            8192,
-            4096
+            4096,
+            2048
           ],
           "format": "DXT5",
           "mips": "full",
@@ -1548,8 +1548,8 @@
         },
         "Color": {
           "native": [
-            8192,
-            4096
+            4096,
+            2048
           ],
           "format": "DXT1",
           "mips": "full",
@@ -1789,8 +1789,8 @@
       "maps": {
         "Biomes": {
           "native": [
-            2048,
-            1024
+            1024,
+            512
           ],
           "format": "A8B8G8R8",
           "mips": "none",
@@ -2427,6 +2427,30 @@
   },
   "knownDeviations": [
     {
+      "map": "ArielBiomes",
+      "set": "16384",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "ArielBiomes",
+      "set": "4096",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "ArielBiomes",
+      "set": "8192",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
       "map": "ArielColor",
       "set": "16384",
       "kind": "format",
@@ -2729,6 +2753,38 @@
       "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
     },
     {
+      "map": "Europa_NRM",
+      "set": "16384",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "Europa_NRM",
+      "set": "8192",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "EuropaColor",
+      "set": "16384",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "EuropaColor",
+      "set": "8192",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
       "map": "GanymedeColor",
       "set": "16384",
       "kind": "format",
@@ -2805,6 +2861,30 @@
       "set": "8192",
       "kind": "missing",
       "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "IapetusBiomes",
+      "set": "16384",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "IapetusBiomes",
+      "set": "4096",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "IapetusBiomes",
+      "set": "8192",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
       "map": "IapetusColor",
@@ -2839,6 +2919,22 @@
       "set": "8192",
       "kind": "missing",
       "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "Io_NRM",
+      "set": "16384",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "Io_NRM",
+      "set": "8192",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
       "map": "IoColor",
@@ -3110,19 +3206,27 @@
     },
     {
       "map": "NeptuneColor",
+      "set": "16384",
+      "kind": "size",
+      "expected": 4096,
+      "actual": 8192,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "NeptuneColor",
       "set": "4096",
       "kind": "size",
       "expected": 4096,
       "actual": 2048,
-      "reason": "set ships a resolution that is not min(native, setCap)"
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
       "map": "NeptuneColor",
       "set": "8192",
       "kind": "size",
-      "expected": 8192,
+      "expected": 4096,
       "actual": 2048,
-      "reason": "set ships a resolution that is not min(native, setCap)"
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
       "map": "OberonColor",
@@ -3205,6 +3309,30 @@
       "set": "8192",
       "kind": "missing",
       "reason": "declared from a source asset and produced by the build; no DDS for it has ever shipped, so a checkout does not have one. Delete this entry once the map ships."
+    },
+    {
+      "map": "RheaBiomes",
+      "set": "16384",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "RheaBiomes",
+      "set": "4096",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
+    },
+    {
+      "map": "RheaBiomes",
+      "set": "8192",
+      "kind": "size",
+      "expected": 1024,
+      "actual": 2048,
+      "reason": "checkout carries older art than the source release, whose map is smaller than this set's cap; the build replaces it with the source at the source's own resolution so every set shows the same map. Delete this entry once the converted map is committed."
     },
     {
       "map": "RheaColor",

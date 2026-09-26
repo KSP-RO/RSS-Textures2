@@ -7,8 +7,9 @@ name: Build
 # Each build job converts everything the source release can produce into an
 # overlay, generates heightmaps from the release's DEMs with TopoConv into the
 # same overlay, then packages that overlay on top of the textures in the
-# checkout. Maps with no source, or a source below the set's target resolution,
-# fall back to the file that already ships. The job summary lists exactly which
+# checkout. Maps with no source fall back to the file that already ships; a
+# source below the set's target resolution is built at its own resolution
+# rather than mixed with older art from git. The job summary lists exactly which
 # textures in a release came from conversion, so an in-game test knows what it
 # is testing. See tools/build/README.md and tools/convert/README.md.
 #
@@ -256,8 +257,9 @@ jobs:
         run: make -C tools/TopoConv
 
       # Convert everything the sources can produce into an overlay. Maps with
-      # no source, or a source below this set's target resolution, are skipped
-      # and fall back to the texture already in the checkout.
+      # no source are skipped and fall back to the texture already in the
+      # checkout. A source below this set's target resolution is built at its
+      # own resolution, so every set of a map shows the same art.
       #
       # --jobs 2, not the default 4: EarthColor is 16384x8192 16-bit RGB, which
       # is 768 MB of samples plus 512 MB as RGBA8 plus a mip chain. Four of

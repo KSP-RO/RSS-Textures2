@@ -143,6 +143,13 @@ export async function writeZip(outPath, files, { level = zlibConstants.Z_DEFAULT
   if (sorted.length > MAX_ENTRIES) {
     throw new Error(outPath + ': ' + sorted.length + ' entries exceeds the non-zip64 limit of ' + MAX_ENTRIES);
   }
+  // A zip happily stores the same name twice, and unzip then prompts or
+  // silently overwrites. That is how every unsplit set once carried README.txt
+  // and Flat_NRM once per planetary group.
+  const dupes = sorted.filter((f, i) => i > 0 && f.name === sorted[i - 1].name).map((f) => f.name);
+  if (dupes.length) {
+    throw new Error(outPath + ': duplicate entries: ' + [...new Set(dupes)].join(', '));
+  }
 
   const out = createWriteStream(outPath);
   const write = (buf) => new Promise((resolve, reject) => {

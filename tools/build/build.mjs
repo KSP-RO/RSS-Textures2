@@ -179,6 +179,11 @@ async function collect(manifest, root, overlay, setName) {
   // Flat_NRM is the placeholder normal map ten RSS configs point at; when it
   // was modelled as a body called "Flat" it landed in exactly one group, so
   // which groups you installed decided whether you got it.
+  //
+  // Kept out of the group buckets and added per asset by planAssets. Pushing
+  // them into every bucket here meant an unsplit set, which flattens all the
+  // buckets into one zip, carried each of them once per planetary group.
+  const common = [];
   for (const [mapName, map] of Object.entries(manifest.shared ?? {})) {
     const install = map.install ?? 'PluginData';
     const { path: source, from } = await resolveSource(root, overlay, setName, mapName, install);
@@ -191,10 +196,7 @@ async function collect(manifest, root, overlay, setName) {
       continue;
     }
     if (from === 'overlay') fromOverlay.push(mapName);
-    const bytes = (await stat(source)).size;
-    for (const bucket of groups.values()) {
-      bucket.push({ source, name: archivePath(mapName, install), bytes });
-    }
+    common.push({ source, name: archivePath(mapName, install), bytes: (await stat(source)).size });
     shared.push(mapName);
   }
 
@@ -203,12 +205,10 @@ async function collect(manifest, root, overlay, setName) {
   for (const doc of ['README.txt']) {
     const p = join(root, doc);
     if (!(await exists(p))) continue;
-    for (const bucket of groups.values()) {
-      bucket.push({ source: p, name: 'GameData/RSS-Textures/' + doc, bytes: (await stat(p)).size });
-    }
+    common.push({ source: p, name: 'GameData/RSS-Textures/' + doc, bytes: (await stat(p)).size });
   }
 
-  return { groups, missing, fromOverlay, shared };
+  return { groups, common, missing, fromOverlay, shared };
 }
 
 /**
@@ -218,8 +218,8 @@ async function collect(manifest, root, overlay, setName) {
  * keeps the smaller packs as single assets and so leaves the existing CKAN
  * krefs for those untouched.
  */
-function planAssets(setName, groups, split, limitMiB, missing) {
-  const all = [...groups.values()].flat();
+function planAssets(setName, groups, common, split, limitMiB, missing) {
+  const all = [...[...groups.values()].flat(), ...common];
   const measured = all.reduce((n, f) => n + f.bytes, 0);
   const inferred = missing.reduce((n, m) => n + (m.expectedBytes ?? 0), 0);
 
@@ -236,7 +236,9 @@ function planAssets(setName, groups, split, limitMiB, missing) {
   }
   const assets = [...groups.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([groupName, files]) => ({ name: 'RSS-Textures-' + setName + '-' + groupName + '.zip', files, group: groupName }));
+    .map(([groupName, files]) => ({
+      name: 'RSS-Textures-' + setName + '-' + groupName + '.zip', files: [...files, ...common], group: groupName,
+    }));
   return { split: true, estimatedMiB, note, assets };
 }
 
@@ -263,8 +265,8 @@ async function main() {
       console.log('=== set ' + setName + ' ===');
       console.log('  overlay matches its conversion report (' + n + ' map(s))');
     }
-    const { groups, missing, fromOverlay, shared } = await collect(manifest, opts.root, opts.overlay, setName);
-    const plan = planAssets(setName, groups, opts.split, opts.limit, missing);
+    const { groups, common, missing, fromOverlay, shared } = await collect(manifest, opts.root, opts.overlay, setName);
+    const plan = planAssets(setName, groups, common, opts.split, opts.limit, missing);
 
     if (!opts.overlayReport) console.log('=== set ' + setName + ' ===');
     if (shared.length) console.log('  ' + shared.length + ' shared texture(s) in every asset: ' + shared.join(', '));

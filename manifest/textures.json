@@ -653,7 +653,7 @@
           ],
           "format": "R16",
           "mips": "none",
-          "source": null,
+          "source": "release:v0.0.1/Earth.zip#Earth/Earth_Height.png",
           "derivedFrom": null,
           "generation": 1,
           "rss": {
@@ -662,20 +662,8 @@
             "node": "VertexHeightMap",
             "source": "GameData/RealSolarSystem/RSSKopernicus/Earth/Earth.cfg:439"
           },
-          "topoconv": {
-            "dem": "topo30",
-            "srcEndian": "big",
-            "resample": "median",
-            "outMeridian": 90,
-            "flip": [
-              "x",
-              "y"
-            ],
-            "format": "r16"
-          },
-          "todo": [
-            "source"
-          ]
+          "topoconv": null,
+          "todo": []
         },
         "Surface": {
           "native": [

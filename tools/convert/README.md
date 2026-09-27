@@ -70,6 +70,19 @@ because on a power-of-two image a 2×2 footprint never straddles x=0. It starts
 mattering for wider kernels and for generating a normal map from height, where
 the gradient at x=0 must see the far edge.
 
+Source PNGs are north-up; every DDS in the pack has the south pole in its first
+row, because Unity uploads DDS rows as stored and treats the first as the
+bottom. So every source is flipped vertically as it is decoded, before
+resampling. The converter did not do this at first and built every map
+upside down: unflipped, MarsHeight missed the shipped 4096 by a mean of
+4.3 km; flipped, by 35 m, and MarsBiomes and MoonBiomes match texel for texel.
+The `--from` path reads DDS that are in pack order already and is not flipped.
+
+Normal maps are flipped the same way, with channels untouched, and that is
+not settled: the shipped `Moon_NRM` correlates with the flipped output at
++0.89 in x but −0.86 in green, which says either its source is
+DirectX-convention or the shipped map has green inverted.
+
 ## Heightmaps are not downscaled
 
 `convert.mjs` refuses to produce a heightmap by downscaling a larger one, and
@@ -151,8 +164,9 @@ geometry.
 
 This is also the one texture a release cannot carry from git. `EarthHeight` is
 absent from the checkout for the 8192 and 16384 sets — 256 MiB at 16384
-breaches GitHub's 100 MiB file limit — so those packs currently ship with no
-Earth terrain at all. Generating from the DEM fills that in:
+breaches GitHub's 100 MiB file limit — so those packs would ship with no
+Earth terrain at all. Generating it fills that in, now from the source PNG
+rather than the DEM (see below):
 
 ```
 === set 16384 ===                        before          after
@@ -197,6 +211,16 @@ to the ice sheets: this DEM lacks the ice-surface fill the shipped map has.
 Overall that is a mean of 286 m and a maximum of 7896 m.
 
 Publishing it would drop Antarctic terrain by roughly 2.7 km.
+
+So `EarthHeight` no longer has a `topoconv` spec, and is built by
+`convert.mjs` from `Earth/Earth_Height.png` on the source release instead: a
+16384×8192 16-bit map that carries the ice sheets. At 16384 the converter
+reproduces the released `16384.zip` `EarthHeight.dds` byte for byte (sha256
+`73fb9357…`), so the PNG is that release's map, flipped north-up. Downscaled
+to 8192 it misses the shipped 4096-set map by a mean of 27.7 m, against 286 m
+from the DEM. The spec it had is recorded here in case a DEM with ice surfaces turns
+up: `dem topo30`, big-endian, median, `-outmeridian 90`, `-xflip -yflip`,
+`r16`.
 
 **Drift is reported, not enforced.** `--compare <set>` measures the generated
 map against the one that set ships, and anything past `--drift-warn` (default
@@ -304,10 +328,12 @@ and each build job. The gate job also runs `--list` and a `--dry-run` for every
 set, which needs no DEM, so a broken heightmap path fails in seconds instead of
 after three jobs have each pulled 1.74 GiB.
 
-Only `EarthHeight` has a `topoconv` spec so far. The other 28 heightmaps have
-no recorded invocation, so they cannot be regenerated from a DEM — `--list`
-names them, and `convert.mjs` produces their set variants by downscaling the
-source PNG.
+No heightmap has a `topoconv` spec any more; `EarthHeight` was the only one,
+and moved to its source PNG. The rest have no recorded invocation, so they
+cannot be regenerated from a DEM — `--list` names them all, and `convert.mjs`
+produces their set variants by downscaling the source PNG. With no specs the
+CI heights step generates nothing, and its smoke test says so rather than
+failing.
 
 ## Sources
 

@@ -139,7 +139,13 @@ jobs:
         run: |
           set -euo pipefail
           make -C tools/TopoConv
-          node tools/convert/heights.mjs --list
+          node tools/convert/heights.mjs --list | tee /tmp/heights-list
+          # No map carries a topoconv spec since EarthHeight moved to its
+          # source PNG, so there is nothing to generate; the path stays for
+          # the next DEM that does.
+          if grep -q '^heightmaps with a topoconv spec: 0 ' /tmp/heights-list; then
+            exit 0
+          fi
           for s in 4096 8192 16384; do
             node tools/convert/heights.mjs --set "$s" --out /tmp/h --dry-run \
               | grep -q -- '-width' \
@@ -283,14 +289,13 @@ jobs:
       # resampled from their source PNG by the step above, which is the only
       # input they have.
       #
-      # After the conversion step, deliberately: if a source release ever adds
-      # an EarthHeight.png, convert.mjs would produce one, and the DEM-derived
-      # map is the authoritative one - so it lands last and wins.
+      # After the conversion step, deliberately: a map with both a source PNG
+      # and a `topoconv` spec is skipped by convert.mjs and lands here last.
       #
-      # This is the one texture the release genuinely cannot carry from git.
-      # EarthHeight is absent from the checkout for the 8192 and 16384 sets
-      # (256 MiB at 16384 breaches GitHub's 100 MiB file limit), so today those
-      # packs ship without Earth terrain. Generating it fills that gap.
+      # No map has a spec today. EarthHeight had one, against topo30, until it
+      # turned out topo30 has no ice sheets: it sits 2.7 km below the shipped
+      # map over Antarctica. EarthHeight now comes from Earth_Height.png on the
+      # source release, which carries them, so this step generates nothing.
       #
       # Drift is reported, not enforced. Regenerating a heightmap moves
       # terrain, and terrain that moves puts landed craft underground - but

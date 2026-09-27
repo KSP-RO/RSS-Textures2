@@ -94,6 +94,34 @@ export function pack16(data, width, height) {
   return out;
 }
 
+/**
+ * Reverse row order in place. `channels` is elements per pixel: 4 for RGBA8,
+ * 1 for a Uint16Array of heights.
+ *
+ * Source PNGs are north-up. KSP's DDS files are not: Unity uploads DDS rows as
+ * stored and treats the first one as v=0, the bottom of the texture, so every
+ * map in the pack carries the south pole in its first row. Measured against
+ * the shipped 4096 set, flipped output matches: MarsBiomes and MoonBiomes
+ * texel for texel, and Mars/Moon heights to a mean of 35 m / 84 m where the
+ * unflipped maps missed by 4.3 km / 2.1 km.
+ *
+ * Only the row order changes here. Whether a normal map's green channel should
+ * also be inverted is open: the shipped Moon_NRM correlates with flipped output
+ * at +0.89 in x but -0.86 in green, and Earth_NRM's source is different art so
+ * it cannot say either way.
+ */
+export function flipRows(data, width, height, channels) {
+  const stride = width * channels;
+  const tmp = data.slice(0, stride);
+  for (let top = 0, bottom = height - 1; top < bottom; top++, bottom--) {
+    const a = top * stride, b = bottom * stride;
+    tmp.set(data.subarray(a, a + stride));
+    data.copyWithin(a, b, b + stride);
+    data.set(tmp, b);
+  }
+  return data;
+}
+
 // Address a source texel: longitude wraps, latitude clamps.
 //
 // Worth being precise about what this does and does not buy. For the 2x2 box

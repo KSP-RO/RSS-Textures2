@@ -25,7 +25,7 @@ import { readHeader, fullChainLevels } from '../manifest/lib/dds.mjs';
 import { parseSets } from '../manifest/lib/sets.mjs';
 import { writeDDS, readLevels } from './lib/dds-io.mjs';
 import {
-  unpackToRGBA, unpack16, pack16,
+  unpackToRGBA, unpack16, pack16, flipRows,
   resampleTo, resampleTo16, buildMipChain, packDXT5nm,
 } from './lib/pixels.mjs';
 import { encodeLevel, backendFor, backendStatus } from './lib/encoders.mjs';
@@ -108,12 +108,15 @@ function decodeSource(data, kind, mapName) {
     // conversion, on top of the RGBA copy, the resample and the mip chain.
     // Two of those concurrently is enough to be killed outright.
     return {
-      grey16: png.toGrey16(img), width: img.width, height: img.height,
+      grey16: flipRows(png.toGrey16(img), img.width, img.height, 1),
+      width: img.width, height: img.height,
       bitDepth: img.bitDepth, colourType: img.colourType, notes,
     };
   }
 
-  const rgba = png.toRGBA8(img);
+  // Into DDS row order, before anything else looks at the pixels. The --from
+  // path reads DDS files that are in that order already, so it skips this.
+  const rgba = flipRows(png.toRGBA8(img), img.width, img.height, 4);
 
   if (kind === 'Biomes') {
     // Biome colours are matched exactly against the definitions in RSS's
@@ -218,6 +221,18 @@ async function convertMap(opts, manifest, ctx, bodyName, kind, map) {
   const install = map.install ?? manifest.kinds[kind].install;
   const target = targetFor(map, opts.set);
   const filter = RESAMPLE_BY_KIND[kind] ?? 'box';
+
+  // A heightmap keeps the width its set actually ships, the rule heights.mjs
+  // applies too. The 4096 set carries EarthHeight at 8192x4096; building it at
+  // min(native, cap) would halve Earth terrain there and nothing would object.
+  if (kind === 'Height') {
+    const dev = (manifest.knownDeviations ?? []).find(
+      (d) => d.map === mapName && d.set === opts.set && d.kind === 'size' && d.actual);
+    if (dev && dev.actual !== target.width) {
+      target.height = Math.round(target.height * dev.actual / target.width);
+      target.width = dev.actual;
+    }
+  }
 
   let src;
   if (opts.from) {
